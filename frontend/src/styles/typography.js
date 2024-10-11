@@ -1,5 +1,15 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/700.css";
+
 const typography = {
-  fontFamily: `"Roboto", "Arial", sans-serif`,
+  fontFamily: `"Inter", "Roboto", "Arial", sans-serif`,
   fontSize: 14,
 
   h1: {
