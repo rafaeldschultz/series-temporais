@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
+import AnalysisPage from "../pages/AnalysisPage";
 
 const routes = () => [
   {
@@ -14,9 +15,9 @@ const routes = () => [
     element: <HomePage />,
   },
   {
-    path: "/about",
+    path: "/analysis",
     title: "Análise Estatística",
-    element: <HomePage />,
+    element: <AnalysisPage />,
   },
   {
     path: "/about",

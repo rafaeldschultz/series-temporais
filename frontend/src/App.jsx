@@ -1,5 +1,11 @@
 import useAppContext from "./hooks/useAppContext";
-import { Box, createTheme, responsiveFontSizes } from "@mui/material";
+import {
+  Box,
+  Container,
+  createTheme,
+  CssBaseline,
+  responsiveFontSizes,
+} from "@mui/material";
 import darkPalette from "./styles/darkPalette";
 import lightPalette from "./styles/lightPalette";
 import typography from "./styles/typography";
@@ -18,7 +24,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box>
+      <CssBaseline />
+      <Box height={100}>
         <RouterProvider router={router()} />
       </Box>
     </ThemeProvider>
