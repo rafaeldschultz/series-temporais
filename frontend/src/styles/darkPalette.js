@@ -1,8 +1,8 @@
 const darkPalette = {
-  mode: "light",
+  mode: "dark",
   background: {
-    default: "#F5f6f9",
-    paper: "#FFF",
+    default: "#000000",
+    paper: "#000000",
   },
 };
 

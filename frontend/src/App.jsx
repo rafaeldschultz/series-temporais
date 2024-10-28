@@ -12,6 +12,7 @@ import typography from "./styles/typography";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import router from "./router";
+import { AppProvider } from "./contexts/AppContext";
 
 function App() {
   const { darkMode } = useAppContext();
@@ -23,12 +24,14 @@ function App() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box height={100}>
-        <RouterProvider router={router()} />
-      </Box>
-    </ThemeProvider>
+    <AppProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box height={100}>
+          <RouterProvider router={router()} />
+        </Box>
+      </ThemeProvider>
+    </AppProvider>
   );
 }
 

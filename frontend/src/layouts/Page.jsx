@@ -3,17 +3,17 @@ import { Paper, Toolbar } from "@mui/material";
 const Page = ({ children, sx, ...others }) => {
   return (
     <Paper
-      sx={{
-        bgcolor: "background.default",
+      sx={(theme) => ({
+        backgroundColor: theme.palette.background.default,
         display: "flex",
         flexDirection: "column",
-        height: 1,
         overflowY: "auto",
         border: "none",
         borderRadius: 0,
         padding: 4,
+        height: "100%",
         ...sx,
-      }}
+      })}
       {...others}
     >
       {children}

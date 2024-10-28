@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import PageHeader from "../src/components/PageHeader/PageHeader";
-import routes from "../src/router/routes";
+import PageHeader from "../components/PageHeader/PageHeader";
+import routes from "../router/routes";
 import { Box, Container } from "@mui/material";
 
 const Root = () => {

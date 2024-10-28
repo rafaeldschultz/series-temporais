@@ -2,12 +2,16 @@ import {
   AppBar,
   Box,
   Button,
+  FormControlLabel,
+  FormGroup,
   styled,
   Toolbar,
   Typography,
   useTheme,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import ColorModeSwitch from "../Switch/ColorModeSwitch";
+import useAppContext from "../../hooks/useAppContext";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   position: "relative",
@@ -25,12 +29,16 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const PageHeader = ({ routes }) => {
+  const { darkMode, handleDarkModeSwitch } = useAppContext();
+
   const { pathname: currentPath } = useLocation();
   const navigate = useNavigate();
-  const theme = useTheme();
-
   const handleNavigate = (newPath) => {
     navigate(newPath);
+  };
+
+  const handleDarkModeChange = (event) => {
+    handleDarkModeSwitch();
   };
 
   return (
@@ -84,6 +92,11 @@ const PageHeader = ({ routes }) => {
                 </Typography>
               </Button>
             ))}
+          <ColorModeSwitch
+            sx={{ m: 1 }}
+            checked={darkMode}
+            onChange={handleDarkModeChange}
+          />
         </Box>
       </Toolbar>
     </StyledAppBar>
