@@ -13,111 +13,17 @@ import {
   styled,
 } from "@mui/material";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import AnalyticsRoundedIcon from "@mui/icons-material/AnalyticsRounded";
-import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded";
-import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-
-const navigationItems = [
-  {
-    kind: "header",
-    segment: "",
-    title: "Espacial",
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "item",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: true,
-  },
-  {
-    kind: "item",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "item",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "divider",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "header",
-    segment: "",
-    title: "Temporal",
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "item",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "item",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-  {
-    kind: "item",
-    segment: "",
-    title: "Home",
-    icon: <HomeRoundedIcon />,
-    pattern: "",
-    action: "",
-    children: [],
-    isSelected: false,
-  },
-];
 
 const SideMenu = ({
+  navigationItems,
+  onSelect,
+  selectedItemId,
   basePath = "",
   depth = 0,
   onLinkClick,
   isMini = false,
   isFullyExpanded = true,
   hasDrawerTransitions = false,
-  selectedItemId,
 }) => {
   return (
     <Box
@@ -185,7 +91,9 @@ const SideMenu = ({
             >
               <ListItemButton
                 alignItems="left"
-                selected={navigationItem.isSelected}
+                selected={
+                  selectedItemId && navigationItem.id === selectedItemId
+                }
                 sx={(theme) => ({
                   borderRadius: 1,
                   "&.Mui-selected": {
@@ -196,6 +104,9 @@ const SideMenu = ({
                     backgroundColor: theme.palette.primary.light,
                   },
                 })}
+                onClick={
+                  selectedItemId ? () => onSelect(navigationItem.id) : null
+                }
               >
                 <ListItemText
                   primary={navigationItem.title}
