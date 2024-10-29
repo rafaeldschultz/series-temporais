@@ -5,42 +5,44 @@ import SideMenu from "../../components/SideMenu/SideMenu";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import LinePlot from "../../components/Charts/LinePlot";
 import Grid from "@mui/material/Grid2";
+import TemporalSeriesChart from "./Sections/temporalSeriesChart";
 
 const AnalysisPage = () => {
   return (
     <Page sx={{ p: 0 }}>
       <Box sx={{ display: "flex", height: "100%", width: "100%" }}>
         <SideMenu />
-
-        <Grid
-          container
-          direction={"row"}
-          sx={{ p: 4, width: "100%", height: "100%" }}
-        >
-          <Grid size={5} spacing={2}>
-            <Breadcrumbs
-              aria-label="breadcrumb"
-              separator={<NavigateNextRoundedIcon fontSize="small" />}
+        <Box sx={{ p: 4, width: "100%", height: "100%" }}>
+          <Breadcrumbs
+            aria-label="breadcrumb"
+            separator={<NavigateNextRoundedIcon fontSize="small" />}
+          >
+            <Link underline="hover" color="inherit" href="/">
+              Análise Estatística
+            </Link>
+            <Link
+              underline="hover"
+              color="inherit"
+              href="/material-ui/getting-started/installation/"
             >
-              <Link underline="hover" color="inherit" href="/">
-                Análise Estatística
-              </Link>
-              <Link
-                underline="hover"
-                color="inherit"
-                href="/material-ui/getting-started/installation/"
-              >
-                Espacial
-              </Link>
-              <Typography sx={{ color: "text.primary" }}>
-                Breadcrumbs
-              </Typography>
-            </Breadcrumbs>
+              Temporal
+            </Link>
+            <Typography sx={{ color: "text.primary" }}>
+              A Série Temporal
+            </Typography>
+          </Breadcrumbs>
+          <Grid
+            container
+            direction={"row"}
+            sx={{ width: "100%", height: "100%" }}
+          >
+            {/* <Grid size={5} spacing={2}></Grid> */}
+            <Grid size="grow">
+              {/* <LinePlot width="100%" height="100%" /> */}
+              <TemporalSeriesChart />
+            </Grid>
           </Grid>
-          <Grid size="grow">
-            <LinePlot width="100%" height="100%" />
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
     </Page>
   );
