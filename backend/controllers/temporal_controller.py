@@ -10,7 +10,7 @@ class TemporalController:
         self.df = self.__load_data()
 
     def __load_data(self):
-        base_path = Path(__file__).resolve().parent.parent.joinpath("utils")
+        base_path = Path(__file__).resolve().parent.parent.joinpath("datasets")
         df = pd.read_parquet(base_path.joinpath("data_srag.parquet"))
         df["DT_NOTIFIC"] = pd.to_datetime(df["DT_NOTIFIC"], format="%d/%m/%Y")
         df = df.rename(columns={"SG_UF_NOT": "SIGLA_UF"})
