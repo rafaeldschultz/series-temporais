@@ -1,5 +1,7 @@
 import { Typography } from "@mui/material";
 import TemporalSeriesChart from "./temporalSeriesChart";
+import OccurrenceBySexChart from "./occurrenceBySexChart";
+import OccurrenceByRaceChart from "./OccurrenceByRaceChart";
 
 export const navigationItems = [
   {
@@ -17,7 +19,13 @@ export const navigationItems = [
   {
     id: 2,
     kind: "item",
-    title: "Série Temporal Tipografia",
-    component: <Typography> Teste </Typography>,
+    title: "Ocorrência por Sexo",
+    component: <OccurrenceBySexChart />,
+  },
+  {
+    id: 3,
+    kind: "item",
+    title: "Ocorrência por Raça",
+    component: <OccurrenceByRaceChart />,
   },
 ];

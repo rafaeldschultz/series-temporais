@@ -1,9 +1,11 @@
 import {
+  Autocomplete,
   Box,
   Breadcrumbs,
   Drawer,
   Link,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import Page from "../../layouts/Page";
@@ -54,13 +56,7 @@ const AnalysisPage = () => {
               </Typography>
             )}
           </Breadcrumbs>
-          <Grid
-            container
-            direction={"row"}
-            sx={{ width: "100%", height: "100%" }}
-          >
-            <Grid size="grow">{navigationItems[visibleChart].component}</Grid>
-          </Grid>
+          {navigationItems[visibleChart].component}
         </Box>
       </Box>
     </Page>

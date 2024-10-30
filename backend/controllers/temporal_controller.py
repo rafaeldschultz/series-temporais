@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 
@@ -10,48 +11,44 @@ class TemporalController:
 
     def __load_data(self):
         base_path = Path(__file__).resolve().parent.parent.joinpath("utils")
-        variaveis = [
-            "DT_NOTIFIC",
-            "SG_UF_NOT",
-            "ID_MUNICIP",
-            "CS_SEXO",
-            "CS_RACA",
-            "EVOLUCAO",
-            "CLASSI_FIN",
-        ]
-        csvs = [
-            "INFLUD21-01-05-2023.csv",
-            "INFLUD22-03-04-2023.csv",
-            "INFLUD23-23-09-2024.csv",
-            "INFLUD24-23-09-2024.csv",
-        ]
-
-        path_file = base_path.joinpath(csvs[0])
-        df = pd.read_csv(path_file, delimiter=";", usecols=variaveis)
-
-        for csv in csvs[1:]:
-            path_file = base_path.joinpath(csv)
-            aux_frame = pd.read_csv(path_file, delimiter=";", usecols=variaveis)
-            df = pd.concat([df, aux_frame], ignore_index=True)
-
-        class_map = {
-            1: "Influenza",
-            2: "Vírus respiratório",
-            3: "Outro agente etiológico",
-            4: "Não especificado",
-        }
-
-        df["CLASSI_FIN"] = df["CLASSI_FIN"].map(class_map)
+        df = pd.read_parquet(base_path.joinpath("data_srag.parquet"))
         df["DT_NOTIFIC"] = pd.to_datetime(df["DT_NOTIFIC"], format="%d/%m/%Y")
+        df = df.rename(columns={"SG_UF_NOT": "SIGLA_UF"})
+        df["CS_RACA"] = df["CS_RACA"].map(
+            {
+                1: "Branca",
+                2: "Preta",
+                3: "Amarela",
+                4: "Parda",
+                5: "Indígena",
+                9: "Ignorado",
+            }
+        )
         return df
 
-    def get_temporal_data(self):
+    def get_temporal_data(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
         serie_temporal = self.df["DT_NOTIFIC"].value_counts().sort_index().reset_index()
         serie_temporal["DT_NOTIFIC"] = serie_temporal["DT_NOTIFIC"].dt.strftime(
             "%Y-%m-%d"
         )
-
-        self.df.rename(columns={"SG_UF_NOT": "SIGLA_UF"}, inplace=True)
 
         intervalo_semestral = (
             pd.date_range(
@@ -65,3 +62,86 @@ class TemporalController:
             "serieTemporal": serie_temporal.to_dict(orient="records"),
             "intervaloSemestral": intervalo_semestral,
         }
+
+    def occurrence_by_sex(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        group = self.df.groupby("CS_SEXO").size().reset_index()
+
+        return {
+            "sex": group["CS_SEXO"]
+            .apply(lambda x: "Feminino" if x == "F" else "Masculino")
+            .to_list(),
+            "count": group[0].to_list(),
+        }
+
+    def occurrence_by_race(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        group = self.df.groupby("CS_RACA").size().reset_index()
+
+        return {
+            "race": group["CS_RACA"].to_list(),
+            "count": group[0].to_list(),
+        }
+
+
+# fig = go.Figure()
+
+# fig.add_trace(
+#     go.Bar(
+#         y=group[0],
+#         x=group["CS_SEXO"].apply(lambda x: "Feminino" if x == "F" else "Masculino"),
+#         marker=dict(color="royalblue", line=dict(color="black", width=1)),
+#         text=group[0],
+#         textposition="outside",
+#     )
+# )
+
+# fig.update_xaxes(showline=True, linewidth=1, linecolor="black")
+# fig.update_yaxes(showline=True, linewidth=1, linecolor="black")
+
+# fig.update_layout(
+#     title="Número de Ocorrências por Sexo",
+#     title_x=0.5,
+#     title_y=0.9,
+#     width=900,
+#     height=600,
+#     template="plotly_white",
+#     xaxis_title="Sexo",
+#     yaxis_title="Número de Ocorrências",
+# )
+
+# fig.show()
