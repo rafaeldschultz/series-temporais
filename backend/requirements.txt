@@ -3,3 +3,6 @@ uvicorn[standard]
 pydantic
 pandas
 numpy
+pyarrow
+fastparquet
+geopandas
