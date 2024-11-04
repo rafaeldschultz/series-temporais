@@ -1,10 +1,15 @@
-import {
-  Box,
-} from "@mui/material";
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+
 import Page from "../../layouts/Page";
 import SideMenu from "../../components/SideMenu/SideMenu";
+import FilterPanel from './FilterPanel';
+
 import { useState } from "react";
 import { navigationItems } from "./Sections/navigation";
+
+import { FilterProvider } from '../../contexts/FilterContext';
+
 
 const AnalysisPage = () => {
   const [visibleChart, setVisibleChart] = useState(1);
@@ -18,7 +23,18 @@ const AnalysisPage = () => {
           selectedItemId={visibleChart}
         />
         <Box sx={{ p: 4, width: "100%", height: "100%" }}>
-          {navigationItems[visibleChart].component}
+
+          <FilterProvider>
+            <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }} pt={5}>
+              <Grid item xs={3}>
+                <FilterPanel />
+              </Grid>
+              <Grid item xs={9} container alignItems="center" justifyContent="center">
+                {navigationItems[visibleChart].component}
+              </Grid>
+            </Grid>
+          </FilterProvider>
+
         </Box>
       </Box>
     </Page>
