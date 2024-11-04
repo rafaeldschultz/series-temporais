@@ -29,7 +29,7 @@ const AnalysisPage = () => {
               <Grid item xs={3}>
                 <FilterPanel />
               </Grid>
-              <Grid item xs={9} container alignItems="center" justifyContent="center">
+              <Grid size="grow">
                 {navigationItems[visibleChart].component}
               </Grid>
             </Grid>

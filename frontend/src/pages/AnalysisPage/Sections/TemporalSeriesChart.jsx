@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import useTemporalSeries from "../../../hooks/dataLoaders/useTemporalSeries";
 import { useFilter } from '../../../contexts/FilterContext';
-import React, { useState } from "react";
+import React from "react";
 import Plot from "react-plotly.js";
 import Grid from "@mui/material/Grid2";
 

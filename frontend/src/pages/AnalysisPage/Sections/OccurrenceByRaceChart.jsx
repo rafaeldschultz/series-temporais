@@ -1,6 +1,6 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 import { useFilter } from '../../../contexts/FilterContext';
 import { useOccurrenceByRace } from "../../../hooks/dataLoaders/useOccurrence";
 
@@ -14,7 +14,15 @@ const OccurrenceByRaceChart = () => {
   );
 
   return loading ? (
-    <CircularProgress />
+    <Box
+      width={1}
+      height={1}
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <CircularProgress />
+    </Box>
   ) : (
     <Plot
       data={[
