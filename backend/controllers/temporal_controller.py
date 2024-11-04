@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional
 
 import pandas as pd
+import numpy as np
 
 
 class TemporalController:
@@ -14,16 +15,6 @@ class TemporalController:
         df = pd.read_parquet(base_path.joinpath("data_srag.parquet"))
         df["DT_NOTIFIC"] = pd.to_datetime(df["DT_NOTIFIC"], format="%d/%m/%Y")
         df = df.rename(columns={"SG_UF_NOT": "SIGLA_UF"})
-        df["CS_RACA"] = df["CS_RACA"].map(
-            {
-                1: "Branca",
-                2: "Preta",
-                3: "Amarela",
-                4: "Parda",
-                5: "Indígena",
-                9: "Ignorado",
-            }
-        )
         return df
 
     def get_temporal_data(
@@ -116,32 +107,175 @@ class TemporalController:
             "race": group["CS_RACA"].to_list(),
             "count": group[0].to_list(),
         }
+    
+
+    def occurrence_by_day(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+        
+
+        group = self.df.groupby("DT_DIA_NOME").size().reset_index()
+
+        day_in_order = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
+        group['DT_DIA_NOME'] = pd.Categorical(group['DT_DIA_NOME'], categories=day_in_order, ordered=True)
+        group = group.sort_values('DT_DIA_NOME')
+
+        return {
+            "day": group["DT_DIA_NOME"].to_list(),
+            "count": group[0].to_list(),
+        }
+    
+
+    def occurrence_by_age(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+        
+        age = self.df["NU_IDADE_N"].astype(int).to_list()
+
+        return {
+            "age": age,
+        }
+    
+
+    def serie_rooling_average(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        granularity: Optional[str] = None
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+        
+        serie = self.df["DT_NOTIFIC"].value_counts().reset_index().sort_values("DT_NOTIFIC")
+
+        if granularity:
+            serie = serie.resample(granularity, on="DT_NOTIFIC").mean()
+        else:
+            serie = serie.resample('3D', on="DT_NOTIFIC").mean()
+        
+        serie = serie.reset_index()
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime('%Y-%m-%d')
+
+        return serie.to_dict(orient="records")
 
 
-# fig = go.Figure()
+    def serie_differentiation(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        order: Optional[int] = None
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
 
-# fig.add_trace(
-#     go.Bar(
-#         y=group[0],
-#         x=group["CS_SEXO"].apply(lambda x: "Feminino" if x == "F" else "Masculino"),
-#         marker=dict(color="royalblue", line=dict(color="black", width=1)),
-#         text=group[0],
-#         textposition="outside",
-#     )
-# )
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
 
-# fig.update_xaxes(showline=True, linewidth=1, linecolor="black")
-# fig.update_yaxes(showline=True, linewidth=1, linecolor="black")
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
 
-# fig.update_layout(
-#     title="Número de Ocorrências por Sexo",
-#     title_x=0.5,
-#     title_y=0.9,
-#     width=900,
-#     height=600,
-#     template="plotly_white",
-#     xaxis_title="Sexo",
-#     yaxis_title="Número de Ocorrências",
-# )
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+        
+        serie = self.df['DT_NOTIFIC'].value_counts().reset_index().sort_values('DT_NOTIFIC')
+        serie = serie.set_index('DT_NOTIFIC')
+        serie = serie.resample('1D').sum()
 
-# fig.show()
+        if order:
+            # Max order is Two
+            if order == 2:
+                serie = serie.diff(1)
+                serie = serie.diff(1)
+                serie = serie.iloc[2:]
+
+            else:
+                serie = serie.diff(1)
+                serie = serie.iloc[1:]
+
+        # Default diffirentiation - 1º order
+        else:
+            serie = serie.diff(1)
+            serie = serie.iloc[1:]
+        
+        serie = serie.reset_index()
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime('%Y-%m-%d')
+
+        return serie.to_dict(orient="records")
+
+
+    def serie_exponential_rooling_average(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        granularity: Optional[int] = None
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+        
+        serie = self.df['DT_NOTIFIC'].value_counts().reset_index().sort_values('DT_NOTIFIC')
+        serie = serie.set_index('DT_NOTIFIC')
+
+        if granularity:
+            serie = serie.ewm(span=granularity, adjust=True).mean()
+        else:
+            serie = serie.ewm(span=3, adjust=True).mean()
+
+        serie = serie.reset_index()
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime('%Y-%m-%d')
+
+        return serie.to_dict(orient="records")
+
