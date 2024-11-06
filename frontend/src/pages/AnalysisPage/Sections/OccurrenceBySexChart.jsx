@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Box, CircularProgress } from "@mui/material";
-import Grid from "@mui/material/Grid2";
 
 import Plot from "react-plotly.js";
 
