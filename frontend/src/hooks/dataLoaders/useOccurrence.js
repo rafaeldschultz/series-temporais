@@ -29,15 +29,19 @@ export const useOccurrenceBySex = (federalState, syndrome, year, evolution) => {
   });
 };
 
-export const useOccurrenceByRace = (
-  federalState,
-  syndrome,
-  year,
-  evolution
-) => {
+export const useOccurrenceByRace = (federalState, syndrome, year, evolution) => {
   return useQuery({
     queryKey: ["occurrenceByRace", federalState, syndrome, year, evolution],
     queryFn: () =>
       fetch("occurrence_by_race", federalState, syndrome, year, evolution),
+  });
+};
+
+
+export const useOccurrenceByDay = (federalState, syndrome, year, evolution) => {
+  return useQuery({
+    queryKey: ["occurrenceBySex", federalState, syndrome, year, evolution],
+    queryFn: () =>
+      fetch("occurrence_by_day", federalState, syndrome, year, evolution),
   });
 };
