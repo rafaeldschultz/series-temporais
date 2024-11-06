@@ -3,6 +3,7 @@ import TemporalSeriesChart from "./temporalSeriesChart";
 import OccurrenceBySexChart from "./occurrenceBySexChart";
 import OccurrenceByRaceChart from "./OccurrenceByRaceChart";
 import BarplotOccurrenceByDay from "./OccurrenceByDay";
+import BarplotOccurrenceByAge from "./OccurrenceByAge";
 
 export const navigationItems = [
   {
@@ -34,5 +35,11 @@ export const navigationItems = [
     kind: "item",
     title: "barplot_ocurrence_by_day",
     component: <BarplotOccurrenceByDay />,
-  }
+  },
+  // {
+  //   id: 5,
+  //   kind: "item",
+  //   title: "barplot_ocurrence_by_age",
+  //   component: <BarplotOccurrenceByAge />,
+  // },
 ];

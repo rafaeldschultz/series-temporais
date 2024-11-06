@@ -160,12 +160,13 @@ class TemporalController:
         if evolution:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
         
-        age = self.df["NU_IDADE_N"].astype(int).to_list()
+        group = self.df.groupby("NU_IDADE_N").astype(int).to_list()
+        group = group.sort_values('NU_IDADE_N')
 
         return {
-            "age": age,
+            "age": group["NU_IDADE_N"].to_list(),
+            "count": group[0].to_list(),
         }
-    
 
     def serie_rooling_average(
         self,
