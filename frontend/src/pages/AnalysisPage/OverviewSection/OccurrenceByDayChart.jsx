@@ -30,7 +30,7 @@ const OccurrenceByDayChart = () => {
   );
 
   return (
-    <DashboardCard title={"Ocorrências por Idade"}>
+    <DashboardCard title={"Ocorrências por dia da semana"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (

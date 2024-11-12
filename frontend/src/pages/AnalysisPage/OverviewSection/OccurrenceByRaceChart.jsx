@@ -30,7 +30,7 @@ const OccurrenceByRaceChart = () => {
   );
 
   return (
-    <DashboardCard title={"Ocorrências por Sexo"}>
+    <DashboardCard title={"Ocorrências por Raça"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (

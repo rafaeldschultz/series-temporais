@@ -1,12 +1,13 @@
 # Considera-se que a base já está processada
 import pandas as pd
+import geopandas
 import plotly.graph_objects as go
 
 def plot_serie_temporalSRAG(df, doenca=None, estado=None, regiao_imediata=None, municipio=None):
     """Função de Visualização da Série Temporal dos Dados SRAG
 
     Args:
-        df (_type_): Dataframe Pandas
+        df (_type_): Geodataframe 
         doenca (_type_, optional): {'Outro agente etiológico', 'Não especificado', 'Influenza',
        'Vírus respiratório'}
        
@@ -52,7 +53,6 @@ def plot_serie_temporalSRAG(df, doenca=None, estado=None, regiao_imediata=None, 
       else:
           novos_casos = serie_temporal.loc[intervalo_semestral[i-1]:semestre].sum()
       novos_casos_semestrais.append((semestre, novos_casos))
-
 
     # Cria o gráfico
     fig = go.Figure()
