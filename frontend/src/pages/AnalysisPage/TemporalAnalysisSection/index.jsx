@@ -7,7 +7,7 @@ import useTemporal from "../../../hooks/useTemporal";
 import CorrelogramChart from "./CorrelogramChart";
 import Grid from "@mui/material/Grid2";
 import SerieDifferetiationChart from "./SerieDifferentiationChart";
-import SerieExponentialRoolingAverageChart from "./serieExponentialRoolingAverageChart";
+import SerieExponentialRoolingAverageChart from "./SerieExponentialRoolingAverageChart";
 import SerieRoolingAverageChart from "./SerieRoolingAverageChart";
 
 const TemporalAnalysisSection = () => {
