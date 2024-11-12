@@ -218,6 +218,50 @@ class TemporalController:
         serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
         return serie.to_dict(orient="records")
+    
+    
+    def correlogram(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        granularity: Optional[int] = None,
+        diff_order: Optional[int] = None
+    ): 
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        if granularity:
+            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period(granularity)).size()
+        else:
+            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period('7D')).size()
+        
+        serie.index = serie.index.to_timestamp()
+        
+        # Remove Trend of the time series
+        serie = serie.diff().dropna()
+
+        # Remove Seasonality of the time series
+        if diff_order:
+            serie = serie.diff(diff_order).dropna()
+        else:
+            serie = serie.diff(7).dropna()
+        
+        serie = serie.reset_index().rename(columns={0:"count"})
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
+
+        return serie.to_dict(orient="records")
+        
 
     def get_overview_data(
         self,
