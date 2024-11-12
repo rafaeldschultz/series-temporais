@@ -1,7 +1,10 @@
-import TemporalSeriesChart from "./TemporalSeriesChart";
-import OccurrenceBySexChart from "./OccurrenceBySexChart";
+import { Typography } from "@mui/material";
+import TemporalSeriesChart from "./temporalSeriesChart";
+import OccurrenceBySexChart from "./occurrenceBySexChart";
 import OccurrenceByRaceChart from "./OccurrenceByRaceChart";
 import OverviewSection from "../OverviewSection";
+import BarplotOccurrenceByDay from "./OccurrenceByDay";
+import BarplotOccurrenceByAge from "./OccurrenceByAge";
 
 export const navigationItems = [
   {
@@ -38,7 +41,7 @@ export const navigationItems = [
     id: 5,
     kind: "item",
     title: "barplot_ocurrence_by_day",
-    component: <OccurrenceByRaceChart />,
+    component: <BarplotOccurrenceByDay />,
   },
   {
     id: 6,

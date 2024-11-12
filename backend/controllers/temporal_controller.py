@@ -95,11 +95,31 @@ class TemporalController:
             "count": group[0].to_list(),
         }
 
-    def occurrence_by_age(self):
-        age = self.df["NU_IDADE_N"].astype(int).to_list()
+    def occurrence_by_age(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        group = self.df.groupby("NU_IDADE_N").astype(int).to_list()
+        group = group.sort_values("NU_IDADE_N")
 
         return {
-            "age": age,
+            "age": group["NU_IDADE_N"].to_list(),
+            "count": group[0].to_list(),
         }
 
     def serie_rooling_average(
