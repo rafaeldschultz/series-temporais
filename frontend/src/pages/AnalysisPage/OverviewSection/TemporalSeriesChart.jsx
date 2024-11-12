@@ -23,7 +23,6 @@ const generateAnnotations = (data) => {
   }));
 
   const intervaloSemestral = data.temporalSeries.intervaloSemestral;
-  console.log(serieTemporal);
 
   const cumulativeCases = {};
   serieTemporal.reduce((acc, item) => {

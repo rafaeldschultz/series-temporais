@@ -23,6 +23,22 @@ async def overview(
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
+@api_temporal.get("/temporal")
+async def temporal(
+    uf: Optional[str] = None,
+    syndrome: Optional[str] = None,
+    year: Optional[int] = None,
+    evolution: Optional[str] = None,
+):
+    try:
+        controller = TemporalController()
+        data = controller.get_temporal_data(uf, syndrome, year, evolution)
+        return JSONResponse(status_code=200, content=data)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
 @api_temporal.get("/serie_rooling_average")
 async def serie_rooling_average(
     uf: Optional[str] = None,
@@ -90,12 +106,19 @@ async def correlogram(
     granularity: Optional[int] = None,
     diff_order: Optional[int] = None,
     num_lags: Optional[int] = None,
-    alpha: Optional[int] = None
+    alpha: Optional[int] = None,
 ):
     try:
         controller = TemporalController()
         data = controller.correlogram(
-            uf, syndrome, year, evolution, granularity, diff_order, num_lags, alpha,
+            uf,
+            syndrome,
+            year,
+            evolution,
+            granularity,
+            diff_order,
+            num_lags,
+            alpha,
         )
         return JSONResponse(status_code=200, content=data)
     except Exception as e:

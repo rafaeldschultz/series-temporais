@@ -35,7 +35,7 @@ class TemporalController:
 
         return self.df
 
-    def get_temporal_data(self):
+    def get_temporal_occurences(self):
         serie_temporal = self.df["DT_NOTIFIC"].value_counts().sort_index().reset_index()
         serie_temporal["DT_NOTIFIC"] = serie_temporal["DT_NOTIFIC"].dt.strftime(
             "%Y-%m-%d"
@@ -219,8 +219,7 @@ class TemporalController:
         serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
         return serie.to_dict(orient="records")
-    
-    
+
     def correlogram(
         self,
         uf: Optional[str] = None,
@@ -230,8 +229,8 @@ class TemporalController:
         granularity: Optional[int] = None,
         diff_order: Optional[int] = None,
         num_lags: Optional[int] = None,
-        alpha: Optional[int] = None
-    ): 
+        alpha: Optional[int] = None,
+    ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
 
@@ -245,12 +244,14 @@ class TemporalController:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
         if granularity:
-            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period(granularity)).size()
+            serie = self.df.groupby(
+                self.df["DT_NOTIFIC"].dt.to_period(granularity)
+            ).size()
         else:
-            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period('W')).size()
-        
+            serie = self.df.groupby(self.df["DT_NOTIFIC"].dt.to_period("W")).size()
+
         serie.index = serie.index.to_timestamp()
-        
+
         # Remove Trend of the time series
         serie = serie.diff().dropna()
 
@@ -259,7 +260,7 @@ class TemporalController:
             serie = serie.diff(diff_order).dropna()
         else:
             serie = serie.diff(7).dropna()
-    
+
         aux_num_lags = num_lags if num_lags else 25
         aux_alpha = alpha if alpha else 0.01
 
@@ -269,12 +270,11 @@ class TemporalController:
         upper_y = corr_array[1][:, 1] - corr_array[0]
 
         return {
-            "autocorrelations":corr_array[0].tolist(),
-            "confidenceIntervals":corr_array[1].tolist(),
+            "autocorrelations": corr_array[0].tolist(),
+            "confidenceIntervals": corr_array[1].tolist(),
             "lowerY": lower_y.tolist(),
-            "upperY":upper_y.tolist()
+            "upperY": upper_y.tolist(),
         }
-        
 
     def get_overview_data(
         self,
@@ -290,7 +290,7 @@ class TemporalController:
         total_recovered = self.df[self.df["EVOLUCAO"] == "Cura"].shape[0]
 
         return {
-            "temporalSeries": self.get_temporal_data(),
+            "temporalSeries": self.get_temporal_occurences(),
             "general": {
                 "totalCases": total_cases,
                 "totalDeaths": total_deaths,
@@ -302,4 +302,31 @@ class TemporalController:
                 "day": self.occurrence_by_day(),
                 "age": self.occurrence_by_age(),
             },
+        }
+
+    def get_temporal_data(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        granularity: Optional[int] = None,
+        diff_order: Optional[int] = None,
+        num_lags: Optional[int] = None,
+        alpha: Optional[int] = None,
+    ):
+        self.df = self.apply_filters(uf, syndrome, year, evolution)
+        return {
+            "correlogram": self.correlogram(
+                uf, syndrome, year, evolution, granularity, diff_order, num_lags, alpha
+            ),
+            "serieDifferentiation": self.serie_differentiation(
+                uf, syndrome, year, evolution, diff_order
+            ),
+            "serieExponentialRoolingAverage": self.serie_exponential_rooling_average(
+                uf, syndrome, year, evolution, granularity
+            ),
+            "serieRoolingAverage": self.serie_rooling_average(
+                uf, syndrome, year, evolution, granularity
+            ),
         }

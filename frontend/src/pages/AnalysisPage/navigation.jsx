@@ -4,12 +4,18 @@ import OccurrenceBySexChart from "./Sections/OccurrenceBySexChart";
 import OccurrenceByRaceChart from "./Sections/OccurrenceByRaceChart";
 import OverviewSection from "./OverviewSection";
 import BarplotOccurrenceByDay from "./Sections/OccurrenceByDay";
+import TemporalAnalysisSection from "./TemporalAnalysisSection";
 
 export const navigationItems = [
   {
     kind: "item",
     title: "Overview",
     component: <OverviewSection />,
+  },
+  {
+    kind: "item",
+    title: "Análise Temporal",
+    component: <TemporalAnalysisSection />,
   },
   // {
   //   kind: "header",
