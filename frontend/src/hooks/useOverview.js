@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import api from "../../helpers/axios";
+import api from "../helpers/axios";
 
 const fetch = async (federalState, syndrome, year, evolution) => {
   const params = {
@@ -12,21 +11,22 @@ const fetch = async (federalState, syndrome, year, evolution) => {
     },
   };
   const response = await api
-    .get("temporal", params)
+    .get("overview", params)
     .then((res) => res["data"])
     .catch((err) => {
       console.error(err);
       return null;
     });
+  console.log(response);
   return response;
 };
 
-const useTemporalSeries = (federalState, syndrome, year, evolution, select) => {
+const useOverview = (federalState, syndrome, year, evolution, select) => {
   return useQuery({
-    queryKey: ["temporalSeries", federalState, syndrome, year, evolution],
+    queryKey: ["overview", federalState, syndrome, year, evolution],
     queryFn: () => fetch(federalState, syndrome, year, evolution),
     select,
   });
 };
 
-export default useTemporalSeries;
+export default useOverview;

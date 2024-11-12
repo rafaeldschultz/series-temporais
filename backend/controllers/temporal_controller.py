@@ -2,8 +2,8 @@ import os
 from pathlib import Path
 from typing import Optional
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 
 class TemporalController:
@@ -17,25 +17,24 @@ class TemporalController:
         df = df.rename(columns={"SG_UF_NOT": "SIGLA_UF"})
         return df
 
-    def get_temporal_data(
-        self,
-        uf: Optional[str] = None,
-        syndrome: Optional[str] = None,
-        year: Optional[int] = None,
-        evolution: Optional[str] = None,
-    ):
+    def apply_filters(
+        self, uf: str, syndrome: str, year: int, evolution: str
+    ) -> pd.DataFrame:
         if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == uf]
+            self.df = self.df[self.df["SIGLA_UF"] == self.uf]
 
         if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+            self.df = self.df[self.df["CLASSI_FIN"] == self.syndrome]
 
         if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == self.year]
 
         if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+            self.df = self.df[self.df["EVOLUCAO"] == self.evolution]
 
+        return self.df
+
+    def get_temporal_data(self):
         serie_temporal = self.df["DT_NOTIFIC"].value_counts().sort_index().reset_index()
         serie_temporal["DT_NOTIFIC"] = serie_temporal["DT_NOTIFIC"].dt.strftime(
             "%Y-%m-%d"
@@ -54,25 +53,7 @@ class TemporalController:
             "intervaloSemestral": intervalo_semestral,
         }
 
-    def occurrence_by_sex(
-        self,
-        uf: Optional[str] = None,
-        syndrome: Optional[str] = None,
-        year: Optional[int] = None,
-        evolution: Optional[str] = None,
-    ):
-        if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == uf]
-
-        if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
-
-        if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
-
-        if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == evolution]
-
+    def occurrence_by_sex(self):
         group = self.df.groupby("CS_SEXO").size().reset_index()
 
         return {
@@ -82,90 +63,44 @@ class TemporalController:
             "count": group[0].to_list(),
         }
 
-    def occurrence_by_race(
-        self,
-        uf: Optional[str] = None,
-        syndrome: Optional[str] = None,
-        year: Optional[int] = None,
-        evolution: Optional[str] = None,
-    ):
-        if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == uf]
-
-        if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
-
-        if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
-
-        if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == evolution]
-
+    def occurrence_by_race(self):
         group = self.df.groupby("CS_RACA").size().reset_index()
 
         return {
             "race": group["CS_RACA"].to_list(),
             "count": group[0].to_list(),
         }
-    
 
     def occurrence_by_day(
         self,
-        uf: Optional[str] = None,
-        syndrome: Optional[str] = None,
-        year: Optional[int] = None,
-        evolution: Optional[str] = None,
     ):
-        if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == uf]
-
-        if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
-
-        if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
-
-        if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == evolution]
-        
-
         group = self.df.groupby("DT_DIA_NOME").size().reset_index()
 
-        day_in_order = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
-        group['DT_DIA_NOME'] = pd.Categorical(group['DT_DIA_NOME'], categories=day_in_order, ordered=True)
-        group = group.sort_values('DT_DIA_NOME')
+        day_in_order = [
+            "Segunda",
+            "Terça",
+            "Quarta",
+            "Quinta",
+            "Sexta",
+            "Sábado",
+            "Domingo",
+        ]
+        group["DT_DIA_NOME"] = pd.Categorical(
+            group["DT_DIA_NOME"], categories=day_in_order, ordered=True
+        )
+        group = group.sort_values("DT_DIA_NOME")
 
         return {
             "day": group["DT_DIA_NOME"].to_list(),
             "count": group[0].to_list(),
         }
-    
 
-    def occurrence_by_age(
-        self,
-        uf: Optional[str] = None,
-        syndrome: Optional[str] = None,
-        year: Optional[int] = None,
-        evolution: Optional[str] = None,
-    ):
-        if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == uf]
-
-        if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
-
-        if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
-
-        if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == evolution]
-        
+    def occurrence_by_age(self):
         age = self.df["NU_IDADE_N"].astype(int).to_list()
 
         return {
             "age": age,
         }
-    
 
     def serie_rooling_average(
         self,
@@ -173,7 +108,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: Optional[str] = None
+        granularity: Optional[str] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -186,19 +121,20 @@ class TemporalController:
 
         if evolution:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
-        
-        serie = self.df["DT_NOTIFIC"].value_counts().reset_index().sort_values("DT_NOTIFIC")
+
+        serie = (
+            self.df["DT_NOTIFIC"].value_counts().reset_index().sort_values("DT_NOTIFIC")
+        )
 
         if granularity:
             serie = serie.resample(granularity, on="DT_NOTIFIC").mean()
         else:
-            serie = serie.resample('3D', on="DT_NOTIFIC").mean()
-        
+            serie = serie.resample("3D", on="DT_NOTIFIC").mean()
+
         serie = serie.reset_index()
-        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime('%Y-%m-%d')
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
         return serie.to_dict(orient="records")
-
 
     def serie_differentiation(
         self,
@@ -206,7 +142,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        order: Optional[int] = None
+        order: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -219,10 +155,12 @@ class TemporalController:
 
         if evolution:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
-        
-        serie = self.df['DT_NOTIFIC'].value_counts().reset_index().sort_values('DT_NOTIFIC')
-        serie = serie.set_index('DT_NOTIFIC')
-        serie = serie.resample('1D').sum()
+
+        serie = (
+            self.df["DT_NOTIFIC"].value_counts().reset_index().sort_values("DT_NOTIFIC")
+        )
+        serie = serie.set_index("DT_NOTIFIC")
+        serie = serie.resample("1D").sum()
 
         if order:
             # Max order is Two
@@ -239,12 +177,11 @@ class TemporalController:
         else:
             serie = serie.diff(1)
             serie = serie.iloc[1:]
-        
+
         serie = serie.reset_index()
-        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime('%Y-%m-%d')
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
         return serie.to_dict(orient="records")
-
 
     def serie_exponential_rooling_average(
         self,
@@ -252,7 +189,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: Optional[int] = None
+        granularity: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -265,9 +202,11 @@ class TemporalController:
 
         if evolution:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
-        
-        serie = self.df['DT_NOTIFIC'].value_counts().reset_index().sort_values('DT_NOTIFIC')
-        serie = serie.set_index('DT_NOTIFIC')
+
+        serie = (
+            self.df["DT_NOTIFIC"].value_counts().reset_index().sort_values("DT_NOTIFIC")
+        )
+        serie = serie.set_index("DT_NOTIFIC")
 
         if granularity:
             serie = serie.ewm(span=granularity, adjust=True).mean()
@@ -275,7 +214,34 @@ class TemporalController:
             serie = serie.ewm(span=3, adjust=True).mean()
 
         serie = serie.reset_index()
-        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime('%Y-%m-%d')
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
         return serie.to_dict(orient="records")
 
+    def get_overview_data(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        self.df = self.apply_filters(uf, syndrome, year, evolution)
+
+        total_cases = self.df.shape[0]
+        total_deaths = self.df[self.df["EVOLUCAO"] == "Óbito"].shape[0]
+        total_recovered = self.df[self.df["EVOLUCAO"] == "Cura"].shape[0]
+
+        return {
+            "temporalSeries": self.get_temporal_data(),
+            "general": {
+                "totalCases": total_cases,
+                "totalDeaths": total_deaths,
+                "totalRecovered": total_recovered,
+            },
+            "occurences": {
+                "sex": self.occurrence_by_sex(),
+                "race": self.occurrence_by_race(),
+                "day": self.occurrence_by_day(),
+                "age": self.occurrence_by_age(),
+            },
+        }

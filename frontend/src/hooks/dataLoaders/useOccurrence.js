@@ -21,11 +21,18 @@ const fetch = async (type, federalState, syndrome, year, evolution) => {
   return response;
 };
 
-export const useOccurrenceBySex = (federalState, syndrome, year, evolution) => {
+export const useOccurrenceBySex = (
+  federalState,
+  syndrome,
+  year,
+  evolution,
+  select
+) => {
   return useQuery({
     queryKey: ["occurrenceBySex", federalState, syndrome, year, evolution],
     queryFn: () =>
       fetch("occurrence_by_sex", federalState, syndrome, year, evolution),
+    select,
   });
 };
 
@@ -33,11 +40,13 @@ export const useOccurrenceByRace = (
   federalState,
   syndrome,
   year,
-  evolution
+  evolution,
+  select
 ) => {
   return useQuery({
     queryKey: ["occurrenceByRace", federalState, syndrome, year, evolution],
     queryFn: () =>
       fetch("occurrence_by_race", federalState, syndrome, year, evolution),
+    select,
   });
 };
