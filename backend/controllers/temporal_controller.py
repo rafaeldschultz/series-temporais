@@ -4,6 +4,7 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
+from statsmodels.api import tsa
 
 
 class TemporalController:
@@ -227,7 +228,9 @@ class TemporalController:
         year: Optional[int] = None,
         evolution: Optional[str] = None,
         granularity: Optional[int] = None,
-        diff_order: Optional[int] = None
+        diff_order: Optional[int] = None,
+        num_lags: Optional[int] = None,
+        alpha: Optional[int] = None
     ): 
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -244,7 +247,7 @@ class TemporalController:
         if granularity:
             serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period(granularity)).size()
         else:
-            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period('7D')).size()
+            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period('W')).size()
         
         serie.index = serie.index.to_timestamp()
         
@@ -256,11 +259,21 @@ class TemporalController:
             serie = serie.diff(diff_order).dropna()
         else:
             serie = serie.diff(7).dropna()
-        
-        serie = serie.reset_index().rename(columns={0:"count"})
-        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
+    
+        aux_num_lags = num_lags if num_lags else 25
+        aux_alpha = alpha if alpha else 0.01
 
-        return serie.to_dict(orient="records")
+        corr_array = tsa.acf(serie, nlags=aux_num_lags, alpha=aux_alpha)
+
+        lower_y = corr_array[1][:, 0] - corr_array[0]
+        upper_y = corr_array[1][:, 1] - corr_array[0]
+
+        return {
+            "autocorrelations":corr_array[0].tolist(),
+            "confidenceIntervals":corr_array[1].tolist(),
+            "lowerY": lower_y.tolist(),
+            "upperY":upper_y.tolist()
+        }
         
 
     def get_overview_data(
