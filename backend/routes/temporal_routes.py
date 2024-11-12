@@ -88,12 +88,14 @@ async def correlogram(
     year: Optional[int] = None,
     evolution: Optional[str] = None,
     granularity: Optional[int] = None,
-    diff_order: Optional[int] = None
+    diff_order: Optional[int] = None,
+    num_lags: Optional[int] = None,
+    alpha: Optional[int] = None
 ):
     try:
         controller = TemporalController()
         data = controller.correlogram(
-            uf, syndrome, year, evolution, granularity, diff_order,
+            uf, syndrome, year, evolution, granularity, diff_order, num_lags, alpha,
         )
         return JSONResponse(status_code=200, content=data)
     except Exception as e:
