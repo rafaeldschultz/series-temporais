@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
-import TemporalSeriesChart from "./sections/temporalSeriesChart";
-import OccurrenceBySexChart from "./sections/occurrenceBySexChart";
-import OccurrenceByRaceChart from "./sections/OccurrenceByRaceChart";
+import TemporalSeriesChart from "./Sections/TemporalSeriesChart";
+import OccurrenceBySexChart from "./Sections/OccurrenceBySexChart";
+import OccurrenceByRaceChart from "./Sections/OccurrenceByRaceChart";
 import OverviewSection from "./OverviewSection";
-import BarplotOccurrenceByDay from "./sections/OccurrenceByDay";
+import BarplotOccurrenceByDay from "./Sections/OccurrenceByDay";
 
 export const navigationItems = [
   {
