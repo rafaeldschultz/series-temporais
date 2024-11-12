@@ -6,3 +6,4 @@ numpy
 pyarrow
 fastparquet
 geopandas
+statsmodels
