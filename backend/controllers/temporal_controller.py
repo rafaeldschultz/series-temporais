@@ -21,16 +21,16 @@ class TemporalController:
         self, uf: str, syndrome: str, year: int, evolution: str
     ) -> pd.DataFrame:
         if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == self.uf]
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
 
         if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == self.syndrome]
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
 
         if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == self.year]
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
 
         if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == self.evolution]
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
         return self.df
 
@@ -71,9 +71,7 @@ class TemporalController:
             "count": group[0].to_list(),
         }
 
-    def occurrence_by_day(
-        self,
-    ):
+    def occurrence_by_day(self):
         group = self.df.groupby("DT_DIA_NOME").size().reset_index()
 
         day_in_order = [
@@ -95,27 +93,10 @@ class TemporalController:
             "count": group[0].to_list(),
         }
 
-    def occurrence_by_age(
-        self,
-        uf: Optional[str] = None,
-        syndrome: Optional[str] = None,
-        year: Optional[int] = None,
-        evolution: Optional[str] = None,
-    ):
-        if uf:
-            self.df = self.df[self.df["SIGLA_UF"] == uf]
-
-        if syndrome:
-            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
-
-        if year:
-            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
-
-        if evolution:
-            self.df = self.df[self.df["EVOLUCAO"] == evolution]
-
-        group = self.df.groupby("NU_IDADE_N").astype(int).to_list()
-        group = group.sort_values("NU_IDADE_N")
+    def occurrence_by_age(self):
+        group = (
+            self.df.groupby("NU_IDADE_N").size().reset_index().sort_values("NU_IDADE_N")
+        )
 
         return {
             "age": group["NU_IDADE_N"].to_list(),

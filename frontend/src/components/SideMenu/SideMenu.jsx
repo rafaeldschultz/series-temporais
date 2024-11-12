@@ -92,7 +92,7 @@ const SideMenu = ({
               <ListItemButton
                 alignItems="left"
                 selected={
-                  selectedItemId && navigationItem.id === selectedItemId
+                  selectedItemId != null && navigationItem.id === selectedItemId
                 }
                 sx={(theme) => ({
                   borderRadius: 1,
@@ -105,7 +105,9 @@ const SideMenu = ({
                   },
                 })}
                 onClick={
-                  selectedItemId ? () => onSelect(navigationItem.id) : null
+                  selectedItemId != null
+                    ? () => onSelect(navigationItem.id)
+                    : null
                 }
               >
                 <ListItemText

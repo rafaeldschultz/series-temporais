@@ -7,6 +7,8 @@ import BigNumberCard from "../../../components/Cards/BigNumberCard";
 import FilterPanel from "./FilterPanel";
 import useOverview from "../../../hooks/useOverview";
 import { useFilter } from "../../../contexts/FilterContext";
+import OccurrenceByAgeChart from "./OccurrenceByAgeChart";
+import OccurrenceByDayChart from "./OccurrenceByDayChart";
 
 const OverviewSection = () => {
   const { filters } = useFilter();
@@ -39,7 +41,8 @@ const OverviewSection = () => {
               <Grid item>
                 <BigNumberCard
                   title={"Óbitos"}
-                  number={loading ? "..." : data?.general.totalDeaths}
+                  isLoading={loading}
+                  number={data?.general.totalDeaths}
                   percentage={
                     data
                       ? data.general.totalDeaths / data.general.totalCases
@@ -51,7 +54,8 @@ const OverviewSection = () => {
                 <Grid item>
                   <BigNumberCard
                     title={"Recuperados"}
-                    number={loading ? "..." : data?.general.totalRecovered}
+                    isLoading={loading}
+                    number={data?.general.totalRecovered}
                     percentage={
                       data
                         ? data.general.totalRecovered / data.general.totalCases
@@ -63,11 +67,10 @@ const OverviewSection = () => {
               <Grid item>
                 <BigNumberCard
                   title={"Outras Notificações"}
+                  isLoading={loading}
                   number={
-                    loading
-                      ? "..."
-                      : data.general.totalCases -
-                        (data.general.totalRecovered + data.general.totalDeaths)
+                    data?.general.totalCases -
+                    (data?.general.totalRecovered + data?.general.totalDeaths)
                   }
                   percentage={
                     data
@@ -86,8 +89,14 @@ const OverviewSection = () => {
           <Grid item size={4}>
             <OccurrenceBySexChart />
           </Grid>
-          <Grid item size={5}>
+          <Grid item size={4}>
             <OccurrenceByRaceChart />
+          </Grid>
+          <Grid item size={4}>
+            <OccurrenceByDayChart />
+          </Grid>
+          <Grid item size={12}>
+            <OccurrenceByAgeChart />
           </Grid>
         </Grid>
       </Stack>

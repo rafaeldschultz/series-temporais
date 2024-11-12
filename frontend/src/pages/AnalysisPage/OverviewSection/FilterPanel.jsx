@@ -1,13 +1,32 @@
-import React from "react";
-import { Stack, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Button,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useFilter } from "../../../contexts/FilterContext";
 import Grid from "@mui/material/Grid2";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import DashboardCard from "../../../components/Cards/DashboardCard";
+import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRounded";
 
 const FilterPanel = () => {
   const { filters, updateFilter } = useFilter();
+
+  const [federalState, setFederalState] = useState();
+  const [syndrome, setSyndrome] = useState();
+  const [evolution, setEvolution] = useState();
+  const [year, setYear] = useState();
+
+  const handleSubmit = () => {
+    updateFilter("federalState", federalState);
+    updateFilter("syndrome", syndrome);
+    updateFilter("evolution", evolution);
+    updateFilter("year", year);
+  };
 
   return (
     <DashboardCard>
@@ -21,7 +40,12 @@ const FilterPanel = () => {
           </Typography>
         </Grid>
         <Grid item size={7}>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
             <Grid item size={"grow"}>
               <Autocomplete
                 disablePortal
@@ -58,9 +82,10 @@ const FilterPanel = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="Estado" size="small" />
                 )}
-                value={filters.federalState}
-                onChange={(event, newValue) =>
-                  updateFilter("federalState", newValue)
+                value={federalState}
+                onChange={
+                  (event, newValue) => setFederalState(newValue)
+                  // updateFilter("federalState", newValue)
                 }
               />
             </Grid>
@@ -78,10 +103,11 @@ const FilterPanel = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="Sindrome" size="small" />
                 )}
-                onChange={(event, newValue) =>
-                  updateFilter("syndrome", newValue)
+                onChange={
+                  (event, newValue) => setSyndrome(newValue)
+                  // updateFilter("syndrome", newValue)
                 }
-                value={filters.syndrome}
+                value={syndrome}
               />
             </Grid>
             <Grid item size={"grow"}>
@@ -92,8 +118,8 @@ const FilterPanel = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="Ano" size="small" />
                 )}
-                onChange={(event, newValue) => updateFilter("year", newValue)}
-                value={filters.year}
+                onChange={(event, newValue) => setYear(newValue)} //updateFilter("year", newValue)}
+                value={year}
               />
             </Grid>
             <Grid item size={"grow"}>
@@ -113,11 +139,21 @@ const FilterPanel = () => {
                     size="small"
                   />
                 )}
-                onChange={(event, newValue) =>
-                  updateFilter("evolution", newValue)
+                onChange={
+                  (event, newValue) => setEvolution(newValue)
+                  // updateFilter("evolution", newValue)
                 }
-                value={filters.evolution}
+                value={evolution}
               />
+            </Grid>
+            <Grid item>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={handleSubmit}
+              >
+                <SystemUpdateAltRoundedIcon />
+              </Button>
             </Grid>
           </Grid>
         </Grid>
