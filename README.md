@@ -55,3 +55,33 @@ pip install -r requirements.txt
 # iniciando o servidor backend
 python main.py
 ```
+
+Árvore de arquivos :
+```
+├── BackEnd
+│   ├── Controllers
+│   ├── Datasets
+│   ├── Routes
+│   └── main.py
+│
+├── Frontend
+│   ├── assets
+│   ├── components
+│   ├── contexts
+│   │   ├── AppContext.jsx
+│   │   └── FilterContext.jsx
+│   ├── helpers
+│   │   └── axios.jsx
+│   ├── hooks
+│   │   └── dataLoaders
+│   ├── pages
+│   │   ├── AnalysisPage
+│   │   │   ├── Sections
+│   │   │   └── FilterPanel.jsx
+│   │   │   └── index.jsx
+│   │   └── HomePage
+│   └── App.jsx
+│
+└── Plots
+
+```
