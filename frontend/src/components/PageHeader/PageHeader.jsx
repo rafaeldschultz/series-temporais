@@ -53,7 +53,7 @@ const PageHeader = ({ routes }) => {
           justifyContent: "space-between",
           width: "100%",
           px: 7,
-          py: 3,
+          py: 2,
         }}
       >
         <Typography
