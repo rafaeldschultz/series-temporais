@@ -15,8 +15,10 @@ import Grid from "@mui/material/Grid2";
 import LinePlot from "../../../components/Charts/LinePlot";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import useOverview from "../../../hooks/useOverview";
+import { useTheme } from "@emotion/react";
 
 const generateAnnotations = (data) => {
+  const theme = useTheme();
   const serieTemporal = data.temporalSeries.serieTemporal.map((item) => ({
     date: item.DT_NOTIFIC,
     count: item.count,
@@ -44,7 +46,11 @@ const generateAnnotations = (data) => {
         showarrow: false,
         ax: 0,
         ay: 30,
-        font: { color: "black", size: 11, family: "Inter" },
+        font: {
+          color: theme.palette.text.secondary,
+          size: 11,
+          family: "Inter",
+        },
       };
     }
     return null;
