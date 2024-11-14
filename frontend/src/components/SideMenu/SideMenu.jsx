@@ -129,6 +129,9 @@ const SideMenu = ({
                       },
                     }}
                     align="left"
+                    primaryTypographyProps={{
+                      variant: "body2",
+                    }}
                   />
                 </ListItemButton>
               </ListItem>
