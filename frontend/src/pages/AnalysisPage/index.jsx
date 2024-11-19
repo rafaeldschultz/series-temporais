@@ -3,7 +3,6 @@ import Grid from "@mui/material/Grid2";
 
 import Page from "../../layouts/Page";
 import SideMenu from "../../components/SideMenu/SideMenu";
-import FilterPanel from "./FilterPanel";
 
 import { useMemo, useState } from "react";
 import { navigationItems } from "./navigation";
@@ -36,9 +35,6 @@ const AnalysisPage = () => {
               sx={{ width: "100%", height: "100%" }}
               pt={5}
             >
-              {/* <Grid item xs={3}>
-                <FilterPanel />
-              </Grid> */}
               <Grid size="grow">{navItems[visibleChart].component}</Grid>
             </Grid>
           </FilterProvider>
