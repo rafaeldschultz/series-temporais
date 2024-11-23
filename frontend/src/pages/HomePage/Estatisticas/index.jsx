@@ -1,11 +1,42 @@
-import { Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+
+import FunctionsIcon from '@mui/icons-material/Functions';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 
 const Estatisticas = () => {
   return (
     <>
-      <Typography variant="h4" gutterBottom sx={{color: '#2969BD', padding:'20px'}}>
-        Estatísticas
-      </Typography>
+      <Stack>
+        <Typography variant="h3" gutterBottom sx={{color: '#215497', padding:'20px'}}>
+          Estatísticas Gerais
+        </Typography>
+
+        <Box display={"flex"} alignContent={"center"} justifyContent={"space-around"}>
+
+        <Stack alignItems={"center"}>
+            <FunctionsIcon  sx={{ color: '#215497', width:"100px", height:"100px" }}/>
+            <Typography variant="h4" gutterBottom>
+              N Observações
+            </Typography>
+          </Stack>
+
+          <Stack alignItems={"center"}>
+            <CalendarTodayIcon  sx={{ color: '#215497', width:"100px", height:"100px" }}/>
+            <Typography variant="h4" gutterBottom>
+              M Anos
+            </Typography>
+          </Stack>
+
+          <Stack alignItems={"center"}>
+            <MapOutlinedIcon  sx={{ color: '#215497', width:"100px", height:"100px" }}/>
+            <Typography variant="h4" gutterBottom>
+              X Localizações
+            </Typography>
+          </Stack>
+
+        </Box>
+      </Stack>
     </>
   )
 }
