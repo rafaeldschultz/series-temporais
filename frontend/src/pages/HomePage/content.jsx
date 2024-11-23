@@ -7,10 +7,10 @@ import Estatisticas from "./Estatisticas";
 import Preview from "./Preview";
 
 const Information = (props) => {
-  if (props.id == 1)  return <Analises />;
-  if (props.id == 2)  return <Conjunto />;
-  if (props.id == 3)  return <Estatisticas />;
-  if (props.id == 4)  return <Preview />;
+  if (props.id == 1)  return <Preview />;
+  if (props.id == 2)  return <Estatisticas />;
+  if (props.id == 3)  return <Analises />;
+  if (props.id == 4)  return <Conjunto />;
 }
 
 
