@@ -28,14 +28,14 @@ function App() {
             })
           );
           return (
-            <ThemeProvider theme={theme}>
-              <QueryClientProvider client={queryClient}>
-                <CssBaseline />
-                <Box height={100}>
+            <Box sx={{ height: "100%", width: "100%" }}>
+              <ThemeProvider theme={theme}>
+                <QueryClientProvider client={queryClient}>
+                  <CssBaseline />
                   <RouterProvider router={router()} />
-                </Box>
-              </QueryClientProvider>
-            </ThemeProvider>
+                </QueryClientProvider>
+              </ThemeProvider>
+            </Box>
           );
         }}
       </AppContext.Consumer>

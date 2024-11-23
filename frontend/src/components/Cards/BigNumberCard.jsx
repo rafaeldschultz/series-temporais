@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid2";
 const BigNumberCard = ({ title, number, percentage, isLoading }) => {
   return (
     <DashboardCard title={title}>
-      <Stack spacing={2} mt={2}>
+      <Stack spacing={2} mt={2} width={1}>
         <Grid container justifyContent={"space-between"}>
           <Grid item>
             <Typography variant={"h1"}>

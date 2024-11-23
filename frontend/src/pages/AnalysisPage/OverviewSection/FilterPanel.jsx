@@ -16,10 +16,10 @@ import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRound
 const FilterPanel = () => {
   const { filters, updateFilter } = useFilter();
 
-  const [federalState, setFederalState] = useState();
-  const [syndrome, setSyndrome] = useState();
-  const [evolution, setEvolution] = useState();
-  const [year, setYear] = useState();
+  const [federalState, setFederalState] = useState(filters.federalState);
+  const [syndrome, setSyndrome] = useState(filters.syndrome);
+  const [evolution, setEvolution] = useState(filters.evolution);
+  const [year, setYear] = useState(filters.year);
 
   const handleSubmit = () => {
     updateFilter("federalState", federalState);

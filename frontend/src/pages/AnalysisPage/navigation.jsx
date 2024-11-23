@@ -1,7 +1,13 @@
 import OverviewSection from "./OverviewSection";
+import RawDataSection from "./RawDataSection";
 import TemporalAnalysisSection from "./TemporalAnalysisSection";
 
 export const navigationItems = [
+  {
+    kind: "item",
+    title: "Dados Brutos",
+    component: <RawDataSection />,
+  },
   {
     kind: "item",
     title: "Overview",
