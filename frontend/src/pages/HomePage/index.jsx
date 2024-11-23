@@ -1,13 +1,11 @@
-import { Box, Container, Stack, Typography, Button } from "@mui/material";
-
+import { Box, Container, Typography, Button } from "@mui/material";
 import mapaBrasil from "../../assets/mapa_brasil.png"
-import { useState } from "react";
 
 import Content from './content'
 
 const Head = () => {
   const handleSubmit = () => {
-    console.log("ok")
+    window.location.href = 'https://opendatasus.saude.gov.br/dataset/srag-2021-a-2024';
   };
 
   return (
