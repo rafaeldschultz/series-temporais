@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "../helpers/axios";
 
 const fetch = async (federalState, syndrome, year, evolution) => {
@@ -19,6 +19,77 @@ const fetch = async (federalState, syndrome, year, evolution) => {
     });
   console.log(response);
   return response;
+};
+
+const fetchCorrelogram = async (
+  federalState,
+  syndrome,
+  year,
+  evolution,
+  granularity,
+  order,
+  numLags,
+  alpha
+) => {
+  const params = {
+    params: {
+      uf: federalState,
+      syndrome: syndrome,
+      year: year,
+      evolution: evolution,
+      granularity: granularity,
+      diff_order: order,
+      num_lags: numLags,
+      alpha: alpha,
+    },
+  };
+  const response = await api
+    .get("correlogram", params)
+    .then((res) => res["data"])
+    .catch((err) => {
+      console.error(err);
+      return null;
+    });
+  console.log(response);
+  return response;
+};
+
+export const useCorrelogram = (
+  federalState,
+  syndrome,
+  year,
+  evolution,
+  granularity,
+  order,
+  numLags,
+  alpha,
+  select
+) => {
+  return useQuery({
+    queryKey: [
+      "correlogram",
+      federalState,
+      syndrome,
+      year,
+      evolution,
+      granularity,
+      order,
+      numLags,
+      alpha,
+    ],
+    queryFn: () =>
+      fetchCorrelogram(
+        federalState,
+        syndrome,
+        year,
+        evolution,
+        granularity,
+        order,
+        numLags,
+        alpha
+      ),
+    select,
+  });
 };
 
 const useTemporal = (federalState, syndrome, year, evolution, select) => {

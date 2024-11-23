@@ -1,13 +1,15 @@
-import React from "react";
-import { Box, CircularProgress } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Chip, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFilter } from "../../../contexts/FilterContext";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import useTemporal from "../../../hooks/useTemporal";
 import LinePlot from "../../../components/Charts/LinePlot";
+import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 
 const SerieDifferetiationChart = () => {
   const { filters } = useFilter();
+  const [order, setOrder] = useState("first");
   const { data, isPending: loading } = useTemporal(
     filters.federalState,
     filters.syndrome,
@@ -16,18 +18,38 @@ const SerieDifferetiationChart = () => {
     (data) => ({
       serieDifferentiation: [
         {
-          x: data.serieDifferentiation.map((item) => item.DT_NOTIFIC),
-          y: data.serieDifferentiation.map((item) => item.count),
+          x: data.serieDifferentiation[order].map((item) => item.DT_NOTIFIC),
+          y: data.serieDifferentiation[order].map((item) => item.count),
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },
     })
   );
 
-  console.log(data);
+  const items = [
+    {
+      name: "order",
+      label: "Ordem",
+      values: [
+        {
+          value: "first",
+          label: "Primeira",
+        },
+        {
+          value: "second",
+          label: "Segunda",
+        },
+      ],
+      currentValue: order,
+      onChange: (value) => setOrder(value),
+    },
+  ];
 
   return (
-    <DashboardCard title={"Diferenciação de Primeira Ordem"}>
+    <DashboardCard
+      title={"Diferenciação"}
+      actions={<ChipHorizontalGrid items={items} />}
+    >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (

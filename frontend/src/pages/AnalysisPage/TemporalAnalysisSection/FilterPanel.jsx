@@ -4,6 +4,7 @@ import {
   IconButton,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -12,14 +13,15 @@ import Grid from "@mui/material/Grid2";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRounded";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
 const FilterPanel = () => {
   const { filters, updateFilter } = useFilter();
 
-  const [federalState, setFederalState] = useState();
-  const [syndrome, setSyndrome] = useState();
-  const [evolution, setEvolution] = useState();
-  const [year, setYear] = useState();
+  const [federalState, setFederalState] = useState(filters.federalState);
+  const [syndrome, setSyndrome] = useState(filters.syndrome);
+  const [evolution, setEvolution] = useState(filters.evolution);
+  const [year, setYear] = useState(filters.year);
 
   const handleSubmit = () => {
     updateFilter("federalState", federalState);
@@ -30,7 +32,7 @@ const FilterPanel = () => {
 
   return (
     <DashboardCard>
-      <Grid container justifyContent={"space-between"}>
+      <Grid container justifyContent={"space-between"} width={1}>
         <Grid item size={5}>
           <Typography variant={"h5"} color="primary">
             Análise Temporal
@@ -147,13 +149,15 @@ const FilterPanel = () => {
               />
             </Grid>
             <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={handleSubmit}
-              >
-                <SystemUpdateAltRoundedIcon />
-              </Button>
+              <Tooltip title="Atualizar Gráficos">
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSubmit}
+                >
+                  <RefreshRoundedIcon />
+                </Button>
+              </Tooltip>
             </Grid>
           </Grid>
         </Grid>

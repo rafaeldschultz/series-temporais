@@ -5,11 +5,16 @@ import { Box, Container } from "@mui/material";
 
 const Root = () => {
   return (
-    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <PageHeader routes={routes()} />
-      <Box sx={{ flex: "1 1", overflow: "auto" }}>
-        <Outlet />
-      </Box>
+      <Outlet />
     </Box>
   );
 };

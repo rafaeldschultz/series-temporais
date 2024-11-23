@@ -13,6 +13,7 @@ import { ThemeProvider } from "@mui/material";
 import router from "./router";
 import { AppProvider, AppContext } from "./contexts/AppContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ptBR } from "@mui/x-data-grid/locales";
 
 const queryClient = new QueryClient();
 
@@ -22,20 +23,23 @@ function App() {
       <AppContext.Consumer>
         {({ darkMode }) => {
           const theme = responsiveFontSizes(
-            createTheme({
-              palette: darkMode ? darkPalette : lightPalette,
-              typography,
-            })
+            createTheme(
+              {
+                palette: darkMode ? darkPalette : lightPalette,
+                typography,
+              },
+              ptBR
+            )
           );
           return (
-            <ThemeProvider theme={theme}>
-              <QueryClientProvider client={queryClient}>
-                <CssBaseline />
-                <Box height={100}>
+            <Box sx={{ height: "100%", width: "100%" }}>
+              <ThemeProvider theme={theme}>
+                <QueryClientProvider client={queryClient}>
+                  <CssBaseline />
                   <RouterProvider router={router()} />
-                </Box>
-              </QueryClientProvider>
-            </ThemeProvider>
+                </QueryClientProvider>
+              </ThemeProvider>
+            </Box>
           );
         }}
       </AppContext.Consumer>

@@ -20,26 +20,19 @@ const AnalysisPage = () => {
   });
 
   return (
-    <Page sx={{ p: 0 }}>
-      <Box sx={{ display: "flex", height: "100%", width: "100%" }}>
-        <SideMenu
-          navigationItems={navItems}
-          onSelect={setVisibleChart}
-          selectedItemId={visibleChart}
-        />
-        <Box sx={{ width: "100%", height: "100%" }}>
-          <FilterProvider>
-            <Grid
-              container
-              direction={"row"}
-              sx={{ width: "100%", height: "100%" }}
-              pt={5}
-            >
-              <Grid size="grow">{navItems[visibleChart].component}</Grid>
-            </Grid>
-          </FilterProvider>
-        </Box>
-      </Box>
+    <Page sx={{ p: 0, py: 4 }}>
+      <Grid container height={"100%"} width={"100%"}>
+        <Grid>
+          <SideMenu
+            navigationItems={navItems}
+            onSelect={setVisibleChart}
+            selectedItemId={visibleChart}
+          />
+        </Grid>
+        <Grid size="grow" height={"100%"}>
+          <FilterProvider>{navItems[visibleChart].component}</FilterProvider>
+        </Grid>
+      </Grid>
     </Page>
   );
 };
