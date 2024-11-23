@@ -1,14 +1,16 @@
 import useRawData from "../../../hooks/useRawData";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Page from "../../../layouts/Page";
 import { useMemo, useRef, useState } from "react";
 import { Box } from "@mui/material";
+import CustomToolbar from "../../../components/Datagrid/CustomToolbar";
 
 const RawDataSection = () => {
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 25,
   });
+  const [filterButtonEl, setFilterButtonEl] = useState(null);
 
   const { data, isPending } = useRawData(
     paginationModel.page,
@@ -35,10 +37,24 @@ const RawDataSection = () => {
         paginationModel={paginationModel}
         paginationMode="server"
         onPaginationModelChange={setPaginationModel}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+        slotProps={{
+          panel: {
+            anchorEl: filterButtonEl,
+            placement: "bottom-end",
+          },
+          toolbar: {
+            setFilterButtonEl,
+            title: "Dados Brutos",
+            subtitle: "Visualização dos Dados utilizados para Análise",
+          },
+        }}
         sx={(theme) => ({
           boxShadow: theme.palette.card.shadow,
           borderRadius: 2,
-          padding: 2,
+          padding: 3,
           backgroundColor: theme.palette.background.paper,
           border: 0,
         })}
