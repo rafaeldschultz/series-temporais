@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Box, Container, Typography, Button, Stack } from "@mui/material";
 import mapaBrasil from "../../assets/mapa_brasil.png"
 
 import Content from './content'
@@ -47,7 +47,19 @@ const Head = () => {
 
 const Foot = () => {
   return (
-    <Container maxWidth={false}  sx={{ bgcolor: '#2969BD', height: '20vh' }} />
+    <Container maxWidth={false}  sx={{ bgcolor: '#2969BD', height: '30vh' }} >
+      <Stack display={"flex"} justifyContent={"space-around"}
+        alignItems={"center"} padding={"20px"}
+      >
+        <Typography variant="h3" gutterBottom sx={{color: '#fff', padding:'20px'}}>
+          Sobre Nós
+        </Typography>
+        
+        <Typography align="justify" sx={{color: '#fff'}}>
+          Este projeto foi desenvolvivo como parte da disciplina SME0808 - Séries Temporais e Aprendizado Dinâmico e seu uso é livre.  
+        </Typography>
+      </Stack>
+    </Container>
   );
 };
 

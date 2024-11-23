@@ -4,13 +4,11 @@ import { useState } from "react";
 import Analises from "./analises";
 import Conjunto from "./conjunto";
 import Estatisticas from "./estatisticas";
-import Preview from "./preview";
 
 const Information = (props) => {
-  if (props.id == 1)  return <Preview />;
-  if (props.id == 2)  return <Estatisticas />;
-  if (props.id == 3)  return <Analises />;
-  if (props.id == 4)  return <Conjunto />;
+  if (props.id == 1)  return <Estatisticas />;
+  if (props.id == 2)  return <Analises />;
+  if (props.id == 3)  return <Conjunto />;
 }
 
 const Content = () => {
@@ -33,10 +31,9 @@ const Content = () => {
             SOBRE OS DADOS
           </Typography>
           <Stack spacing={2}>
-            <Button variant={(selected == 1) ? "contained" : "outlined" } onClick={() => handleSubmit(1)}>Pré Visualização</Button>
-            <Button variant={(selected == 2) ? "contained" : "outlined" } onClick={() => handleSubmit(2)}>Estatísticas Gerais</Button>
-            <Button variant={(selected == 3) ? "contained" : "outlined" } onClick={() => handleSubmit(3)}>Análises Temporais</Button>
-            <Button variant={(selected == 4) ? "contained" : "outlined" } onClick={() => handleSubmit(4)}>Sobre o Conjunto</Button>
+            <Button variant={(selected == 1) ? "contained" : "outlined" } onClick={() => handleSubmit(1)}>Estatísticas Gerais</Button>
+            <Button variant={(selected == 2) ? "contained" : "outlined" } onClick={() => handleSubmit(2)}>Análises Temporais</Button>
+            <Button variant={(selected == 3) ? "contained" : "outlined" } onClick={() => handleSubmit(3)}>Sobre o Conjunto</Button>
           </Stack>
         </Box>
 
