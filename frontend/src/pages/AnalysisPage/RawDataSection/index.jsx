@@ -27,7 +27,7 @@ const RawDataSection = () => {
   }, [data?.rowCount]);
 
   return (
-    <Page>
+    <Box height={"100%"} px={4}>
       <DataGrid
         rows={data.rows}
         columns={data.columns}
@@ -56,6 +56,8 @@ const RawDataSection = () => {
           borderRadius: 2,
           padding: 3,
           backgroundColor: theme.palette.background.paper,
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0.124), rgba(255, 255, 255, 0.124))",
           border: 0,
         })}
         autosizeOptions={{
@@ -63,7 +65,7 @@ const RawDataSection = () => {
           includeHeaders: true,
         }}
       />
-    </Page>
+    </Box>
   );
 };
 

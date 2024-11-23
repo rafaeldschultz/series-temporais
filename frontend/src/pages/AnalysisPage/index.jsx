@@ -20,7 +20,7 @@ const AnalysisPage = () => {
   });
 
   return (
-    <Page sx={{ p: 0 }}>
+    <Page sx={{ p: 0, py: 4 }}>
       <Grid container height={"100%"} width={"100%"}>
         <Grid>
           <SideMenu
