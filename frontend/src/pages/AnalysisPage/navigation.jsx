@@ -1,22 +1,28 @@
 import OverviewSection from "./OverviewSection";
 import RawDataSection from "./RawDataSection";
 import TemporalAnalysisSection from "./TemporalAnalysisSection";
+import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
 
 export const navigationItems = [
   {
     kind: "item",
     title: "Dados Brutos",
     component: <RawDataSection />,
+    icon: <TableChartRoundedIcon />,
   },
   {
     kind: "item",
     title: "Overview",
     component: <OverviewSection />,
+    icon: <DashboardRoundedIcon />,
   },
   {
     kind: "item",
     title: "Análise Temporal",
     component: <TemporalAnalysisSection />,
+    icon: <HourglassTopRoundedIcon />,
   },
   // {
   //   kind: "header",
