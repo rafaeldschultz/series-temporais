@@ -30,7 +30,7 @@ const FilterPanel = () => {
 
   return (
     <DashboardCard>
-      <Grid container justifyContent={"space-between"}>
+      <Grid container justifyContent={"space-between"} width={1}>
         <Grid item size={5}>
           <Typography variant={"h5"} color="primary">
             Overview

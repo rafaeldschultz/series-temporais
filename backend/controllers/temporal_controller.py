@@ -245,7 +245,7 @@ class TemporalController:
 
         if granularity:
             serie = self.df.groupby(
-                self.df["DT_NOTIFIC"].dt.to_period(granularity)
+                self.df["DT_NOTIFIC"].dt.to_period(f"{granularity}D")
             ).size()
         else:
             serie = self.df.groupby(self.df["DT_NOTIFIC"].dt.to_period("W")).size()
@@ -310,23 +310,31 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: Optional[int] = None,
-        diff_order: Optional[int] = None,
-        num_lags: Optional[int] = None,
-        alpha: Optional[int] = None,
     ):
         self.df = self.apply_filters(uf, syndrome, year, evolution)
         return {
-            "correlogram": self.correlogram(
-                uf, syndrome, year, evolution, granularity, diff_order, num_lags, alpha
-            ),
-            "serieDifferentiation": self.serie_differentiation(
-                uf, syndrome, year, evolution, diff_order
-            ),
-            "serieExponentialRoolingAverage": self.serie_exponential_rooling_average(
-                uf, syndrome, year, evolution, granularity
-            ),
-            "serieRoolingAverage": self.serie_rooling_average(
-                uf, syndrome, year, evolution, granularity
-            ),
+            "serieDifferentiation": {
+                "first": self.serie_differentiation(
+                    uf, syndrome, year, evolution, order=1
+                ),
+                "second": self.serie_differentiation(
+                    uf, syndrome, year, evolution, order=2
+                ),
+            },
+            "serieExponentialRoolingAverage": {
+                f"{i}D": self.serie_exponential_rooling_average(
+                    uf, syndrome, year, evolution, granularity=i
+                )
+                for i in [3, 5, 7, 14, 28]
+            },
+            "serieRoolingAverage": {
+                f"{i}D": self.serie_rooling_average(
+                    uf,
+                    syndrome,
+                    year,
+                    evolution,
+                    granularity=f"{i}D",
+                )
+                for i in [3, 5, 7, 14, 28]
+            },
         }
