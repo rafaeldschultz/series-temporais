@@ -1,10 +1,10 @@
 import { Box, Container, Stack, Typography, Button } from "@mui/material";
 import { useState } from "react";
 
-import Analises from "./Analises";
-import Conjunto from "./Conjunto";
-import Estatisticas from "./Estatisticas";
-import Preview from "./Preview";
+import Analises from "./analises";
+import Conjunto from "./conjunto";
+import Estatisticas from "./estatisticas";
+import Preview from "./preview";
 
 const Information = (props) => {
   if (props.id == 1)  return <Preview />;
@@ -12,8 +12,6 @@ const Information = (props) => {
   if (props.id == 3)  return <Analises />;
   if (props.id == 4)  return <Conjunto />;
 }
-
-
 
 const Content = () => {
   const [selected, setSelected] = useState(1);
