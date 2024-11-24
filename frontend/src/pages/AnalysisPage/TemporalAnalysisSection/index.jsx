@@ -1,7 +1,6 @@
 import { Box, Stack } from "@mui/material";
 
 import FilterPanel from "./FilterPanel";
-import useOverview from "../../../hooks/useOverview";
 import { useFilter } from "../../../contexts/FilterContext";
 import useTemporal from "../../../hooks/useTemporal";
 import CorrelogramChart from "./CorrelogramChart";

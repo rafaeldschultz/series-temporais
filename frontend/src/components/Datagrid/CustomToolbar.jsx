@@ -19,7 +19,7 @@ const CustomToolbar = ({ title, subtitle, setFilterButtonEl }) => {
       width={1}
       direction={"row"}
     >
-      <Grid item size={5}>
+      <Grid size={5}>
         <Typography variant={"h5"} color="primary">
           {title}
         </Typography>
@@ -27,7 +27,7 @@ const CustomToolbar = ({ title, subtitle, setFilterButtonEl }) => {
           {subtitle}
         </Typography>
       </Grid>
-      <Grid item>
+      <Grid>
         <GridToolbarContainer>
           <GridToolbarColumnsButton ref={setFilterButtonEl} />
           <GridToolbarFilterButton ref={setFilterButtonEl} />

@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 import Page from "../../layouts/Page";

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import AnalysisPage from "../pages/AnalysisPage";
+import UnderDevelopmentPage from "../pages/UnderDevelopmentPage";
 
 const routes = () => [
   {
@@ -20,9 +21,9 @@ const routes = () => [
     element: <AnalysisPage />,
   },
   {
-    path: "/about",
+    path: "/predictions",
     title: "Predições e Classificações",
-    element: <HomePage />,
+    element: <UnderDevelopmentPage />,
   },
 ];
 

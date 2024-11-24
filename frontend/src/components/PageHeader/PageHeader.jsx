@@ -13,22 +13,25 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../Switch/ColorModeSwitch";
 import useAppContext from "../../hooks/useAppContext";
 
-const StyledAppBar = styled(AppBar)(({ theme, darkMode }) => ({
-  position: "relative",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  flexShrink: 0,
-  borderBottom: "1px solid",
-  borderColor: theme.palette.divider,
-  backgroundColor: darkMode
-    ? theme.palette.primary.dark
-    : theme.palette.primary.main,
-  boxShadow: "none",
-  backgroundImage: "none",
-  zIndex: theme.zIndex.drawer + 1,
-  flex: "0 0 auto",
-}));
+const StyledAppBar = styled(AppBar)(({ theme }) => {
+  const { darkMode } = useAppContext();
+  return {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexShrink: 0,
+    borderBottom: "1px solid",
+    borderColor: theme.palette.divider,
+    backgroundColor: darkMode
+      ? theme.palette.primary.dark
+      : theme.palette.primary.main,
+    boxShadow: "none",
+    backgroundImage: "none",
+    zIndex: theme.zIndex.drawer + 1,
+    flex: "0 0 auto",
+  };
+});
 
 const PageHeader = ({ routes }) => {
   const { darkMode, handleDarkModeSwitch } = useAppContext();
@@ -44,7 +47,7 @@ const PageHeader = ({ routes }) => {
   };
 
   return (
-    <StyledAppBar darkMode={darkMode}>
+    <StyledAppBar>
       <Toolbar
         variant="dense"
         disableGutters

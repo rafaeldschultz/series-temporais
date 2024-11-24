@@ -55,7 +55,6 @@ const generateAnnotations = (data) => {
     }
     return null;
   });
-  console.log(newAnnotations);
   return newAnnotations.filter((annotation) => annotation !== null);
 };
 

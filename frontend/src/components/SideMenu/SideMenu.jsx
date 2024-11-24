@@ -136,9 +136,13 @@ const SideMenu = ({
             }
 
             return (
-              <Tooltip title={navigationItem.title} placement="right" arrow>
+              <Tooltip
+                title={navigationItem.title}
+                placement="right"
+                arrow
+                key={navigationItemIndex}
+              >
                 <ListItem
-                  key={navigationItemIndex}
                   sx={{
                     overflowX: "hidden",
                     my: 1,
@@ -147,7 +151,7 @@ const SideMenu = ({
                   disablePadding
                 >
                   <ListItemButton
-                    alignItems="left"
+                    alignItems="flex-start"
                     selected={
                       selectedItemId != null &&
                       navigationItem.id === selectedItemId

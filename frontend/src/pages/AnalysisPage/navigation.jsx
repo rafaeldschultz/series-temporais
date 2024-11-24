@@ -4,6 +4,8 @@ import TemporalAnalysisSection from "./TemporalAnalysisSection";
 import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
+import UnderDevelopmentPage from "../UnderDevelopmentPage";
+import MapRoundedIcon from "@mui/icons-material/MapRounded";
 
 export const navigationItems = [
   {
@@ -23,6 +25,12 @@ export const navigationItems = [
     title: "Análise Temporal",
     component: <TemporalAnalysisSection />,
     icon: <HourglassTopRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Análise Espacial",
+    component: <UnderDevelopmentPage />,
+    icon: <MapRoundedIcon />,
   },
   // {
   //   kind: "header",

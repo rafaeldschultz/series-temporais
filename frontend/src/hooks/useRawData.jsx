@@ -26,7 +26,7 @@ const fetch = async (page, pageSize, queryOptions) => {
       console.error(err);
       return null;
     });
-  console.log(response);
+
   return response;
 };
 
