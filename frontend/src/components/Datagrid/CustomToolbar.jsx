@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import {
   GridToolbar,
   GridToolbarColumnsButton,
@@ -8,6 +8,7 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import Grid from "@mui/material/Grid2";
+import ShortcutRoundedIcon from "@mui/icons-material/ShortcutRounded";
 
 const CustomToolbar = ({ title, subtitle, setFilterButtonEl }) => {
   return (
@@ -31,7 +32,13 @@ const CustomToolbar = ({ title, subtitle, setFilterButtonEl }) => {
           <GridToolbarColumnsButton ref={setFilterButtonEl} />
           <GridToolbarFilterButton ref={setFilterButtonEl} />
           <GridToolbarDensitySelector />
-          <GridToolbarExport />
+          <Button
+            startIcon={<ShortcutRoundedIcon />}
+            target="_blank"
+            href="https://opendatasus.saude.gov.br/dataset/srag-2021-a-2024"
+          >
+            OpenDataSUS
+          </Button>
         </GridToolbarContainer>
       </Grid>
     </Grid>

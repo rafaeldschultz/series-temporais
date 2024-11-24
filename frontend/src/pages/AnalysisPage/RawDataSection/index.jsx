@@ -1,20 +1,34 @@
 import useRawData from "../../../hooks/useRawData";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Page from "../../../layouts/Page";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import CustomToolbar from "../../../components/Datagrid/CustomToolbar";
+import useDebounce from "../../../hooks/useDebounce";
 
 const RawDataSection = () => {
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 25,
   });
+  const [queryOptions, setQueryOptions] = useState({});
   const [filterButtonEl, setFilterButtonEl] = useState(null);
+
+  const debouncedSetQueryOptions = useDebounce((newFilterOptions) => {
+    setQueryOptions(newFilterOptions);
+  }, 500);
+
+  const onFilterChange = useCallback(
+    (filterModel) => {
+      debouncedSetQueryOptions({ ...filterModel.items[0] });
+    },
+    [debouncedSetQueryOptions]
+  );
 
   const { data, isPending } = useRawData(
     paginationModel.page,
-    paginationModel.pageSize
+    paginationModel.pageSize,
+    queryOptions
   );
 
   const rowCountRef = useRef(data?.rowCount || 0);
@@ -37,6 +51,8 @@ const RawDataSection = () => {
         paginationModel={paginationModel}
         paginationMode="server"
         onPaginationModelChange={setPaginationModel}
+        filterMode="server"
+        onFilterModelChange={onFilterChange}
         slots={{
           toolbar: CustomToolbar,
         }}
