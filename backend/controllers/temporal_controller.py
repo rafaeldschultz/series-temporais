@@ -4,7 +4,11 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
+
 from statsmodels.api import tsa
+from statsmodels.tsa.seasonal import STL
+from statsmodels.tsa.stattools import pacf
+from statsmodels.graphics.tsaplots import plot_pacf
 
 
 class TemporalController:
@@ -275,6 +279,83 @@ class TemporalController:
             "lowerY": lower_y.tolist(),
             "upperY": upper_y.tolist(),
         }
+
+
+    def serie_stl_decomposition(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        seasonal: Optional[int] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        serie = (
+            self.df.groupby('DT_NOTIFIC').size()
+        )
+
+        stl = STL(serie, seasonal=seasonal if seasonal else 13)
+        results = stl.fit()
+
+        serie = serie.reset_index().rename(columns={0:'Count'})
+        serie['Trend_values'] = results.trend.values
+        serie['Seasonal_values'] = results.seasonal.values
+        serie['Resid_values'] = results.resid.values
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
+
+        return serie.to_dict(orient="records")
+    
+
+    def serie_lag_plot(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        lag: Optional[int] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        serie = (
+            self.df.groupby('DT_NOTIFIC').size()
+        )
+        
+        lag = lag if lag else 4
+        y_actual = serie[:-lag].values
+        y_lagged = serie.shift(-lag)[:-lag].values
+
+        max_val = float(max(y_actual.max(), y_lagged.max()))
+        min_val = float(min(y_actual.min(), y_lagged.min()))
+
+        return {
+            'yActual':y_actual.tolist(),
+            'yLagged':y_lagged.tolist(),
+            'maxVal':max_val,
+            'minVal':min_val,
+            'lag':lag
+        }
+    
 
     def get_overview_data(
         self,

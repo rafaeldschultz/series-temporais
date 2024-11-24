@@ -1,11 +1,11 @@
-import { Box, Container, Stack, Typography, Button } from "@mui/material";
-
+import { Box, Container, Typography, Button, Stack } from "@mui/material";
 import mapaBrasil from "../../assets/mapa_brasil.png"
-import { useState } from "react";
+
+import Content from './content'
 
 const Head = () => {
   const handleSubmit = () => {
-    console.log("ok")
+    window.location.href = 'https://opendatasus.saude.gov.br/dataset/srag-2021-a-2024';
   };
 
   return (
@@ -43,49 +43,23 @@ const Head = () => {
   );
 };
 
-const Content = () => {
-  const [selected, setSelected] = useState(1);
-
-  const handleSubmit = (id) => {
-    setSelected(id)
-  };
-
-  return (
-    <Container maxWidth={false}  sx={{ height: '70vh' }}>
-      <Box display={"flex"} justifyContent={"space-around"}
-        alignItems={"center"} padding={"20px"}
-      >
-        <Box 
-          display={"flex"} flexDirection={"column"}
-          sx={{ bgcolor: '#ffffff', width:'40vw', height: '50vh', margin:"30px"}}
-        >
-          <Typography variant="h3" gutterBottom sx={{color: '#2969BD', padding:'20px'}}>
-            SOBRE OS DADOS
-          </Typography>
-          <Stack spacing={2}>
-            <Button variant={(selected == 1) ? "contained" : "outlined" } onClick={() => handleSubmit(1)}>Pré Visualização</Button>
-            <Button variant={(selected == 2) ? "contained" : "outlined" } onClick={() => handleSubmit(2)}>Estatísticas Gerais</Button>
-            <Button variant={(selected == 3) ? "contained" : "outlined" } onClick={() => handleSubmit(3)}>Análises Temporais</Button>
-            <Button variant={(selected == 4) ? "contained" : "outlined" } onClick={() => handleSubmit(4)}>Sobre o Conjunto</Button>
-          </Stack>
-        </Box>
-        <Box 
-          display={"flex"} flexDirection={"column"}
-          sx={{ bgcolor: '#cfe8fc', width:'40vw', borderRadius:'15px', height: '50vh', padding:'20px'}}
-        >
-          <Typography variant="h4" gutterBottom sx={{color: '#2969BD', padding:'20px'}}>
-            AAA
-          </Typography>
-        </Box>
-      </Box>
-    </Container>
-  );
-};
 
 
 const Foot = () => {
   return (
-    <Container maxWidth={false}  sx={{ bgcolor: '#2969BD', height: '20vh' }} />
+    <Container maxWidth={false}  sx={{ bgcolor: '#2969BD', height: '30vh' }} >
+      <Stack display={"flex"} justifyContent={"space-around"}
+        alignItems={"center"} padding={"20px"}
+      >
+        <Typography variant="h3" gutterBottom sx={{color: '#fff', padding:'20px'}}>
+          Sobre Nós
+        </Typography>
+        
+        <Typography align="justify" sx={{color: '#fff'}}>
+          Este projeto foi desenvolvivo como parte da disciplina SME0808 - Séries Temporais e Aprendizado Dinâmico e seu uso é livre.  
+        </Typography>
+      </Stack>
+    </Container>
   );
 };
 
