@@ -3,6 +3,8 @@ import { Box, Stack, Typography } from "@mui/material";
 import FunctionsIcon from '@mui/icons-material/Functions';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import { useState } from "react";
+
 
 const Estatisticas = () => {
   return (
@@ -17,21 +19,21 @@ const Estatisticas = () => {
         <Stack alignItems={"center"}>
             <FunctionsIcon  sx={{ color: '#215497', width:"100px", height:"100px" }}/>
             <Typography variant="h4" gutterBottom>
-              N Observações
+              2.758.557 Casos
             </Typography>
           </Stack>
 
           <Stack alignItems={"center"}>
             <CalendarTodayIcon  sx={{ color: '#215497', width:"100px", height:"100px" }}/>
             <Typography variant="h4" gutterBottom>
-              M Anos
+              4 Anos
             </Typography>
           </Stack>
 
           <Stack alignItems={"center"}>
             <MapOutlinedIcon  sx={{ color: '#215497', width:"100px", height:"100px" }}/>
             <Typography variant="h4" gutterBottom>
-              X Localizações
+              3124 Localidades
             </Typography>
           </Stack>
 

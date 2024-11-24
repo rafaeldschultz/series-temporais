@@ -32,7 +32,7 @@ const Content = () => {
           </Typography>
           <Stack spacing={2}>
             <Button variant={(selected == 1) ? "contained" : "outlined" } onClick={() => handleSubmit(1)}>Estatísticas Gerais</Button>
-            <Button variant={(selected == 2) ? "contained" : "outlined" } onClick={() => handleSubmit(2)}>Análises Temporais</Button>
+            {/* <Button variant={(selected == 2) ? "contained" : "outlined" } onClick={() => handleSubmit(2)}>Análises Temporais</Button> */}
             <Button variant={(selected == 3) ? "contained" : "outlined" } onClick={() => handleSubmit(3)}>Sobre o Conjunto</Button>
           </Stack>
         </Box>

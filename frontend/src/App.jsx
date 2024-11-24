@@ -32,7 +32,7 @@ function App() {
             )
           );
           return (
-            <Box sx={{ height: "100%", width: "100%" }}>
+            <Box sx={{ height: "100%", width: "100%", overflowX:"hidden" }}>
               <ThemeProvider theme={theme}>
                 <QueryClientProvider client={queryClient}>
                   <CssBaseline />
