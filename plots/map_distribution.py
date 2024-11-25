@@ -7,6 +7,7 @@ import pandas as pd
 import json
 from typing import Union, Dict, List
 
+
 def mapa_dist(geojson: Dict,
               indices: Union[pd.Series, List[Union[str, int]]],
               municipios: Union[pd.Series, List[str]],
