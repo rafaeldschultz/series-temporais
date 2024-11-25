@@ -24,7 +24,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => {
     borderBottom: "1px solid",
     borderColor: theme.palette.divider,
     backgroundColor: darkMode
-      ? theme.palette.primary.dark
+      ? theme.palette.background.default
       : theme.palette.primary.main,
     boxShadow: "none",
     backgroundImage: "none",
