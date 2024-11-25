@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { navigationItems } from "./navigation";
 
 import { FilterProvider } from "../../contexts/FilterContext";
+import { Divider } from "@mui/material";
 
 const AnalysisPage = () => {
   const [visibleChart, setVisibleChart] = useState(0);

@@ -6,6 +6,8 @@ import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
 import UnderDevelopmentPage from "../UnderDevelopmentPage";
 import MapRoundedIcon from "@mui/icons-material/MapRounded";
+import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
+import DecompositionSection from "./DecompositionSection";
 
 export const navigationItems = [
   {
@@ -25,6 +27,12 @@ export const navigationItems = [
     title: "Análise Temporal",
     component: <TemporalAnalysisSection />,
     icon: <HourglassTopRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Decomposição",
+    component: <DecompositionSection />,
+    icon: <GrainRoundedIcon />,
   },
   {
     kind: "item",

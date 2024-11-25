@@ -24,7 +24,7 @@ const drawerWidth = 240;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
+    easing: theme.transitions.easing.easeOut,
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
@@ -44,27 +44,19 @@ const closedMixin = (theme) => ({
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
+})(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
-      },
-    },
-    {
-      props: ({ open }) => !open,
-      style: {
-        ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
-      },
-    },
-  ],
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
 }));
 
 const SideMenu = ({
@@ -78,7 +70,6 @@ const SideMenu = ({
   isFullyExpanded = true,
   hasDrawerTransitions = false,
 }) => {
-  const theme = useTheme();
   const [open, setopen] = useState(true);
 
   const toggleDrawer = () => {
@@ -146,12 +137,14 @@ const SideMenu = ({
                   sx={{
                     overflowX: "hidden",
                     my: 1,
-                    display: "block",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                   disablePadding
                 >
                   <ListItemButton
-                    alignItems="flex-start"
+                    alignItems="center"
                     selected={
                       selectedItemId != null &&
                       navigationItem.id === selectedItemId
@@ -166,6 +159,7 @@ const SideMenu = ({
                         "&.Mui-selected:hover": {
                           backgroundColor: theme.palette.primary.light,
                         },
+                        alignItems: "center",
                       }),
                       open
                         ? {
@@ -190,6 +184,7 @@ const SideMenu = ({
                           },
                           minWidth: 0,
                           justifyContent: "center",
+                          alignItems: "center",
                         },
                         open
                           ? {

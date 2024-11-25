@@ -2,19 +2,20 @@ import { Box, Stack } from "@mui/material";
 
 import FilterPanel from "./FilterPanel";
 import { useFilter } from "../../../contexts/FilterContext";
-import useTemporal from "../../../hooks/useTemporal";
-import CorrelogramChart from "./CorrelogramChart";
 import Grid from "@mui/material/Grid2";
-import SerieDifferetiationChart from "./SerieDifferentiationChart";
-import SerieExponentialRoolingAverageChart from "./SerieExponentialRoolingAverageChart";
-import SerieRoolingAverageChart from "./SerieRoolingAverageChart";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
+import SerieStlDecompositionChart from "./SerieStlDecompositionChart";
+import CountChart from "./CountChart";
+import ResidualsChart from "./ResidualsChart";
+import SeasonalChart from "./SeasonalChart";
+import TrendChart from "./TrendChart";
+import useDecomposition from "../../../hooks/useDecomposition";
 
-const TemporalAnalysisSection = () => {
+const DecompositionSection = () => {
   const { filters } = useFilter();
 
-  const { data, isPending: loading } = useTemporal(
+  const { data, isPending: loading } = useDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
@@ -40,17 +41,20 @@ const TemporalAnalysisSection = () => {
             <Stack gap={2} width={0.8}>
               <FilterPanel />
               <Grid container spacing={2}>
+                {/* <Grid size={6}>
+                  <SerieStlDecompositionChart />
+                </Grid> */}
                 <Grid size={6}>
-                  <SerieDifferetiationChart />
+                  <CountChart />
                 </Grid>
                 <Grid size={6}>
-                  <SerieRoolingAverageChart />
+                  <TrendChart />
                 </Grid>
                 <Grid size={6}>
-                  <SerieExponentialRoolingAverageChart />
+                  <SeasonalChart />
                 </Grid>
                 <Grid size={6}>
-                  <CorrelogramChart />
+                  <ResidualsChart />
                 </Grid>
               </Grid>
             </Stack>
@@ -61,4 +65,4 @@ const TemporalAnalysisSection = () => {
   );
 };
 
-export default TemporalAnalysisSection;
+export default DecompositionSection;

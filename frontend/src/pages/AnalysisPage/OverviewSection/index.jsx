@@ -28,7 +28,7 @@ const OverviewSection = () => {
       {loading ? (
         <QuantumLoadingBox />
       ) : (
-        <FadeBox in={!loading} timeout={transitionTimeout}>
+        <FadeBox in={!loading} timeout={transitionTimeout} sx={{ pb: 4 }}>
           <Box
             sx={{
               display: "flex",
@@ -40,10 +40,10 @@ const OverviewSection = () => {
             <Stack gap={2} width={0.8}>
               <FilterPanel />
               <Grid container spacing={2}>
-                <Grid item size={9}>
+                <Grid size={9}>
                   <TemporalSeriesChart />
                 </Grid>
-                <Grid item size={3}>
+                <Grid size={3}>
                   <Grid
                     container
                     direction={"column"}
@@ -51,7 +51,7 @@ const OverviewSection = () => {
                     justifyContent={"space-between"}
                     height={1}
                   >
-                    <Grid item>
+                    <Grid>
                       <BigNumberCard
                         title={"Óbitos"}
                         isLoading={loading}
@@ -63,22 +63,20 @@ const OverviewSection = () => {
                         }
                       />
                     </Grid>
-                    <Grid item>
-                      <Grid item>
-                        <BigNumberCard
-                          title={"Recuperados"}
-                          isLoading={loading}
-                          number={data?.general.totalRecovered}
-                          percentage={
-                            data
-                              ? data.general.totalRecovered /
-                                data.general.totalCases
-                              : 0
-                          }
-                        />
-                      </Grid>
+                    <Grid>
+                      <BigNumberCard
+                        title={"Recuperados"}
+                        isLoading={loading}
+                        number={data?.general.totalRecovered}
+                        percentage={
+                          data
+                            ? data.general.totalRecovered /
+                              data.general.totalCases
+                            : 0
+                        }
+                      />
                     </Grid>
-                    <Grid item>
+                    <Grid>
                       <BigNumberCard
                         title={"Outras Notificações"}
                         isLoading={loading}
@@ -101,16 +99,16 @@ const OverviewSection = () => {
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
-                <Grid item size={4}>
+                <Grid size={4}>
                   <OccurrenceBySexChart />
                 </Grid>
-                <Grid item size={4}>
+                <Grid size={4}>
                   <OccurrenceByRaceChart />
                 </Grid>
-                <Grid item size={4}>
+                <Grid size={4}>
                   <OccurrenceByDayChart />
                 </Grid>
-                <Grid item size={12}>
+                <Grid size={12}>
                   <OccurrenceByAgeChart />
                 </Grid>
               </Grid>

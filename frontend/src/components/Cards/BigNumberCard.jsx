@@ -7,7 +7,7 @@ const BigNumberCard = ({ title, number, percentage, isLoading }) => {
     <DashboardCard title={title}>
       <Stack spacing={2} mt={2} width={1}>
         <Grid container justifyContent={"space-between"}>
-          <Grid item>
+          <Grid>
             <Typography variant={"h1"}>
               {isLoading ? (
                 <Skeleton width={250} />
@@ -16,7 +16,7 @@ const BigNumberCard = ({ title, number, percentage, isLoading }) => {
               )}
             </Typography>
           </Grid>
-          <Grid item sx={{ display: "flex", alignItems: "center" }}>
+          <Grid sx={{ display: "flex", alignItems: "center" }}>
             {isLoading ? (
               <Skeleton variant={"chip"} width={50} />
             ) : (

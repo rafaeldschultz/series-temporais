@@ -4,11 +4,10 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
-
 from statsmodels.api import tsa
+from statsmodels.graphics.tsaplots import plot_pacf
 from statsmodels.tsa.seasonal import STL
 from statsmodels.tsa.stattools import pacf
-from statsmodels.graphics.tsaplots import plot_pacf
 
 
 class TemporalController:
@@ -280,7 +279,6 @@ class TemporalController:
             "upperY": upper_y.tolist(),
         }
 
-
     def serie_stl_decomposition(
         self,
         uf: Optional[str] = None,
@@ -301,21 +299,18 @@ class TemporalController:
         if evolution:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
-        serie = (
-            self.df.groupby('DT_NOTIFIC').size()
-        )
+        serie = self.df.groupby("DT_NOTIFIC").size()
 
         stl = STL(serie, seasonal=seasonal if seasonal else 13)
         results = stl.fit()
 
-        serie = serie.reset_index().rename(columns={0:'Count'})
-        serie['Trend_values'] = results.trend.values
-        serie['Seasonal_values'] = results.seasonal.values
-        serie['Resid_values'] = results.resid.values
+        serie = serie.reset_index().rename(columns={0: "Count"})
+        serie["Trend_values"] = results.trend.values
+        serie["Seasonal_values"] = results.seasonal.values
+        serie["Resid_values"] = results.resid.values
         serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
-        return serie.to_dict(orient="records")
-    
+        return serie.to_dict(orient="list")
 
     def serie_lag_plot(
         self,
@@ -337,10 +332,8 @@ class TemporalController:
         if evolution:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
-        serie = (
-            self.df.groupby('DT_NOTIFIC').size()
-        )
-        
+        serie = self.df.groupby("DT_NOTIFIC").size()
+
         lag = lag if lag else 4
         y_actual = serie[:-lag].values
         y_lagged = serie.shift(-lag)[:-lag].values
@@ -349,13 +342,12 @@ class TemporalController:
         min_val = float(min(y_actual.min(), y_lagged.min()))
 
         return {
-            'yActual':y_actual.tolist(),
-            'yLagged':y_lagged.tolist(),
-            'maxVal':max_val,
-            'minVal':min_val,
-            'lag':lag
+            "yActual": y_actual.tolist(),
+            "yLagged": y_lagged.tolist(),
+            "maxVal": max_val,
+            "minVal": min_val,
+            "lag": lag,
         }
-    
 
     def get_overview_data(
         self,

@@ -10,7 +10,6 @@ const Page = ({ children, sx, ...others }) => {
         overflowY: "auto",
         border: "none",
         borderRadius: 0,
-        padding: 4,
         height: "100%",
         ...sx,
       })}

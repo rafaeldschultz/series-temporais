@@ -73,7 +73,7 @@ const ChipHorizontalGrid = ({ items }) => {
   return (
     <Grid container spacing={1}>
       {items.map((item, index) => (
-        <Grid item key={item.label}>
+        <Grid key={item.label}>
           <Chip
             label={
               item.label +

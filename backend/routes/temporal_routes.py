@@ -124,7 +124,7 @@ async def correlogram(
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
-    
+
 
 @api_temporal.get("/serie_stl_decomposition")
 async def serie_stl_decomposition(
@@ -144,7 +144,7 @@ async def serie_stl_decomposition(
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
-    
+
 
 @api_temporal.get("/serie_lag_plot")
 async def serie_lag_plot(
@@ -157,9 +157,7 @@ async def serie_lag_plot(
     # lag: to be defined
     try:
         controller = TemporalController()
-        data = controller.serie_lag_plot(
-            uf, syndrome, year, evolution, lag
-        )
+        data = controller.serie_lag_plot(uf, syndrome, year, evolution, lag)
         return JSONResponse(status_code=200, content=data)
     except Exception as e:
         print(e)
