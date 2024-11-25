@@ -5,6 +5,9 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 from statsmodels.api import tsa
+from statsmodels.graphics.tsaplots import plot_pacf
+from statsmodels.tsa.seasonal import STL
+from statsmodels.tsa.stattools import pacf
 
 
 class TemporalController:
@@ -35,7 +38,7 @@ class TemporalController:
 
         return self.df
 
-    def get_temporal_data(self):
+    def get_temporal_occurences(self):
         serie_temporal = self.df["DT_NOTIFIC"].value_counts().sort_index().reset_index()
         serie_temporal["DT_NOTIFIC"] = serie_temporal["DT_NOTIFIC"].dt.strftime(
             "%Y-%m-%d"
@@ -219,8 +222,7 @@ class TemporalController:
         serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
         return serie.to_dict(orient="records")
-    
-    
+
     def correlogram(
         self,
         uf: Optional[str] = None,
@@ -230,8 +232,8 @@ class TemporalController:
         granularity: Optional[int] = None,
         diff_order: Optional[int] = None,
         num_lags: Optional[int] = None,
-        alpha: Optional[int] = None
-    ): 
+        alpha: Optional[int] = None,
+    ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
 
@@ -245,12 +247,14 @@ class TemporalController:
             self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
         if granularity:
-            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period(granularity)).size()
+            serie = self.df.groupby(
+                self.df["DT_NOTIFIC"].dt.to_period(f"{granularity}D")
+            ).size()
         else:
-            serie = self.df.groupby(self.df['DT_NOTIFIC'].dt.to_period('W')).size()
-        
+            serie = self.df.groupby(self.df["DT_NOTIFIC"].dt.to_period("W")).size()
+
         serie.index = serie.index.to_timestamp()
-        
+
         # Remove Trend of the time series
         serie = serie.diff().dropna()
 
@@ -259,7 +263,7 @@ class TemporalController:
             serie = serie.diff(diff_order).dropna()
         else:
             serie = serie.diff(7).dropna()
-    
+
         aux_num_lags = num_lags if num_lags else 25
         aux_alpha = alpha if alpha else 0.01
 
@@ -269,12 +273,81 @@ class TemporalController:
         upper_y = corr_array[1][:, 1] - corr_array[0]
 
         return {
-            "autocorrelations":corr_array[0].tolist(),
-            "confidenceIntervals":corr_array[1].tolist(),
+            "autocorrelations": corr_array[0].tolist(),
+            "confidenceIntervals": corr_array[1].tolist(),
             "lowerY": lower_y.tolist(),
-            "upperY":upper_y.tolist()
+            "upperY": upper_y.tolist(),
         }
-        
+
+    def serie_stl_decomposition(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        seasonal: Optional[int] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        serie = self.df.groupby("DT_NOTIFIC").size()
+
+        stl = STL(serie, seasonal=seasonal if seasonal else 13)
+        results = stl.fit()
+
+        serie = serie.reset_index().rename(columns={0: "Count"})
+        serie["Trend_values"] = results.trend.values
+        serie["Seasonal_values"] = results.seasonal.values
+        serie["Resid_values"] = results.resid.values
+        serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
+
+        return serie.to_dict(orient="list")
+
+    def serie_lag_plot(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        lag: Optional[int] = None,
+    ):
+        if uf:
+            self.df = self.df[self.df["SIGLA_UF"] == uf]
+
+        if syndrome:
+            self.df = self.df[self.df["CLASSI_FIN"] == syndrome]
+
+        if year:
+            self.df = self.df[self.df["DT_NOTIFIC"].dt.year == year]
+
+        if evolution:
+            self.df = self.df[self.df["EVOLUCAO"] == evolution]
+
+        serie = self.df.groupby("DT_NOTIFIC").size()
+
+        lag = lag if lag else 4
+        y_actual = serie[:-lag].values
+        y_lagged = serie.shift(-lag)[:-lag].values
+
+        max_val = float(max(y_actual.max(), y_lagged.max()))
+        min_val = float(min(y_actual.min(), y_lagged.min()))
+
+        return {
+            "yActual": y_actual.tolist(),
+            "yLagged": y_lagged.tolist(),
+            "maxVal": max_val,
+            "minVal": min_val,
+            "lag": lag,
+        }
 
     def get_overview_data(
         self,
@@ -290,7 +363,7 @@ class TemporalController:
         total_recovered = self.df[self.df["EVOLUCAO"] == "Cura"].shape[0]
 
         return {
-            "temporalSeries": self.get_temporal_data(),
+            "temporalSeries": self.get_temporal_occurences(),
             "general": {
                 "totalCases": total_cases,
                 "totalDeaths": total_deaths,
@@ -302,4 +375,40 @@ class TemporalController:
                 "day": self.occurrence_by_day(),
                 "age": self.occurrence_by_age(),
             },
+        }
+
+    def get_temporal_data(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+    ):
+        self.df = self.apply_filters(uf, syndrome, year, evolution)
+        return {
+            "serieDifferentiation": {
+                "first": self.serie_differentiation(
+                    uf, syndrome, year, evolution, order=1
+                ),
+                "second": self.serie_differentiation(
+                    uf, syndrome, year, evolution, order=2
+                ),
+            },
+            "serieExponentialRoolingAverage": {
+                f"{i}D": self.serie_exponential_rooling_average(
+                    uf, syndrome, year, evolution, granularity=i
+                )
+                for i in [3, 5, 7, 14, 28]
+            },
+            "serieRoolingAverage": {
+                f"{i}D": self.serie_rooling_average(
+                    uf,
+                    syndrome,
+                    year,
+                    evolution,
+                    granularity=f"{i}D",
+                )
+                for i in [3, 5, 7, 14, 28]
+            },
+            "serieLagPlot": self.serie_lag_plot(uf, syndrome, year, evolution),
         }

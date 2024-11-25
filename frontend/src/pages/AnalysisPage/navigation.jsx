@@ -1,15 +1,44 @@
-import { Typography } from "@mui/material";
-import TemporalSeriesChart from "./Sections/TemporalSeriesChart";
-import OccurrenceBySexChart from "./Sections/OccurrenceBySexChart";
-import OccurrenceByRaceChart from "./Sections/OccurrenceByRaceChart";
 import OverviewSection from "./OverviewSection";
-import BarplotOccurrenceByDay from "./Sections/OccurrenceByDay";
+import RawDataSection from "./RawDataSection";
+import TemporalAnalysisSection from "./TemporalAnalysisSection";
+import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
+import UnderDevelopmentPage from "../UnderDevelopmentPage";
+import MapRoundedIcon from "@mui/icons-material/MapRounded";
+import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
+import DecompositionSection from "./DecompositionSection";
 
 export const navigationItems = [
   {
     kind: "item",
+    title: "Dados Brutos",
+    component: <RawDataSection />,
+    icon: <TableChartRoundedIcon />,
+  },
+  {
+    kind: "item",
     title: "Overview",
     component: <OverviewSection />,
+    icon: <DashboardRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Análise Temporal",
+    component: <TemporalAnalysisSection />,
+    icon: <HourglassTopRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Decomposição",
+    component: <DecompositionSection />,
+    icon: <GrainRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Análise Espacial",
+    component: <UnderDevelopmentPage />,
+    icon: <MapRoundedIcon />,
   },
   // {
   //   kind: "header",

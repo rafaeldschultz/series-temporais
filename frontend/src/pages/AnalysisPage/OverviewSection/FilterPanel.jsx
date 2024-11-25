@@ -16,10 +16,10 @@ import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRound
 const FilterPanel = () => {
   const { filters, updateFilter } = useFilter();
 
-  const [federalState, setFederalState] = useState();
-  const [syndrome, setSyndrome] = useState();
-  const [evolution, setEvolution] = useState();
-  const [year, setYear] = useState();
+  const [federalState, setFederalState] = useState(filters.federalState);
+  const [syndrome, setSyndrome] = useState(filters.syndrome);
+  const [evolution, setEvolution] = useState(filters.evolution);
+  const [year, setYear] = useState(filters.year);
 
   const handleSubmit = () => {
     updateFilter("federalState", federalState);
@@ -30,8 +30,8 @@ const FilterPanel = () => {
 
   return (
     <DashboardCard>
-      <Grid container justifyContent={"space-between"}>
-        <Grid item size={5}>
+      <Grid container justifyContent={"space-between"} width={1}>
+        <Grid size={5}>
           <Typography variant={"h5"} color="primary">
             Overview
           </Typography>
@@ -39,14 +39,14 @@ const FilterPanel = () => {
             Filtre os dados de acordo com sua necessidade
           </Typography>
         </Grid>
-        <Grid item size={7}>
+        <Grid size={7}>
           <Grid
             container
             spacing={2}
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <Grid item size={"grow"}>
+            <Grid size={"grow"}>
               <Autocomplete
                 disablePortal
                 options={[
@@ -89,7 +89,7 @@ const FilterPanel = () => {
                 }
               />
             </Grid>
-            <Grid item size={"grow"}>
+            <Grid size={"grow"}>
               <Autocomplete
                 disablePortal
                 options={[
@@ -110,7 +110,7 @@ const FilterPanel = () => {
                 value={syndrome}
               />
             </Grid>
-            <Grid item size={"grow"}>
+            <Grid size={"grow"}>
               <Autocomplete
                 disablePortal
                 options={[2024, 2023, 2022, 2021].sort()}
@@ -122,7 +122,7 @@ const FilterPanel = () => {
                 value={year}
               />
             </Grid>
-            <Grid item size={"grow"}>
+            <Grid size={"grow"}>
               <Autocomplete
                 disablePortal
                 options={[
@@ -146,7 +146,7 @@ const FilterPanel = () => {
                 value={evolution}
               />
             </Grid>
-            <Grid item>
+            <Grid>
               <Button
                 color="primary"
                 variant="contained"

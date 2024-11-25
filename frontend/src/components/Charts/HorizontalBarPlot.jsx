@@ -16,29 +16,59 @@ const HorizontalBarPlot = ({ data, axisLabels }) => {
       text: data.y,
       textposition: "outside",
     }));
-  });
+  }, [data, theme.palette.primary.main, theme.palette.info.contrast]);
+
+  const layout = useMemo(
+    () => ({
+      xaxis: {
+        title: {
+          text: axisLabels ? axisLabels.x : "",
+          font: {
+            color: theme.palette.text.primary,
+            size: 14,
+            family: "Inter",
+          },
+        },
+        showline: true,
+        linewidth: 1,
+        linecolor: "black",
+        tickfont: {
+          color: theme.palette.text.secondary,
+          family: "Inter",
+        },
+      },
+      yaxis: {
+        title: {
+          text: axisLabels ? axisLabels.y : "",
+          font: {
+            color: theme.palette.text.primary,
+            size: 14,
+            family: "Inter",
+          },
+        },
+        tickfont: {
+          color: theme.palette.text.secondary,
+          family: "Inter",
+        },
+        showgrid: true,
+        gridcolor: theme.palette.text.disabled,
+        zerolinecolor: theme.palette.text.disabled,
+        gridwidth: 0.5,
+      },
+      paper_bgcolor: "rgba(0, 0, 0, 0)",
+      plot_bgcolor: "rgba(0, 0, 0, 0)",
+      autosize: true,
+      template: "plotly_white",
+      margin: { l: 60, r: 0, t: 20, b: 60 },
+    }),
+    [axisLabels, theme]
+  );
 
   return (
     <Plot
       data={plotData}
       style={{ width: "100%", height: "100%" }}
-      layout={{
-        xaxis: {
-          title: axisLabels ? axisLabels.x : "",
-          showline: true,
-          linewidth: 1,
-          linecolor: "black",
-        },
-        yaxis: {
-          title: axisLabels ? axisLabels.y : "",
-          showline: true,
-          linewidth: 1,
-          linecolor: "black",
-        },
-        autosize: true,
-        template: "plotly_white",
-        margin: { l: 60, r: 0, t: 20, b: 60 },
-      }}
+      layout={layout}
       useResizeHandler={true}
     />
   );

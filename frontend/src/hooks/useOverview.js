@@ -17,7 +17,6 @@ const fetch = async (federalState, syndrome, year, evolution) => {
       console.error(err);
       return null;
     });
-  console.log(response);
   return response;
 };
 
