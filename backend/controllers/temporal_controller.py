@@ -410,4 +410,5 @@ class TemporalController:
                 )
                 for i in [3, 5, 7, 14, 28]
             },
+            "serieLagPlot": self.serie_lag_plot(uf, syndrome, year, evolution),
         }

@@ -10,6 +10,7 @@ import SerieExponentialRoolingAverageChart from "./SerieExponentialRoolingAverag
 import SerieRoolingAverageChart from "./SerieRoolingAverageChart";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
+import SerieLagChart from "./SerieLagChart";
 
 const TemporalAnalysisSection = () => {
   const { filters } = useFilter();
@@ -50,6 +51,9 @@ const TemporalAnalysisSection = () => {
                   <SerieExponentialRoolingAverageChart />
                 </Grid>
                 <Grid size={6}>
+                  <SerieLagChart />
+                </Grid>
+                <Grid size={12}>
                   <CorrelogramChart />
                 </Grid>
               </Grid>
