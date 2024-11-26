@@ -22,9 +22,8 @@ const TemporalLagsSection = () => {
   );
 
   const transitionTimeout = 500;
-  const mappedData =
-    !loading &&
-    useMemo(() => {
+  const mappedData = useMemo(() => {
+    if (!loading)
       return Object.values(data).map((item, index) => {
         return (
           <Grid size={6} key={index}>
@@ -36,7 +35,8 @@ const TemporalLagsSection = () => {
           </Grid>
         );
       });
-    }, [data, initialLag, loading]);
+    return <></>;
+  }, [data, initialLag, loading]);
 
   return (
     <>
