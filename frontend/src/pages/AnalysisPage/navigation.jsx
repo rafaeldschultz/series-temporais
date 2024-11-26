@@ -8,6 +8,8 @@ import UnderDevelopmentPage from "../UnderDevelopmentPage";
 import MapRoundedIcon from "@mui/icons-material/MapRounded";
 import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
 import DecompositionSection from "./DecompositionSection";
+import TemporalLagsSection from "./TemporalLagsSection";
+import AnimationRoundedIcon from "@mui/icons-material/AnimationRounded";
 
 export const navigationItems = [
   {
@@ -23,8 +25,15 @@ export const navigationItems = [
     icon: <DashboardRoundedIcon />,
   },
   {
-    kind: "item",
+    kind: "divider",
+  },
+  {
+    kind: "header",
     title: "Análise Temporal",
+  },
+  {
+    kind: "item",
+    title: "Geral",
     component: <TemporalAnalysisSection />,
     icon: <HourglassTopRoundedIcon />,
   },
@@ -36,7 +45,20 @@ export const navigationItems = [
   },
   {
     kind: "item",
+    title: "Lags Temporais",
+    component: <TemporalLagsSection />,
+    icon: <AnimationRoundedIcon />,
+  },
+  {
+    kind: "divider",
+  },
+  {
+    kind: "header",
     title: "Análise Espacial",
+  },
+  {
+    kind: "item",
+    title: "Geral",
     component: <UnderDevelopmentPage />,
     icon: <MapRoundedIcon />,
   },

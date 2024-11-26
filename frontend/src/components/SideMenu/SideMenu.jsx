@@ -84,26 +84,36 @@ const SideMenu = ({
             {open ? <ChevronLeftRoundedIcon /> : <ChevronRightRoundedIcon />}
           </IconButton>
         </Box>
+        <Divider
+          sx={{
+            borderBottomWidth: 2,
+            mx: 1,
+            mt: 1,
+          }}
+        />
         <List>
           {navigationItems.map((navigationItem, navigationItemIndex) => {
             if (navigationItem.kind === "header") {
               return (
-                <ListSubheader
-                  key={`subheader-${depth}-${navigationItemIndex}`}
-                  component="div"
-                  sx={(theme) => ({
-                    fontSize: 12,
-                    fontWeight: "700",
-                    height: 40,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    zIndex: 2,
-                    backgroundColor: theme.palette.background.paper,
-                  })}
-                >
-                  {navigationItem.title}
-                </ListSubheader>
+                <Box key={`subheader-${depth}-${navigationItemIndex}`}>
+                  {open && (
+                    <ListSubheader
+                      component="div"
+                      sx={(theme) => ({
+                        fontSize: 12,
+                        fontWeight: "700",
+                        height: 40,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        zIndex: 2,
+                        backgroundColor: theme.palette.background.paper,
+                      })}
+                    >
+                      {navigationItem.title}
+                    </ListSubheader>
+                  )}
+                </Box>
               );
             }
 

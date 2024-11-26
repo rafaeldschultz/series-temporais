@@ -412,3 +412,18 @@ class TemporalController:
             },
             "serieLagPlot": self.serie_lag_plot(uf, syndrome, year, evolution),
         }
+
+    def get_serie_lag_plot(
+        self,
+        uf: Optional[str] = None,
+        syndrome: Optional[str] = None,
+        year: Optional[int] = None,
+        evolution: Optional[str] = None,
+        initial_lag: int = 3,
+    ):
+        return {
+            f"{(i + 1) * initial_lag}": self.serie_lag_plot(
+                uf, syndrome, year, evolution, (i + 1) * initial_lag
+            )
+            for i in range(4)
+        }

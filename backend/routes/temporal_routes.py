@@ -152,12 +152,12 @@ async def serie_lag_plot(
     syndrome: Optional[str] = None,
     year: Optional[int] = None,
     evolution: Optional[str] = None,
-    lag: Optional[int] = None,
+    lag: int = 3,
 ):
     # lag: to be defined
     try:
         controller = TemporalController()
-        data = controller.serie_lag_plot(uf, syndrome, year, evolution, lag)
+        data = controller.get_serie_lag_plot(uf, syndrome, year, evolution, lag)
         return JSONResponse(status_code=200, content=data)
     except Exception as e:
         print(e)

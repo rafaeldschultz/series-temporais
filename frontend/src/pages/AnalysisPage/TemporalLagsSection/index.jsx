@@ -1,29 +1,42 @@
 import { Box, Stack } from "@mui/material";
-
 import FilterPanel from "./FilterPanel";
 import { useFilter } from "../../../contexts/FilterContext";
 import useTemporal from "../../../hooks/useTemporal";
-import CorrelogramChart from "./CorrelogramChart";
 import Grid from "@mui/material/Grid2";
-import SerieDifferetiationChart from "./SerieDifferentiationChart";
-import SerieExponentialRoolingAverageChart from "./SerieExponentialRoolingAverageChart";
-import SerieRoolingAverageChart from "./SerieRoolingAverageChart";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
 import SerieLagChart from "./SerieLagChart";
+import { useMemo, useState } from "react";
+import useTemporalLags from "../../../hooks/useTemporalLags";
 
-const TemporalAnalysisSection = () => {
+const TemporalLagsSection = () => {
   const { filters } = useFilter();
+  const [initialLag, setInitialLag] = useState(3);
 
-  const { data, isPending: loading } = useTemporal(
+  const { data, isPending: loading } = useTemporalLags(
     filters.federalState,
     filters.syndrome,
     filters.year,
-    filters.evolution
+    filters.evolution,
+    initialLag
   );
 
   const transitionTimeout = 500;
-  console.log(data);
+  const mappedData =
+    !loading &&
+    useMemo(() => {
+      return Object.values(data).map((item, index) => {
+        return (
+          <Grid size={6} key={index}>
+            <SerieLagChart
+              data={item}
+              index={initialLag * (index + 1)}
+              loading={loading}
+            />
+          </Grid>
+        );
+      });
+    }, [data, initialLag, loading]);
 
   return (
     <>
@@ -39,20 +52,12 @@ const TemporalAnalysisSection = () => {
             }}
           >
             <Stack gap={2} width={0.8}>
-              <FilterPanel />
+              <FilterPanel
+                onChangeCustomFilter={setInitialLag}
+                currentValueCustomFilter={initialLag}
+              />
               <Grid container spacing={2}>
-                <Grid size={6}>
-                  <SerieDifferetiationChart />
-                </Grid>
-                <Grid size={6}>
-                  <SerieRoolingAverageChart />
-                </Grid>
-                <Grid size={6}>
-                  <SerieExponentialRoolingAverageChart />
-                </Grid>
-                <Grid size={6}>
-                  <CorrelogramChart />
-                </Grid>
+                {mappedData}
               </Grid>
             </Stack>
           </Box>
@@ -62,4 +67,4 @@ const TemporalAnalysisSection = () => {
   );
 };
 
-export default TemporalAnalysisSection;
+export default TemporalLagsSection;
