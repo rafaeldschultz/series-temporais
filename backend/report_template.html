@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Automatizado</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-bottom: 2px solid #ddd;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header h2 {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .summary div {
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .summary div h3 {
+            margin-bottom: 10px;
+            font-size: 3em;
+        }
+
+        .chart {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        .chart h4 {
+            text-align: center;
+            margin: 0 0 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #777;
+            border-top: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+	
+	<center>
+
+    <header>
+        <h1>Relatório Automatizado</h1>
+        <h2>SME0808 - Séries Temporais e Aprendizado Dinâmico</h2>
+    </header>
+
+    <section class="summary">
+        <div>
+            <h3>{TOTAL_CASOS}</h3>
+            <p>Total de Casos</p>
+        </div>
+        <div>
+            <h3>{TOTAL_OBITOS}</h3>
+            <p>Total de Óbitos</p>
+        </div>
+        <div>
+            <h3>{TOTAL_RECUPERADOS}</h3>
+            <p>Total de Recuperados</p>
+        </div>
+    </section>
+
+	{CHARTS}
+
+    <footer>
+        <p>Relatório gerado automaticamente - SME0808</p>
+    </footer>
+
+	</center>
+
+	{SCRIPT}
+
+</body>
+</html>
+
