@@ -22,8 +22,7 @@ async def overview(
         }
 
         return Response(content=report, status_code=200,
-                        media_type="application/octet-stream",
-                        headers=headers)
+                        media_type="application/octet-stream", headers=headers)
 
     except Exception as e:
         print(e)

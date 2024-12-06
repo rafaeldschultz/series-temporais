@@ -1,0 +1,1538 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "data": [
+    {
+      "name": "_server_source_0",
+      "values": [
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Covid-19",
+          "count": 104150
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Covid-19",
+          "count": 17929
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3294
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Covid-19",
+          "count": 1197
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Influenza",
+          "count": 653
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Influenza",
+          "count": 1327
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Influenza",
+          "count": 825
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Influenza",
+          "count": 1134
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Não especificado",
+          "count": 35175
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Não especificado",
+          "count": 20342
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Não especificado",
+          "count": 11460
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Não especificado",
+          "count": 6241
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro agente",
+          "count": 336
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro agente",
+          "count": 337
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro agente",
+          "count": 177
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro agente",
+          "count": 136
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1509
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2132
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3403
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Domingo",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3306
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 189616
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 40604
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 8705
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3868
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Influenza",
+          "count": 1899
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Influenza",
+          "count": 2538
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Influenza",
+          "count": 2236
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Influenza",
+          "count": 3449
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 62366
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 39736
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 25033
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 15152
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 892
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 724
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 642
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 461
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3300
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 5289
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 8155
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quarta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 8279
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 186481
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 38771
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 8163
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3703
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Influenza",
+          "count": 1879
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Influenza",
+          "count": 2411
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Influenza",
+          "count": 2118
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Influenza",
+          "count": 3289
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 60605
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 37654
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 23712
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 14081
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 884
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 693
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 582
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 525
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2993
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 5001
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 7540
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Quinta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 7902
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Covid-19",
+          "count": 232306
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Covid-19",
+          "count": 48436
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Covid-19",
+          "count": 11364
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Covid-19",
+          "count": 5075
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Influenza",
+          "count": 1890
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Influenza",
+          "count": 3521
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Influenza",
+          "count": 2743
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Influenza",
+          "count": 4491
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Não especificado",
+          "count": 73613
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Não especificado",
+          "count": 50380
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Não especificado",
+          "count": 32349
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Não especificado",
+          "count": 18543
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro agente",
+          "count": 1059
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro agente",
+          "count": 928
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro agente",
+          "count": 776
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro agente",
+          "count": 614
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 4090
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 7123
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 10456
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Segunda",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 10922
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 177332
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 37339
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 8214
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3538
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Influenza",
+          "count": 1397
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Influenza",
+          "count": 2229
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Influenza",
+          "count": 2017
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Influenza",
+          "count": 3095
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 56232
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 36163
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 22715
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Não especificado",
+          "count": 13314
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 762
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 614
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 496
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro agente",
+          "count": 504
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2944
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 4768
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 6694
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sexta",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 7323
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Covid-19",
+          "count": 112516
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Covid-19",
+          "count": 19118
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3253
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Covid-19",
+          "count": 1195
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Influenza",
+          "count": 534
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Influenza",
+          "count": 1282
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Influenza",
+          "count": 876
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Influenza",
+          "count": 1185
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Não especificado",
+          "count": 35350
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Não especificado",
+          "count": 20479
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Não especificado",
+          "count": 11309
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Não especificado",
+          "count": 6670
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro agente",
+          "count": 366
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro agente",
+          "count": 351
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro agente",
+          "count": 190
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro agente",
+          "count": 151
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1555
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2288
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3399
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Sábado",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3433
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Covid-19",
+          "count": 198558
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Covid-19",
+          "count": 41114
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Covid-19",
+          "count": 9786
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Covid-19",
+          "count": 4106
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Influenza",
+          "count": 1714
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Influenza",
+          "count": 2751
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Influenza",
+          "count": 2545
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Influenza",
+          "count": 3634
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Não especificado",
+          "count": 62432
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Não especificado",
+          "count": 41699
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Não especificado",
+          "count": 27798
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Não especificado",
+          "count": 15684
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro agente",
+          "count": 938
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro agente",
+          "count": 822
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro agente",
+          "count": 757
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro agente",
+          "count": 550
+        },
+        {
+          "Ano": "2021",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3328
+        },
+        {
+          "Ano": "2022",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 5678
+        },
+        {
+          "Ano": "2023",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 8500
+        },
+        {
+          "Ano": "2024",
+          "dia_da_semana": "Terça",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 8715
+        }
+      ]
+    },
+    {"name": "param_7_store"},
+    {"name": "param_8_store"},
+    {
+      "name": "source_0",
+      "source": "_server_source_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!length(data(\"param_7_store\")) || vlSelectionTest(\"param_7_store\", datum)"
+        },
+        {"type": "project", "fields": ["Ano", "count", "dia_da_semana"]}
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum[\"dia_da_semana\"]===\"Segunda\" ? 0 : datum[\"dia_da_semana\"]===\"Terça\" ? 1 : datum[\"dia_da_semana\"]===\"Quarta\" ? 2 : datum[\"dia_da_semana\"]===\"Quinta\" ? 3 : datum[\"dia_da_semana\"]===\"Sexta\" ? 4 : datum[\"dia_da_semana\"]===\"Sábado\" ? 5 : datum[\"dia_da_semana\"]===\"Domingo\" ? 6 : 7",
+          "as": "x_dia_da_semana_sort_index"
+        },
+        {
+          "type": "project",
+          "fields": [
+            "Ano",
+            "count",
+            "dia_da_semana",
+            "x_dia_da_semana_sort_index"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "data_2",
+      "source": "data_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["dia_da_semana"],
+          "fields": ["count"],
+          "ops": ["sum"],
+          "as": ["sum_count"]
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"sum_count\"]) && isFinite(+datum[\"sum_count\"])"
+        },
+        {"type": "project", "fields": ["dia_da_semana", "sum_count"]}
+      ]
+    },
+    {
+      "name": "data_3",
+      "source": "data_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["dia_da_semana", "Ano"],
+          "fields": ["count"],
+          "ops": ["sum"],
+          "as": ["sum_count"]
+        }
+      ]
+    },
+    {
+      "name": "data_4",
+      "source": "data_3",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"sum_count\"]) && isFinite(+datum[\"sum_count\"])"
+        },
+        {"type": "project", "fields": ["Ano", "dia_da_semana", "sum_count"]}
+      ]
+    },
+    {
+      "name": "data_5",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "pivot",
+          "field": "Ano",
+          "value": "count",
+          "groupby": ["dia_da_semana"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum[\"dia_da_semana\"]===\"Segunda\" ? 0 : datum[\"dia_da_semana\"]===\"Terça\" ? 1 : datum[\"dia_da_semana\"]===\"Quarta\" ? 2 : datum[\"dia_da_semana\"]===\"Quinta\" ? 3 : datum[\"dia_da_semana\"]===\"Sexta\" ? 4 : datum[\"dia_da_semana\"]===\"Sábado\" ? 5 : datum[\"dia_da_semana\"]===\"Domingo\" ? 6 : 7",
+          "as": "x_dia_da_semana_sort_index"
+        }
+      ]
+    },
+    {
+      "name": "data_0_view_7_x_domain_dia_da_semana",
+      "source": "data_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["dia_da_semana"],
+          "fields": ["x_dia_da_semana_sort_index"],
+          "ops": ["min"],
+          "as": ["sort_field"]
+        },
+        {"type": "project", "fields": ["dia_da_semana", "sort_field"]}
+      ]
+    },
+    {
+      "name": "data_2_view_7_y_domain_sum_count",
+      "source": "data_2",
+      "transform": [
+        {"type": "formula", "expr": "+datum['sum_count']", "as": "sum_count"},
+        {
+          "type": "aggregate",
+          "groupby": [],
+          "fields": ["sum_count", "sum_count"],
+          "ops": ["min", "max"],
+          "as": ["min", "max"]
+        }
+      ]
+    },
+    {
+      "name": "data_2_view_7_color_domain_dia_da_semana",
+      "source": "data_2",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["dia_da_semana"],
+          "fields": [],
+          "ops": [],
+          "as": []
+        },
+        {
+          "type": "formula",
+          "expr": "datum['dia_da_semana']",
+          "as": "sort_field"
+        },
+        {"type": "project", "fields": ["dia_da_semana"]}
+      ]
+    },
+    {
+      "name": "data_0_concat_1_x_domain_dia_da_semana_0",
+      "source": "data_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["dia_da_semana"],
+          "fields": ["x_dia_da_semana_sort_index"],
+          "ops": ["min"],
+          "as": ["sort_field"]
+        },
+        {"type": "project", "fields": ["dia_da_semana", "sort_field"]}
+      ]
+    },
+    {
+      "name": "data_5_concat_1_x_domain_dia_da_semana_1",
+      "source": "data_5",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["dia_da_semana"],
+          "fields": ["x_dia_da_semana_sort_index"],
+          "ops": ["min"],
+          "as": ["sort_field"]
+        },
+        {"type": "project", "fields": ["dia_da_semana", "sort_field"]}
+      ]
+    },
+    {
+      "name": "data_3_concat_1_color_domain_Ano_0",
+      "source": "data_3",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Ano"],
+          "fields": [],
+          "ops": [],
+          "as": []
+        },
+        {"type": "formula", "expr": "datum['Ano']", "as": "sort_field"},
+        {"type": "project", "fields": ["Ano"]}
+      ]
+    },
+    {
+      "name": "data_4_concat_1_color_domain_Ano_1",
+      "source": "data_4",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Ano"],
+          "fields": [],
+          "ops": [],
+          "as": []
+        },
+        {"type": "formula", "expr": "datum['Ano']", "as": "sort_field"},
+        {"type": "project", "fields": ["Ano"]}
+      ]
+    }
+  ],
+  "signals": [
+    {"name": "childWidth", "value": 400},
+    {
+      "name": "unit",
+      "value": {},
+      "on": [
+        {"events": "pointermove", "update": "isTuple(group()) ? group() : unit"}
+      ]
+    },
+    {
+      "name": "param_7_CLASSI_FIN",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [
+          "Covid-19",
+          "Influenza",
+          "Não especificado",
+          "Outro agente",
+          "Outro vírus"
+        ],
+        "name": "Diagnóstico"
+      }
+    },
+    {
+      "name": "param_7",
+      "update": "vlSelectionResolve(\"param_7_store\", \"union\", true, true)"
+    },
+    {
+      "name": "param_8",
+      "update": "vlSelectionResolve(\"param_8_store\", \"union\", true, true)"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "name": "view_7_group",
+      "encode": {
+        "update": {
+          "width": {"signal": "childWidth"},
+          "height": {"signal": "height"}
+        }
+      },
+      "signals": [
+        {
+          "name": "param_7_tuple",
+          "update": "param_7_CLASSI_FIN !== null ? {fields: param_7_tuple_fields, values: [param_7_CLASSI_FIN]} : null"
+        },
+        {
+          "name": "param_7_tuple_fields",
+          "value": [{"type": "E", "field": "CLASSI_FIN"}]
+        },
+        {
+          "name": "param_7_modify",
+          "on": [
+            {
+              "events": {"signal": "param_7_tuple"},
+              "update": "modify(\"param_7_store\", param_7_tuple, true)"
+            }
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "name": "view_7_marks",
+          "from": {"data": "data_2"},
+          "encode": {
+            "update": {
+              "y2": {"value": 0, "scale": "view_7_y"},
+              "tooltip": {
+                "signal": "{\"dia_da_semana\": isValid(datum[\"dia_da_semana\"]) ? datum[\"dia_da_semana\"] : \"\"+datum[\"dia_da_semana\"], \"Sum of count\": format(datum[\"sum_count\"], \"\")}"
+              },
+              "width": {"signal": "max(0.25, bandwidth('view_7_x'))"},
+              "fill": {"field": "dia_da_semana", "scale": "view_7_color"},
+              "y": {"field": "sum_count", "scale": "view_7_y"},
+              "x": {"field": "dia_da_semana", "scale": "view_7_x"}
+            }
+          },
+          "interactive": true,
+          "style": ["bar"]
+        }
+      ],
+      "axes": [
+        {
+          "scale": "view_7_y",
+          "orient": "left",
+          "aria": false,
+          "labels": false,
+          "grid": true,
+          "domain": false,
+          "zindex": 0,
+          "minExtent": 0,
+          "ticks": false,
+          "maxExtent": 0,
+          "gridScale": "view_7_x",
+          "tickCount": {"signal": "ceil(height/40)"}
+        },
+        {
+          "scale": "view_7_x",
+          "labelAlign": "right",
+          "grid": false,
+          "title": "Dia da semana",
+          "labelAngle": 270,
+          "orient": "bottom",
+          "zindex": 0,
+          "labelBaseline": "middle"
+        },
+        {
+          "scale": "view_7_y",
+          "title": "Média de Casos",
+          "orient": "left",
+          "labelOverlap": true,
+          "tickCount": {"signal": "ceil(height/40)"},
+          "grid": false,
+          "zindex": 0
+        }
+      ],
+      "legends": [
+        {
+          "fill": "view_7_color",
+          "symbolType": "square",
+          "title": "dia_da_semana"
+        }
+      ],
+      "style": "cell"
+    },
+    {
+      "type": "group",
+      "name": "concat_1_group",
+      "encode": {
+        "update": {
+          "height": {"signal": "height"},
+          "width": {"signal": "childWidth"}
+        }
+      },
+      "signals": [
+        {
+          "name": "param_7_tuple",
+          "update": "param_7_CLASSI_FIN !== null ? {fields: param_7_tuple_fields, values: [param_7_CLASSI_FIN]} : null"
+        },
+        {
+          "name": "param_7_tuple_fields",
+          "value": [{"type": "E", "field": "CLASSI_FIN"}]
+        },
+        {
+          "name": "param_7_modify",
+          "on": [
+            {
+              "events": {"signal": "param_7_tuple"},
+              "update": "modify(\"param_7_store\", param_7_tuple, true)"
+            }
+          ]
+        },
+        {
+          "name": "param_8_tuple",
+          "on": [
+            {
+              "events": [
+                {
+                  "source": "scope",
+                  "markname": "view_5_voronoi",
+                  "type": "pointerover"
+                }
+              ],
+              "update": "datum && item().mark.marktype !== 'group' && indexof(item().mark.role, 'legend') < 0 ? {unit: \"view_5\", fields: param_8_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"dia_da_semana\"]]} : null",
+              "force": true
+            },
+            {
+              "events": [{"source": "view", "type": "dblclick"}],
+              "update": "null"
+            }
+          ]
+        },
+        {
+          "name": "param_8_tuple_fields",
+          "value": [{"type": "E", "field": "dia_da_semana"}]
+        },
+        {
+          "name": "param_8_toggle",
+          "value": false,
+          "on": [
+            {
+              "events": [
+                {
+                  "source": "scope",
+                  "markname": "view_5_voronoi",
+                  "type": "pointerover"
+                }
+              ],
+              "update": "event.shiftKey"
+            },
+            {
+              "events": [{"source": "view", "type": "dblclick"}],
+              "update": "false"
+            }
+          ]
+        },
+        {
+          "name": "param_8_modify",
+          "on": [
+            {
+              "events": {"signal": "param_8_tuple"},
+              "update": "modify(\"param_8_store\", param_8_toggle ? null : param_8_tuple, param_8_toggle ? null : true, param_8_toggle ? param_8_tuple : null)"
+            }
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "type": "group",
+          "name": "view_6_pathgroup",
+          "from": {
+            "facet": {
+              "data": "data_3",
+              "name": "faceted_path_view_6_main",
+              "groupby": ["Ano"]
+            }
+          },
+          "encode": {
+            "update": {
+              "height": {
+                "field": {
+                  "signal": null,
+                  "datum": null,
+                  "group": "height",
+                  "parent": null
+                }
+              },
+              "width": {
+                "field": {
+                  "signal": null,
+                  "datum": null,
+                  "group": "width",
+                  "parent": null
+                }
+              }
+            }
+          },
+          "marks": [
+            {
+              "type": "line",
+              "name": "view_6_marks",
+              "from": {"data": "faceted_path_view_6_main"},
+              "sort": {"field": "x"},
+              "encode": {
+                "update": {
+                  "interpolate": {"value": "basis"},
+                  "y": {"field": "sum_count", "scale": "concat_1_y"},
+                  "defined": {
+                    "signal": "isValid(datum[\"sum_count\"]) && isFinite(+datum[\"sum_count\"])"
+                  },
+                  "stroke": {"field": "Ano", "scale": "concat_1_color"},
+                  "x": {
+                    "field": "dia_da_semana",
+                    "scale": "concat_1_x",
+                    "band": 0.5
+                  }
+                }
+              },
+              "interactive": true,
+              "style": ["line"]
+            }
+          ]
+        },
+        {
+          "type": "symbol",
+          "name": "concat_1_layer_1_marks",
+          "from": {"data": "data_4"},
+          "encode": {
+            "update": {
+              "stroke": {"field": "Ano", "scale": "concat_1_color"},
+              "x": {
+                "field": "dia_da_semana",
+                "scale": "concat_1_x",
+                "band": 0.5
+              },
+              "y": {"field": "sum_count", "scale": "concat_1_y"},
+              "fill": {"value": "transparent"},
+              "opacity": [
+                {
+                  "value": 1,
+                  "test": "length(data(\"param_8_store\")) && vlSelectionTest(\"param_8_store\", datum)"
+                },
+                {"value": 0}
+              ]
+            }
+          },
+          "style": ["point"],
+          "interactive": false
+        },
+        {
+          "type": "rule",
+          "name": "view_5_marks",
+          "from": {"data": "data_5"},
+          "encode": {
+            "update": {
+              "tooltip": {
+                "signal": "{\"2021\": format(datum[\"2021\"], \"\"), \"2022\": format(datum[\"2022\"], \"\"), \"2023\": format(datum[\"2023\"], \"\"), \"2024\": format(datum[\"2024\"], \"\")}"
+              },
+              "y2": {
+                "field": {
+                  "signal": null,
+                  "datum": null,
+                  "group": "height",
+                  "parent": null
+                }
+              },
+              "stroke": {"value": "gray"},
+              "y": {"value": 0},
+              "opacity": [
+                {
+                  "value": 0.3,
+                  "test": "length(data(\"param_8_store\")) && vlSelectionTest(\"param_8_store\", datum)"
+                },
+                {"value": 0}
+              ],
+              "x": {
+                "field": "dia_da_semana",
+                "scale": "concat_1_x",
+                "band": 0.5
+              }
+            }
+          },
+          "style": ["rule"],
+          "interactive": true
+        },
+        {
+          "type": "path",
+          "name": "view_5_voronoi",
+          "from": {"data": "view_5_marks"},
+          "encode": {
+            "update": {
+              "fill": {"value": "transparent"},
+              "strokeWidth": {"value": 0.35},
+              "stroke": {"value": "transparent"},
+              "isVoronoi": {"value": true},
+              "tooltip": {
+                "signal": "{\"2021\": format(datum.datum[\"2021\"], \"\"), \"2022\": format(datum.datum[\"2022\"], \"\"), \"2023\": format(datum.datum[\"2023\"], \"\"), \"2024\": format(datum.datum[\"2024\"], \"\")}"
+              }
+            }
+          },
+          "transform": [
+            {
+              "type": "voronoi",
+              "x": {"expr": "datum.datum.x || 0"},
+              "y": {"expr": "datum.datum.y || 0"},
+              "size": [{"signal": "childWidth"}, {"signal": "height"}]
+            }
+          ],
+          "interactive": true
+        }
+      ],
+      "axes": [
+        {
+          "scale": "concat_1_y",
+          "labels": false,
+          "aria": false,
+          "maxExtent": 0,
+          "tickCount": {"signal": "ceil(height/40)"},
+          "ticks": false,
+          "minExtent": 0,
+          "domain": false,
+          "gridScale": "concat_1_x",
+          "grid": true,
+          "zindex": 0,
+          "orient": "left"
+        },
+        {
+          "scale": "concat_1_x",
+          "labelAlign": "right",
+          "zindex": 0,
+          "grid": false,
+          "orient": "bottom",
+          "labelBaseline": "middle",
+          "labelAngle": 270,
+          "title": "Dia da semana"
+        },
+        {
+          "scale": "concat_1_y",
+          "grid": false,
+          "labelOverlap": true,
+          "tickCount": {"signal": "ceil(height/40)"},
+          "zindex": 0,
+          "title": "Sum of count",
+          "orient": "left"
+        }
+      ],
+      "style": "cell",
+      "legends": [
+        {
+          "stroke": "concat_1_color",
+          "symbolType": "circle",
+          "title": "Ano",
+          "encode": {
+            "symbols": {
+              "update": {
+                "fill": {"value": "transparent"},
+                "opacity": {"value": 1}
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "view_7_x",
+      "type": "band",
+      "domain": {
+        "data": "data_0_view_7_x_domain_dia_da_semana",
+        "field": "dia_da_semana",
+        "sort": {"op": "max", "field": "sort_field"}
+      },
+      "range": [0, {"signal": "childWidth"}],
+      "paddingOuter": 0.05,
+      "paddingInner": 0.1
+    },
+    {
+      "name": "view_7_y",
+      "type": "linear",
+      "domain": [
+        {"signal": "(data(\"data_2_view_7_y_domain_sum_count\")[0] || {}).min"},
+        {"signal": "(data(\"data_2_view_7_y_domain_sum_count\")[0] || {}).max"}
+      ],
+      "range": [{"signal": "height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "view_7_color",
+      "type": "ordinal",
+      "domain": {
+        "data": "data_2_view_7_color_domain_dia_da_semana",
+        "field": "dia_da_semana",
+        "sort": true
+      },
+      "range": "category"
+    },
+    {
+      "name": "concat_1_x",
+      "type": "band",
+      "domain": {
+        "fields": [
+          {
+            "data": "data_0_concat_1_x_domain_dia_da_semana_0",
+            "field": "dia_da_semana"
+          },
+          {
+            "data": "data_5_concat_1_x_domain_dia_da_semana_1",
+            "field": "dia_da_semana"
+          }
+        ],
+        "sort": {"op": "max", "field": "sort_field"}
+      },
+      "range": [0, {"signal": "childWidth"}],
+      "paddingInner": 0,
+      "paddingOuter": 0
+    },
+    {
+      "name": "concat_1_y",
+      "type": "linear",
+      "domain": {
+        "fields": [
+          {"data": "data_3", "field": "sum_count"},
+          {"data": "data_4", "field": "sum_count"}
+        ]
+      },
+      "range": [{"signal": "height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "concat_1_color",
+      "type": "ordinal",
+      "domain": {
+        "fields": [
+          {"data": "data_3_concat_1_color_domain_Ano_0", "field": "Ano"},
+          {"data": "data_4_concat_1_color_domain_Ano_1", "field": "Ano"}
+        ],
+        "sort": true
+      },
+      "range": "category"
+    }
+  ],
+  "layout": {"padding": 20, "bounds": "full", "align": "each"},
+  "background": "white",
+  "padding": 5,
+  "height": 250,
+  "config": {}
+}

@@ -2,7 +2,6 @@ from typing import Optional
 from .temporal_controller import TemporalController
 
 import os
-import time
 import pandas as pd
 import altair as alt
 
@@ -41,35 +40,71 @@ class ReportController:
         occurrences = self.render_occurrences(data)
 
         report = self.compile_report(
-            charts=[
-                ("time_series", time_series, "Texto do Plot de Séries Temporais"),
-                ("occurrences", occurrences, "Texto dos Plots de Ocorrências")
-            ],
             metadata={
-                    "totalCases": f"{data['general']['totalCases']:,}",
-                    "totalDeaths": f"{data['general']['totalDeaths']:,}",
-                    "totalRecovered": f"{data['general']['totalRecovered']:,}"
-            }
+                "totalCases": f"{data['general']['totalCases']:,}",
+                "totalDeaths": f"{data['general']['totalDeaths']:,}",
+                "totalRecovered": f"{data['general']['totalRecovered']:,}",
+
+                "uf": uf, "syndrome": syndrome, "year": year, "evolution": evolution,
+            },
+            charts=[
+                ("time_series", time_series,
+                 "Esta figura apresenta uma visualização de séries temporais, "
+                 "destacando a evolução do número de casos ao longo do tempo "
+                 "com base na data de notificação. A análise permite identificar "
+                 "tendências gerais e variações nos dados de forma clara e organizada."),
+
+                ("occurrences", occurrences,
+                 "A figura ilustra a distribuição de ocorrências categorizadas por "
+                 "características específicas, como sexo, faixa etária ou outros "
+                 "atributos relevantes. A disposição visual facilita a comparação "
+                 "direta entre diferentes grupos e categorias, promovendo insights "
+                 "sobre padrões demográficos e comportamentais.")
+            ],
+            json_charts=[
+                ("geoplot", open(os.path.join("datasets", "geoplot.json")).read(),
+                 "Apresenta dados organizados geograficamente, com totais absolutos "
+                 "e gráficos normalizados por região e estado. A seleção de uma região "
+                 "ajusta automaticamente os dados exibidos nos gráficos estaduais, "
+                 "destacando proporções e evoluções entre localidades."),
+
+                ("mensal", open(os.path.join("datasets", "mensal.json")).read(),
+                 "Exibe a série temporal com granularidade mensal, permitindo "
+                 "identificar tendências sazonais e comparar variações entre "
+                 "diferentes meses. A análise destaca padrões de longo prazo para "
+                 "diagnósticos como COVID-19 e Influenza."),
+
+                ("semanal", open(os.path.join("datasets", "semanal.json")).read(),
+                 "Mostra a série temporal com granularidade semanal, evidenciando "
+                 "padrões como subnotificações aos finais de semana e aumentos nas "
+                 "segundas-feiras. Essa visualização é ideal para capturar particularidades "
+                 "em ciclos semanais, auxiliando na análise de notificações periódicas."),
+            ],
         )
 
         return report
 
     def compile_report(self,
-                       charts: list,
-                       metadata: dict) -> str:
+                       metadata: dict,
+                       charts: list = None,
+                       json_charts: list = None) -> str:
 
         """
         Função para compilar os dados do relatório para um arquivo HTML
 
         Parâmetros
         ----------
+        metadata: dict
+            Dicionário com os metadados para adicionar ao banner do relatório.
+                Formato: {"totalCases": 123, "totalDeaths": 123, "totalRecovered": 123}
+
         charts: list
             Lista com os gráficos para adicionar ao relatório no formato:
                 ("Identificador da Figura", Plot do VEGA, "Texto da Figura")
 
-        metadata: dict
-            Dicionário com os metadados para adicionar ao banner do relatório.
-                Formato: {"totalCases": 123, "totalDeaths": 123, "totalRecovered": 123}
+        json_charts: list
+            Lista com os gráficos estáticos para adicionar ao relatório no formato:
+                ("Identificador da Figura", "Código JSON", "Texto da Figura")
 
         Retorno
         -------
@@ -80,12 +115,30 @@ class ReportController:
         chart_divs = []
         chart_scripts = []
 
-        for idx, (chart_id, chart, chart_text) in enumerate(charts):
-            chart_div = chart_template.format(chart_id=chart_id, fig_num=idx + 1, text=chart_text)
-            chart_script = script_template.replace("CHART_ID", chart_id).replace("JSON_CODE", str(chart.to_dict()))
+        if charts is not None:
 
-            chart_divs.append(chart_div)
-            chart_scripts.append(chart_script)
+            if metadata['uf'] is not None:
+                chart_divs.append(f"<h1>Análises para o Estado {metadata['uf']}</h1>")
+            else:
+                chart_divs.append("<h1>Análises do Dataset para os Dados Filtrados</h1>")
+
+            for idx, (chart_id, chart, chart_text) in enumerate(charts):
+                chart_div = chart_template.format(chart_id=chart_id, fig_num=idx + 1, text=chart_text)
+                chart_script = script_template.replace("CHART_ID", chart_id).replace("JSON_CODE", str(chart.to_dict()))
+
+                chart_divs.append(chart_div)
+                chart_scripts.append(chart_script)
+
+        if json_charts is not None:
+
+            chart_divs.append("<h1>Análises do Dataset Geral</h1>")
+
+            for idx, (chart_id, chart_json, chart_text) in enumerate(json_charts):
+                chart_div = chart_template.format(chart_id=chart_id, fig_num=idx + 1, text=chart_text)
+                chart_script = script_template.replace("CHART_ID", chart_id).replace("JSON_CODE", chart_json)
+
+                chart_divs.append(chart_div)
+                chart_scripts.append(chart_script)
 
         chart_divs = "".join(chart_divs)
         chart_scripts = "<script>{code}</script>".format(code="".join(chart_scripts))
