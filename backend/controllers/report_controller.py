@@ -27,17 +27,24 @@ class ReportController:
         self.temporal_controller = TemporalController()
         self.template_path = os.path.join(".", "report_template.html")
 
-    def overview_report(self,
-                        uf: Optional[str] = None,
-                        syndrome: Optional[str] = None,
-                        year: Optional[int] = None,
-                        evolution: Optional[str] = None
-    ):
+    def general_report(self,
+                       uf: Optional[str] = None,
+                       syndrome: Optional[str] = None,
+                       year: Optional[int] = None,
+                       evolution: Optional[str] = None):
 
         data = self.temporal_controller.get_overview_data(uf, syndrome, year, evolution)
 
         time_series = self.render_time_series(data)
         occurrences = self.render_occurrences(data)
+
+        correlation = self.render_correlation(uf, syndrome, year, evolution)
+        lag_plots = self.render_lag_plots(uf, syndrome, year, evolution)
+        stl_decomposition = self.render_stl_decomposition(uf, syndrome, year, evolution)
+        differentiation = self.render_diff(uf, syndrome, year, evolution)
+
+        moving_mean = self.render_moving_mean(uf, syndrome, year, evolution)
+        ema = self.render_EMA(uf, syndrome, year, evolution)
 
         report = self.compile_report(
             metadata={
@@ -59,7 +66,26 @@ class ReportController:
                  "características específicas, como sexo, faixa etária ou outros "
                  "atributos relevantes. A disposição visual facilita a comparação "
                  "direta entre diferentes grupos e categorias, promovendo insights "
-                 "sobre padrões demográficos e comportamentais.")
+                 "sobre padrões demográficos e comportamentais."),
+
+                ("correlation", correlation,
+                 "Texto do Plot de Autocorrelação"),
+
+                ("lag_plots", lag_plots,
+                 "Texto dos Plots de Lag"),
+
+                ("stl_decomposition", stl_decomposition,
+                 "Texto do Plot de Decomposição STL"),
+
+                ("differentiation", differentiation,
+                 "Texto do Plot de Diferenciação"),
+
+                ("moving_mean", moving_mean,
+                 "Texto do Plot de Médias Móveis"),
+
+                ("EMA", ema,
+                 "Texto do Plot de Médias Móveis Exponênciais"),
+
             ],
             json_charts=[
                 ("geoplot", open(os.path.join("datasets", "geoplot.json")).read(),
@@ -142,6 +168,7 @@ class ReportController:
 
         chart_divs = "".join(chart_divs)
         chart_scripts = "<script>{code}</script>".format(code="".join(chart_scripts))
+        chart_scripts = chart_scripts.replace("True", "true")
 
         template = open(self.template_path).read()
 
@@ -215,3 +242,176 @@ class ReportController:
 
         return occs_chart
 
+
+    def render_correlation(self, *args):
+
+        CORR = self.temporal_controller.correlogram(*args)
+
+        CORR = pd.DataFrame(CORR).reset_index(names='lag')
+
+        del CORR['confidenceIntervals']
+
+        autocorr = alt.Chart(CORR).mark_point(filled=True).encode(
+            x=alt.X("lag:Q", title="Lag"),
+            y=alt.Y("autocorrelations:Q", title="Autocorrelação", scale=alt.Scale(domain=[-1, 1])),
+            color=alt.datum("Autocorrelações")
+        )
+
+        lines = alt.Chart(CORR).mark_rule().encode(
+            x=alt.X("lag:Q"),
+            y=alt.Y("autocorrelations:Q")
+        )
+
+        lowerRange = alt.Chart(CORR).mark_area(opacity=0.3).encode(
+            x=alt.X("lag:Q"),
+            y=alt.Y("lowerY"),
+            color=alt.datum("Intervalo de Confiança")
+        )
+
+        upperRange = alt.Chart(CORR).mark_area(opacity=0.3).encode(
+            x=alt.X("lag:Q"),
+            y=alt.Y("upperY"),
+            color=alt.datum("Intervalo de Confiança")
+        )
+
+        chart = (autocorr + lines + lowerRange + upperRange).properties(
+            title="Autocorrelações com 25 Lags",
+            width=800
+        )
+
+        return chart
+
+
+    def render_lag_plots(self, *args):
+
+        lags = self.temporal_controller.get_serie_lag_plot(*args)
+
+        xlabel = "Número de Casos"
+        ylabel = "Número de Casos com Lag"
+
+        d3 = pd.DataFrame(lags['3'])
+        d6 = pd.DataFrame(lags['6'])
+        d9 = pd.DataFrame(lags['9'])
+        d12 = pd.DataFrame(lags['12'])
+
+        d3 = alt.Chart(d3).mark_point().encode(
+            x=alt.X("yActual:Q", title=xlabel),
+            y=alt.Y('yLagged:Q', title=ylabel)
+        ).properties(
+            title="Lags Temporais 3D"
+        )
+
+        d6 = alt.Chart(d6).mark_point().encode(
+            x=alt.X("yActual:Q", title=xlabel),
+            y=alt.Y('yLagged:Q', title=ylabel)
+        ).properties(
+            title="Lags Temporais 6D"
+        )
+
+        d9 = alt.Chart(d9).mark_point().encode(
+            x=alt.X("yActual:Q", title=xlabel),
+            y=alt.Y('yLagged:Q', title=ylabel)
+        ).properties(
+            title="Lags Temporais 9D"
+        )
+
+        d12 = alt.Chart(d12).mark_point().encode(
+            x=alt.X("yActual:Q", title=xlabel),
+            y=alt.Y('yLagged:Q', title=ylabel)
+        ).properties(
+            title="Lags Temporais 12D"
+        )
+
+        chart = (d3 | d6) & (d9 | d12)
+
+        return chart
+
+    def render_stl_decomposition(self, *args):
+
+        SSD = pd.DataFrame(self.temporal_controller.serie_stl_decomposition())
+        width = 800
+
+        trend = alt.Chart(SSD).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("Trend_values:Q", title="Tendência")
+        ).properties(
+            width=width
+        )
+
+        seasonal = alt.Chart(SSD).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("Seasonal_values:Q", title="Sasonalidade")
+        ).properties(
+            width=width
+        )
+
+        resid = alt.Chart(SSD).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("Resid_values:Q", title="Resíduos")
+        ).properties(
+            width=width
+        )
+
+        chart = (trend & seasonal & resid)
+
+        return chart
+
+
+    def render_EMA(self, *args):
+        granularity = 30
+        SERA = pd.DataFrame(
+            data=self.temporal_controller.serie_exponential_rooling_average(
+                granularity=granularity
+            )
+        )
+
+        chart = alt.Chart(SERA).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("count:Q", title="Número de Casos")
+        ).properties(
+            title=f"Médias Móveis Exponenciais ({granularity} dias)",
+            width=800
+        )
+
+        return chart
+
+    def render_diff(self, *args):
+
+        SD1 = pd.DataFrame(self.temporal_controller.serie_differentiation(*args, order=1))
+        SD2 = pd.DataFrame(self.temporal_controller.serie_differentiation(*args, order=2))
+
+        first = alt.Chart(SD1).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("count:Q", title="Número de Casos")
+        ).properties(
+            title="Diferenciação de Primeira Ordem"
+        )
+
+        second = alt.Chart(SD2).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("count:Q", title="")
+        ).properties(
+            title="Diferenciação de Segunda Ordem"
+        )
+
+        chart = (first | second).resolve_scale(y='shared')
+
+        return chart
+
+    def render_moving_mean(self, *args):
+        granularity = 30
+        SERA = pd.DataFrame(
+            data=self.temporal_controller.serie_rooling_average(
+                granularity=f"{granularity}D"
+            )
+        )
+
+        chart = alt.Chart(SERA).mark_line().encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("count:Q", title="Número de Casos")
+        ).properties(
+            title=f"Médias Móveis ({granularity} dias)",
+            width=800
+        )
+
+        return chart

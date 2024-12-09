@@ -14,7 +14,7 @@ async def overview(
     try:
         controller = ReportController()
 
-        report = controller.overview_report(uf, syndrome, year, evolution)
+        report = controller.general_report(uf, syndrome, year, evolution)
 
         headers = {
             "content-length": str(len(report.encode('utf-8'))),

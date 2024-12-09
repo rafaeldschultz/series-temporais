@@ -301,7 +301,7 @@ class TemporalController:
 
         serie = self.df.groupby("DT_NOTIFIC").size()
 
-        stl = STL(serie, seasonal=seasonal if seasonal else 13)
+        stl = STL(serie, period=seasonal if seasonal else 13)
         results = stl.fit()
 
         serie = serie.reset_index().rename(columns={0: "Count"})
