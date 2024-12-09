@@ -328,7 +328,7 @@ class ReportController:
 
     def render_stl_decomposition(self, *args):
 
-        SSD = pd.DataFrame(self.temporal_controller.serie_stl_decomposition())
+        SSD = pd.DataFrame(self.temporal_controller.serie_stl_decomposition(*args))
         width = 800
 
         trend = alt.Chart(SSD).mark_line().encode(
