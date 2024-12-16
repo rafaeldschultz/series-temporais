@@ -1,10 +1,10 @@
+pmdarima
 fastapi
 uvicorn[standard]
 pydantic
+statsmodels
 pandas
-numpy
 pyarrow
 fastparquet
 geopandas
-statsmodels
-pmdarima
+numpy==1.26.4
