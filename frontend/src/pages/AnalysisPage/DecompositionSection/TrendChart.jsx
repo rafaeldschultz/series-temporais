@@ -18,8 +18,8 @@ const TrendChart = () => {
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data["DT_NOTIFIC"],
-          y: data["Trend_values"],
+          x: data.stlData["DT_NOTIFIC"],
+          y: data.stlData["Trend_values"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },

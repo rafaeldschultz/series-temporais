@@ -11,6 +11,8 @@ import ResidualsChart from "./ResidualsChart";
 import SeasonalChart from "./SeasonalChart";
 import TrendChart from "./TrendChart";
 import useDecomposition from "../../../hooks/useDecomposition";
+import CorrelogramChart from "./CorrelogramChart";
+import PartialCorrelogramChart from "./PartialCorrelogramChart";
 
 const DecompositionSection = () => {
   const { filters } = useFilter();
@@ -55,6 +57,12 @@ const DecompositionSection = () => {
                 </Grid>
                 <Grid size={6}>
                   <ResidualsChart />
+                </Grid>
+                <Grid size={6}>
+                  <CorrelogramChart />
+                </Grid>
+                <Grid size={6}>
+                  <PartialCorrelogramChart />
                 </Grid>
               </Grid>
             </Stack>

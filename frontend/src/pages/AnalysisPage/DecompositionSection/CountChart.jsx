@@ -18,8 +18,8 @@ const CountChart = () => {
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data["DT_NOTIFIC"],
-          y: data["Count"],
+          x: data.stlData["DT_NOTIFIC"],
+          y: data.stlData["Count"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },

@@ -18,8 +18,8 @@ const ResidualsChart = () => {
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data["DT_NOTIFIC"],
-          y: data["Resid_values"],
+          x: data.stlData["DT_NOTIFIC"],
+          y: data.stlData["Resid_values"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },

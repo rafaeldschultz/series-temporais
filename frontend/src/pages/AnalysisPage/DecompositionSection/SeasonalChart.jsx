@@ -18,8 +18,8 @@ const SeasonalChart = () => {
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data["DT_NOTIFIC"],
-          y: data["Seasonal_values"],
+          x: data.stlData["DT_NOTIFIC"],
+          y: data.stlData["Seasonal_values"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },

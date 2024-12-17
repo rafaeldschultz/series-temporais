@@ -2,22 +2,17 @@ import Grid from "@mui/material/Grid2";
 
 import Page from "../../layouts/Page";
 import SideMenu from "../../components/SideMenu/SideMenu";
-
-import { useMemo, useState } from "react";
 import { navigationItems } from "./navigation";
-
 import { FilterProvider } from "../../contexts/FilterContext";
-import { Divider } from "@mui/material";
+import { Suspense, useState } from "react";
 
 const AnalysisPage = () => {
   const [visibleChart, setVisibleChart] = useState(0);
 
-  const navItems = useMemo(() => {
-    return navigationItems.map((item, index) => ({
-      ...item,
-      id: index,
-    }));
-  });
+  const navItems = navigationItems.map((item, index) => ({
+    ...item,
+    id: index,
+  }));
 
   return (
     <Page sx={{ p: 0, py: 4 }}>
@@ -30,7 +25,9 @@ const AnalysisPage = () => {
           />
         </Grid>
         <Grid size="grow" height={"100%"}>
-          <FilterProvider>{navItems[visibleChart].component}</FilterProvider>
+          <Suspense>
+            <FilterProvider>{navItems[visibleChart].component}</FilterProvider>
+          </Suspense>
         </Grid>
       </Grid>
     </Page>
