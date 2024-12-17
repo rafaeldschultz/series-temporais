@@ -1,21 +1,15 @@
-import os
+import pandas as pd
 from pathlib import Path
 from typing import Optional
 
-import numpy as np
-import pandas as pd
-
 from statsmodels.api import tsa
-from statsmodels.graphics.tsaplots import plot_pacf
 from statsmodels.tsa.seasonal import STL, seasonal_decompose
-from statsmodels.tsa.stattools import pacf
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.stats.diagnostic import acorr_ljungbox
 
-from scipy.stats import jarque_bera
-
 from pmdarima import auto_arima
+from scipy.stats import jarque_bera
 
 
 
@@ -425,7 +419,7 @@ class TemporalController:
             "correlogram":correlogram_data,
             "partialCorrelogram":partial_correlogram_data
         }
-    
+
 
     def get_seasonal_decomposition_data(
         self,
@@ -574,7 +568,6 @@ class TemporalController:
         pred_resid_partial_correlogram = self.partial_correlogram(
             serie=pred_resid['Resid'], num_lags=num_lags_correlogram, alpha=alpha_correlogram
         )
-
 
         serie = serie.reset_index()
         serie = serie.rename(columns={0: "Count"})

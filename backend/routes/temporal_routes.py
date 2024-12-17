@@ -193,6 +193,26 @@ async def get_stl_decomposition_data(
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
+@api_temporal.get("/serie_stl_decomposition")
+async def serie_stl_decomposition(
+    uf: Optional[str] = None,
+    syndrome: Optional[str] = None,
+    year: Optional[int] = None,
+    evolution: Optional[str] = None,
+    seasonal: Optional[int] = None,
+):
+    # seasonal: to be defined
+    try:
+        controller = TemporalController()
+        data = controller.serie_stl_decomposition(
+            uf, syndrome, year, evolution, seasonal
+        )
+        return JSONResponse(status_code=200, content=data)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
 @api_temporal.get("/get_seasonal_decomposition_data")
 async def get_seasonal_decomposition_data(
     uf: Optional[str] = None,

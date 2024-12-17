@@ -2,6 +2,7 @@ from typing import Optional
 from .temporal_controller import TemporalController
 
 import os
+import warnings
 import pandas as pd
 import altair as alt
 
@@ -22,6 +23,73 @@ vegaEmbed('#CHART_ID', chartSpec_CHART_ID).then(result => {
 """
 
 
+def plot_decomposition(data: dict, width: int = 800):
+    SDD = pd.DataFrame(data)
+
+    trend = alt.Chart(SDD).mark_line().encode(
+        x=alt.X("DT_NOTIFIC:T", title="Data"),
+        y=alt.Y("Trend_values:Q", title="Tendência")
+    ).properties(
+        width=width
+    )
+
+    seasonal = alt.Chart(SDD).mark_line().encode(
+        x=alt.X("DT_NOTIFIC:T", title="Data"),
+        y=alt.Y("Seasonal_values:Q", title="Sasonalidade")
+    ).properties(
+        width=width
+    )
+
+    resid = alt.Chart(SDD).mark_line().encode(
+        x=alt.X("DT_NOTIFIC:T", title="Data"),
+        y=alt.Y("Resid_values:Q", title="Resíduos")
+    ).properties(
+        width=width
+    )
+
+    chart = (trend & seasonal & resid)
+
+    return chart
+
+
+def plot_correlogram(CORR: dict,
+                     title="Titulo do Correlograma"):
+
+    CORR = pd.DataFrame(CORR).reset_index(names='lag')
+
+    del CORR['confidenceIntervals']
+
+    autocorr = alt.Chart(CORR).mark_point(filled=True).encode(
+        x=alt.X("lag:Q", title="Lag"),
+        y=alt.Y("autocorrelations:Q", title="Autocorrelação", scale=alt.Scale(domain=[-1, 1])),
+        color=alt.datum("Autocorrelações")
+    )
+
+    lines = alt.Chart(CORR).mark_rule().encode(
+        x=alt.X("lag:Q"),
+        y=alt.Y("autocorrelations:Q")
+    )
+
+    lowerRange = alt.Chart(CORR).mark_area(opacity=0.3).encode(
+        x=alt.X("lag:Q"),
+        y=alt.Y("lowerY"),
+        color=alt.datum("Intervalo de Confiança")
+    )
+
+    upperRange = alt.Chart(CORR).mark_area(opacity=0.3).encode(
+        x=alt.X("lag:Q"),
+        y=alt.Y("upperY"),
+        color=alt.datum("Intervalo de Confiança")
+    )
+
+    chart = (autocorr + lines + lowerRange + upperRange).properties(
+        title=title,
+        width=800
+    )
+
+    return chart
+
+
 class ReportController:
     def __init__(self):
         self.temporal_controller = TemporalController()
@@ -38,13 +106,37 @@ class ReportController:
         time_series = self.render_time_series(data)
         occurrences = self.render_occurrences(data)
 
-        correlation = self.render_correlation(uf, syndrome, year, evolution)
+        correlation = plot_correlogram(
+            CORR=self.temporal_controller.correlogram(uf, syndrome, year, evolution)
+        )
+
         lag_plots = self.render_lag_plots(uf, syndrome, year, evolution)
-        stl_decomposition = self.render_stl_decomposition(uf, syndrome, year, evolution)
         differentiation = self.render_diff(uf, syndrome, year, evolution)
+
+        stl_decomposition_data = self.temporal_controller.get_stl_decomposition_data(uf, syndrome, year, evolution)
+        stl_decomposition = plot_decomposition(data=stl_decomposition_data['stlData'])
+        stl_correlogram = plot_correlogram(CORR=stl_decomposition_data['correlogram'])
+
+        seasonal_decomposition_data = self.temporal_controller.get_seasonal_decomposition_data(uf, syndrome, year, evolution)
+        seasonal_decomposition = plot_decomposition(data=seasonal_decomposition_data['seasonalData'])
+        seasonal_correlogram = plot_correlogram(CORR=seasonal_decomposition_data['correlogram'])
 
         moving_mean = self.render_moving_mean(uf, syndrome, year, evolution)
         ema = self.render_EMA(uf, syndrome, year, evolution)
+
+        with warnings.catch_warnings():
+            # Ignorar todos os avisos do segmento de código
+            warnings.simplefilter("ignore")
+
+            # Ajustar um modelo ARIMA com os dados
+            predict_data = self.temporal_controller.get_predict_data(uf, syndrome, year, evolution)
+
+        arima_chart = self.render_arima(predict_data)
+        arima_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
+                                      title="Correlograma dos Resíduos do Modelo")
+
+        arima_partial_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
+                                              title="Correlograma Parcial dos Resíduos do Modelo")
 
         report = self.compile_report(
             metadata={
@@ -54,12 +146,22 @@ class ReportController:
 
                 "uf": uf, "syndrome": syndrome, "year": year, "evolution": evolution,
             },
+            messages=[
+                ("Teste de Estacionariedade na Série Temporal",
+                 self.stationarity_test_msg(stl_decomposition_data)),
+
+                ("Teste de Normalidade dos Resíduos",
+                 self.normality_test_msg(predict_data)),
+
+                ("Teste de Indepêndencia dos Resíduos",
+                 self.independence_test_msg(predict_data)),
+
+                ("Ajuste do Modelo ARIMA à Série Temporal",
+                 self.arima_fit_msg(predict_data))
+            ],
             charts=[
                 ("time_series", time_series,
-                 "Esta figura apresenta uma visualização de séries temporais, "
-                 "destacando a evolução do número de casos ao longo do tempo "
-                 "com base na data de notificação. A análise permite identificar "
-                 "tendências gerais e variações nos dados de forma clara e organizada."),
+                 self.time_series_text()),
 
                 ("occurrences", occurrences,
                  "A figura ilustra a distribuição de ocorrências categorizadas por "
@@ -77,6 +179,15 @@ class ReportController:
                 ("stl_decomposition", stl_decomposition,
                  "Texto do Plot de Decomposição STL"),
 
+                ("stl_correlogram", stl_correlogram,
+                 "Texto do Plot de Correlograma do STL"),
+
+                ("season_decomposition", seasonal_decomposition,
+                 "Texto do Plot de Decomposição Sasonal"),
+
+                ("season_correlogram", seasonal_correlogram,
+                 "Texto do Plot de Correlograma da Decomposição Sasonal"),
+
                 ("differentiation", differentiation,
                  "Texto do Plot de Diferenciação"),
 
@@ -86,6 +197,14 @@ class ReportController:
                 ("EMA", ema,
                  "Texto do Plot de Médias Móveis Exponênciais"),
 
+                ("arima_chart", arima_chart,
+                 "Texto do Plot do Modelo ARIMA"),
+
+                ("arima_corr", arima_corr,
+                 "Texto do Plot de Autocorrelações do Modelo ARIMA"),
+
+                ("arima_partial_corr", arima_partial_corr,
+                 "Texto do Plot de Autocorrelações Parciais do Modelo ARIMA")
             ],
             json_charts=[
                 ("geoplot", open(os.path.join("datasets", "geoplot.json")).read(),
@@ -112,6 +231,7 @@ class ReportController:
 
     def compile_report(self,
                        metadata: dict,
+                       messages: list = None,
                        charts: list = None,
                        json_charts: list = None) -> str:
 
@@ -140,6 +260,12 @@ class ReportController:
 
         chart_divs = []
         chart_scripts = []
+
+        if messages is not None:
+
+            for title, msg in messages:
+                chart_divs.append(f"<h2>{title}</h2>")
+                chart_divs.append(f"<h3 class='message'>{msg}</h3>")
 
         if charts is not None:
 
@@ -328,7 +454,7 @@ class ReportController:
 
     def render_stl_decomposition(self, *args):
 
-        SSD = pd.DataFrame(self.temporal_controller.serie_stl_decomposition(*args))
+        SSD = pd.DataFrame()
         width = 800
 
         trend = alt.Chart(SSD).mark_line().encode(
@@ -415,3 +541,123 @@ class ReportController:
         )
 
         return chart
+
+    @staticmethod
+    def render_arima(predict_data: dict):
+        predict = pd.DataFrame(predict_data['serie'])
+        predictMean = pd.DataFrame(predict_data['predictMean'])
+        predictConf = pd.DataFrame(predict_data['predictConf'])
+
+        arima = alt.Chart(predict).encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("Predict:Q", title="Número de Casos"),
+            color=alt.datum("ARIMA Ajustado")
+        ).mark_line(opacity=0.6)
+
+        count = alt.Chart(predict).encode(
+            x=alt.X("DT_NOTIFIC:T"),
+            y=alt.Y("Count:Q"),
+            color=alt.datum("Valores Reais")
+        ).mark_line()
+
+        trend = alt.Chart(predictMean).encode(
+            x=alt.X("DT_NOTIFIC:T"),
+            y=alt.Y("predicted_mean:Q"),
+            color=alt.datum("ARIMA Previsão")
+        ).mark_line()
+
+        lower_conf = alt.Chart(predictConf).encode(
+            x=alt.X("DT_NOTIFIC:T"),
+            y=alt.Y("lower y:Q"),
+            color=alt.datum("Intervalo de Confiança")
+        ).mark_area()
+
+        upper_conf = alt.Chart(predictConf).encode(
+            x=alt.X("DT_NOTIFIC:T"),
+            y=alt.Y("upper y:Q"),
+            color=alt.datum("Intervalo de Confiança")
+        ).mark_area()
+
+        chart = count + arima + (lower_conf + upper_conf + trend)
+
+        chart = chart.properties(
+            title="Ajuste do Modelo ARIMA e Previsões",
+            width=800
+        )
+
+        return chart
+
+
+    @staticmethod
+    def stationarity_test_msg(stl_decomposition_data: dict):
+        # Teste estatístico pra saber se a serie é Estacionaria
+        stationarityTest = stl_decomposition_data['stationarityTest']
+
+        test_result = "POSITIVO" if stationarityTest['stationary'] else "NEGATIVO"
+        meaning = "não variam" if stationarityTest['stationary'] else "variam"
+        meaning2 = "não possui" if stationarityTest['stationary'] else "possui"
+        meaning3 = "persistentes" if stationarityTest['stationary'] else "inconsistentes"
+        meaning4 = "facilitando" if stationarityTest['stationary'] else "dificultando"
+
+        stationarityTestMsg = f"O teste de estacionariedade resultou em {test_result}, com p-valor de {stationarityTest['pValue']} e estatística {stationarityTest['testStatistic']}. Isso indica que as propriedades estatísticas da série temporal, como média, variância e autocovariância, {meaning} ao longo do tempo. Isso significa que a série {meaning2} tendências ou padrões sazonais {meaning3}, {meaning4} o uso de modelos estatísticos como ARIMA ou SARIMA."
+
+        return stationarityTestMsg
+
+    @staticmethod
+    def normality_test_msg(predict_data: dict):
+        normTest = predict_data['normTest']
+
+        test_result = "POSITIVO" if normTest['normResid'] else "NEGATIVO"
+        meaning = "são" if normTest['normResid'] else "não são"
+        meaning2 = "está" if normTest['normResid'] else "não está"
+
+        norm_msg = f"O teste Jarque-Bera de normalidade obteve resultado {test_result}, indicando que os resíduos da série temporal {meaning} normalmente distribuidos. Isso indica que o modelo ajustado {meaning2} capturando adequadamente a estrutura dos dados, e os erros (ou resíduos) {meaning} puramente aleatórios."
+
+        return norm_msg
+
+    @staticmethod
+    def independence_test_msg(predict_data: dict):
+        # Test est. pra saber se os resíduos são independentes
+        independenceTest = predict_data['independenceTest']
+        independenceTest['independenceResid'] = bool(independenceTest['independenceResid'])
+
+        # Formatação para o teste de independência
+        test_result = "POSITIVO" if independenceTest['independenceResid'] else "NEGATIVO"
+        meaning = "são" if independenceTest['independenceResid'] else "não são"
+        meaning2 = "está" if independenceTest['independenceResid'] else "não está"
+
+        indep_msg = f"O teste Ljung-Box de independência obteve resultado {test_result}, indicando que os resíduos da série temporal {meaning} independentes. Isso indica que o modelo ajustado {meaning2} capturando toda a estrutura dos dados, e os erros (ou resíduos) {meaning} livres de autocorrelação, uma das principais suposições de modelos de séries temporais."
+
+        return indep_msg
+
+    @staticmethod
+    def arima_fit_msg(predict_data: dict):
+        # Ajuste de parâmetros para modelo arima (AIC, Order)
+        aic = predict_data['aic']
+        order = predict_data['order']
+        seasonalOrder = predict_data['seasonalOrder']
+
+        # Formatação da mensagem
+        arima_msg = (
+            f"O ajuste do modelo ARIMA foi realizado com sucesso. O valor do critério de informação AIC é {aic:.2f}, "
+            f"indicando a qualidade do ajuste. Os parâmetros do modelo são ordem (p, d, q) = {order}, onde p representa "
+            f"a ordem do componente autorregressivo (AR), d é o número de diferenciações necessárias para tornar a série "
+            f"estacionária e q corresponde à ordem do componente de média móvel (MA). A ordem sazonal (P, D, Q, s) = {seasonalOrder} "
+            f"foi ajustada, onde P é a ordem sazonal do componente AR, D o número de diferenciações sazonais, Q a ordem sazonal do "
+            f"componente MA e s representa o período sazonal (por exemplo, 12 para dados mensais). Esses parâmetros indicam como o "
+            f"modelo ARIMA capturou tanto os padrões não sazonais quanto os sazonais da série temporal."
+        )
+
+        return arima_msg
+
+    @staticmethod
+    def time_series_text(year: Optional[int] = None):
+        year = f"{year}" if year is not None else f"2021 a 2024"
+        text = f"""O gráfico de linha apresenta a evolução temporal do número de ocorrências de Síndrome Respiratória Aguda no período de {year}, com o eixo X representando as datas de ocorrência e o eixo Y o número de casos registrados. O gráfico facilita a análise de padrões temporais, possibilitando a identificação de períodos críticos, surtos epidêmicos ou mudanças sazonais.
+
+      - Tendências Gerais: O gráfico permite identificar o comportamento dos casos ao longo do tempo, como aumentos graduais ou quedas acentuadas.
+      - Períodos de Queda: As quedas podem refletir estabilização dos casos, impactos de medidas preventivas (como campanhas de vacinação ou distanciamento social) ou alterações nas condições ambientais.
+      - Ciclos Anuais: Caso haja repetições de padrões em intervalos regulares, pode-se inferir uma sazonalidade dos casos, como o aumento em determinados meses ou estações do ano.
+      """
+
+        return text
