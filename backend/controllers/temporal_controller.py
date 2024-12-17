@@ -586,7 +586,7 @@ class TemporalController:
             "order": order, # Card
             "seasonalOrder": seasonal_order, # Card
             "summary": model_search.summary().as_text(), # Text base64
-            "originalSerie":serie.to_dict(orient="list"),   # Serie
+            "serie":serie.to_dict(orient="list"),   # Serie
             # "adjustedSerie":adjusted_serie.to_dict(orient="list"),   # Serie
             "normTest":norm_result, # Card
             "independenceTest":independence_result, # Card
