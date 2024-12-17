@@ -7,14 +7,14 @@ import LinePlot from "../../../components/Charts/LinePlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
 
-const CountChart = () => {
+const CountChart = ({ seasonal }) => {
   const { filters } = useFilter();
-  const [order, setOrder] = useState("first");
   const { data, isPending: loading } = useDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
+    seasonal,
     (data) => ({
       serieStlDecomposition: [
         {
@@ -26,30 +26,8 @@ const CountChart = () => {
     })
   );
 
-  const items = [
-    {
-      name: "seasonal",
-      label: "Sazonalidade",
-      values: [
-        {
-          value: "first",
-          label: "Primeira",
-        },
-        {
-          value: "second",
-          label: "Segunda",
-        },
-      ],
-      currentValue: order,
-      onChange: (value) => setOrder(value),
-    },
-  ];
-
   return (
-    <DashboardCard
-      title={"Ocorrências"}
-      actions={<ChipHorizontalGrid items={items} />}
-    >
+    <DashboardCard title={"Ocorrências"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (

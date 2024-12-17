@@ -13,19 +13,27 @@ import TrendChart from "./TrendChart";
 import useDecomposition from "../../../hooks/useDecomposition";
 import CorrelogramChart from "./CorrelogramChart";
 import PartialCorrelogramChart from "./PartialCorrelogramChart";
+import { useCallback, useState } from "react";
+import useDebounce from "../../../hooks/useDebounce";
 
 const DecompositionSection = () => {
   const { filters } = useFilter();
+  const [initialSeasonzal, setInitialSeasonal] = useState(13);
 
   const { data, isPending: loading } = useDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
-    filters.evolution
+    filters.evolution,
+    initialSeasonzal
+  );
+
+  const debouncedSetInitialSeasonal = useCallback(
+    useDebounce((value) => setInitialSeasonal(value), 300),
+    []
   );
 
   const transitionTimeout = 500;
-  console.log(data);
 
   return (
     <>
@@ -41,28 +49,28 @@ const DecompositionSection = () => {
             }}
           >
             <Stack gap={2} width={0.8}>
-              <FilterPanel />
+              <FilterPanel
+                onChangeCustomFilter={debouncedSetInitialSeasonal}
+                currentValueCustomFilter={initialSeasonzal}
+              />
               <Grid container spacing={2}>
-                {/* <Grid size={6}>
-                  <SerieStlDecompositionChart />
-                </Grid> */}
                 <Grid size={6}>
-                  <CountChart />
+                  <CountChart seasonal={initialSeasonzal} />
                 </Grid>
                 <Grid size={6}>
-                  <TrendChart />
+                  <TrendChart seasonal={initialSeasonzal} />
                 </Grid>
                 <Grid size={6}>
-                  <SeasonalChart />
+                  <SeasonalChart seasonal={initialSeasonzal} />
                 </Grid>
                 <Grid size={6}>
-                  <ResidualsChart />
+                  <ResidualsChart seasonal={initialSeasonzal} />
                 </Grid>
                 <Grid size={6}>
-                  <CorrelogramChart />
+                  <CorrelogramChart seasonal={initialSeasonzal} />
                 </Grid>
                 <Grid size={6}>
-                  <PartialCorrelogramChart />
+                  <PartialCorrelogramChart seasonal={initialSeasonzal} />
                 </Grid>
               </Grid>
             </Stack>

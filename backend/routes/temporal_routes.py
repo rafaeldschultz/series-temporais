@@ -184,6 +184,15 @@ async def stl_decomposition_data(
     num_lags: Optional[int] = None,
     alpha: Optional[int] = None,
 ):
+    if seasonal is None:
+        seasonal = 13
+
+    if num_lags is None:
+        num_lags = 25
+
+    if alpha is None:
+        alpha = 0.01
+
     try:
         controller = TemporalController()
         data = controller.get_stl_decomposition_data(

@@ -15,19 +15,22 @@ import DashboardCard from "../../../components/Cards/DashboardCard";
 import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRounded";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
-const FilterPanel = () => {
+const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
   const { filters, updateFilter } = useFilter();
 
   const [federalState, setFederalState] = useState(filters.federalState);
   const [syndrome, setSyndrome] = useState(filters.syndrome);
   const [evolution, setEvolution] = useState(filters.evolution);
   const [year, setYear] = useState(filters.year);
+  const [seasonal, setSeasonal] = useState(currentValueCustomFilter);
+  const [error, setError] = useState(false);
 
   const handleSubmit = () => {
     updateFilter("federalState", federalState);
     updateFilter("syndrome", syndrome);
     updateFilter("evolution", evolution);
     updateFilter("year", year);
+    onChangeCustomFilter(seasonal);
   };
 
   return (
@@ -146,6 +149,36 @@ const FilterPanel = () => {
                   // updateFilter("evolution", newValue)
                 }
                 value={evolution}
+              />
+            </Grid>
+            <Grid size={"grow"}>
+              <TextField
+                size="small"
+                label="Sazonalidade"
+                type="number"
+                slotProps={{
+                  inputLabel: {
+                    shrink: true,
+                  },
+                  htmlInput: {
+                    min: 3,
+                    step: 2,
+                  },
+                }}
+                value={seasonal}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  if (
+                    newValue === "" ||
+                    (parseInt(newValue) >= 3 && parseInt(newValue) % 2 !== 0)
+                  ) {
+                    setSeasonal(newValue);
+                    setError(false); // Reset error if input is valid
+                  } else {
+                    setError(true); // Show error if input is invalid
+                  }
+                }}
+                error={error} // Enable error state based on validation
               />
             </Grid>
             <Grid>
