@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 import FilterPanel from "./FilterPanel";
 import { useFilter } from "../../../contexts/FilterContext";
@@ -15,6 +15,7 @@ import CorrelogramChart from "./CorrelogramChart";
 import PartialCorrelogramChart from "./PartialCorrelogramChart";
 import { useCallback, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
+import BigNumberCard from "../../../components/Cards/BigNumberCard";
 
 const DecompositionSection = () => {
   const { filters } = useFilter();
@@ -27,6 +28,8 @@ const DecompositionSection = () => {
     filters.evolution,
     initialSeasonzal
   );
+
+  console.log(data);
 
   const debouncedSetInitialSeasonal = useCallback(
     useDebounce((value) => setInitialSeasonal(value), 300),
@@ -53,6 +56,7 @@ const DecompositionSection = () => {
                 onChangeCustomFilter={debouncedSetInitialSeasonal}
                 currentValueCustomFilter={initialSeasonzal}
               />
+
               <Grid container spacing={2}>
                 <Grid size={6}>
                   <CountChart seasonal={initialSeasonzal} />
@@ -65,6 +69,55 @@ const DecompositionSection = () => {
                 </Grid>
                 <Grid size={6}>
                   <ResidualsChart seasonal={initialSeasonzal} />
+                </Grid>
+                <Grid size={12}>
+                  <Typography
+                    variant={"h5"}
+                    color="primary"
+                    mt={2}
+                    ml={1}
+                    mb={1}
+                  >
+                    Teste de Estacionariedade
+                  </Typography>
+                </Grid>
+                <Grid size={3}>
+                  <BigNumberCard
+                    title={"Estatística"}
+                    isLoading={loading}
+                    number={data?.stationarityTest?.testStatistic}
+                  />
+                </Grid>
+                <Grid size={3}>
+                  <BigNumberCard
+                    title={"Valor p"}
+                    isLoading={loading}
+                    number={data?.stationarityTest?.pValue
+                      .toExponential(2)
+                      .replace(".", ",")}
+                  />
+                </Grid>
+                <Grid size={6}>
+                  <BigNumberCard
+                    title={"Resultado"}
+                    isLoading={loading}
+                    number={
+                      data?.stationarityTest?.stationary
+                        ? "Estacionário"
+                        : "Não Estacionário"
+                    }
+                  />
+                </Grid>
+                <Grid size={12}>
+                  <Typography
+                    variant={"h5"}
+                    color="primary"
+                    mt={2}
+                    ml={1}
+                    mb={1}
+                  >
+                    Correlogramas
+                  </Typography>
                 </Grid>
                 <Grid size={6}>
                   <CorrelogramChart seasonal={initialSeasonzal} />

@@ -46,7 +46,7 @@ export const navigationItems = [
   },
   {
     kind: "item",
-    title: "Decomposição",
+    title: "Decomposição STL",
     component: <DecompositionSection />,
     icon: <GrainRoundedIcon />,
   },

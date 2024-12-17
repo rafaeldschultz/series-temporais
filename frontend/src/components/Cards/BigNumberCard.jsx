@@ -11,8 +11,10 @@ const BigNumberCard = ({ title, number, percentage, isLoading }) => {
             <Typography variant={"h1"}>
               {isLoading ? (
                 <Skeleton width={250} />
-              ) : (
+              ) : typeof number === "number" ? (
                 number.toLocaleString("pt-BR")
+              ) : (
+                number
               )}
             </Typography>
           </Grid>
@@ -20,35 +22,43 @@ const BigNumberCard = ({ title, number, percentage, isLoading }) => {
             {isLoading ? (
               <Skeleton variant={"chip"} width={50} />
             ) : (
-              <Chip
-                label={percentage.toLocaleString("pt-BR", {
-                  maximumFractionDigits: 2,
-                  minimumFractionDigits: 2,
-                  style: "percent",
-                })}
-                color={"primary"}
-                sx={{ borderRadius: 2, fontWeight: "bold" }}
-              />
+              percentage && (
+                <Chip
+                  label={percentage.toLocaleString("pt-BR", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                    style: "percent",
+                  })}
+                  color={"primary"}
+                  sx={{ borderRadius: 2, fontWeight: "bold" }}
+                />
+              )
             )}
           </Grid>
         </Grid>
-        <Box
-          width={1}
-          height={"0.5rem"}
-          sx={{ backgroundColor: "#eaeff4", borderRadius: 2, display: "block" }}
-        >
-          {isLoading || (
-            <Box
-              width={percentage}
-              height={"0.5rem"}
-              sx={(theme) => ({
-                backgroundColor: theme.palette.primary.main,
-                borderRadius: 2,
-                display: "block",
-              })}
-            />
-          )}
-        </Box>
+        {percentage && (
+          <Box
+            width={1}
+            height={"0.5rem"}
+            sx={{
+              backgroundColor: "#eaeff4",
+              borderRadius: 2,
+              display: "block",
+            }}
+          >
+            {isLoading || (
+              <Box
+                width={percentage}
+                height={"0.5rem"}
+                sx={(theme) => ({
+                  backgroundColor: theme.palette.primary.main,
+                  borderRadius: 2,
+                  display: "block",
+                })}
+              />
+            )}
+          </Box>
+        )}
       </Stack>
     </DashboardCard>
   );
