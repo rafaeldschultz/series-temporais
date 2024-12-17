@@ -124,27 +124,97 @@ async def correlogram(
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
+    
 
-
-@api_temporal.get("/serie_stl_decomposition")
-async def serie_stl_decomposition(
+@api_temporal.get("/partial_correlogram")
+async def partial_correlogram(
     uf: Optional[str] = None,
     syndrome: Optional[str] = None,
     year: Optional[int] = None,
     evolution: Optional[str] = None,
-    seasonal: Optional[int] = None,
+    granularity: Optional[int] = None,
+    diff_order: Optional[int] = None,
+    num_lags: Optional[int] = None,
+    alpha: Optional[int] = None,
 ):
-    # seasonal: to be defined
     try:
         controller = TemporalController()
-        data = controller.serie_stl_decomposition(
-            uf, syndrome, year, evolution, seasonal
+        data = controller.partial_correlogram(
+            uf,
+            syndrome,
+            year,
+            evolution,
+            granularity,
+            diff_order,
+            num_lags,
+            alpha,
         )
         return JSONResponse(status_code=200, content=data)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
 
+
+@api_temporal.get("/stationarity_test")
+async def stationarity_test(
+    uf: Optional[str] = None,
+    syndrome: Optional[str] = None,
+    year: Optional[int] = None,
+    evolution: Optional[str] = None,
+    significance_level: Optional[float] = 0.05
+):
+    try:
+        controller = TemporalController()
+        data = controller.stationarity_test(uf, syndrome, year, evolution, significance_level)
+        return JSONResponse(status_code=200, content=data)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Internal server error")
+    
+    
+@api_temporal.get("/get_stl_decomposition_data")
+async def get_stl_decomposition_data(
+    uf: Optional[str] = None,
+    syndrome: Optional[str] = None,
+    year: Optional[int] = None,
+    evolution: Optional[str] = None,
+    seasonal: Optional[int] = None,
+    num_lags: Optional[int] = None, 
+    alpha: Optional[int] = None
+):
+    try:
+        controller = TemporalController()
+        data = controller.get_stl_decomposition_data(
+            uf, syndrome, year, evolution, seasonal, num_lags, alpha
+        )
+        return JSONResponse(status_code=200, content=data)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
+@api_temporal.get("/get_seasonal_decomposition_data")
+async def get_seasonal_decomposition_data(
+    uf: Optional[str] = None,
+    syndrome: Optional[str] = None,
+    year: Optional[int] = None,
+    evolution: Optional[str] = None,
+    period: Optional[int] = 5,
+    model: Optional[str] = 'additive',
+    num_lags: Optional[int] = None, 
+    alpha: Optional[int] = None
+):
+    try:
+        controller = TemporalController()
+        data = controller.get_seasonal_decomposition_data(
+            uf, syndrome, year, evolution, period, model, num_lags, alpha
+        )
+        return JSONResponse(status_code=200, content=data)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Internal server error")
+    
+    
 
 @api_temporal.get("/serie_lag_plot")
 async def serie_lag_plot(
@@ -158,6 +228,28 @@ async def serie_lag_plot(
     try:
         controller = TemporalController()
         data = controller.get_serie_lag_plot(uf, syndrome, year, evolution, lag)
+        return JSONResponse(status_code=200, content=data)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Internal server error")
+    
+
+@api_temporal.get("/get_predict_data")
+async def get_predict_data(
+    uf: Optional[str] = None,
+    syndrome: Optional[str] = None,
+    year: Optional[int] = None,
+    evolution: Optional[str] = None,
+    forecast_steps: Optional[int] = 30,
+    independence_lags: Optional[int] = 4,
+    num_lags_correlogram: Optional[int] = None, # Auto Correlogram and P.A.C plot
+    alpha_correlogram: Optional[int] = None,
+):
+    try:
+        controller = TemporalController()
+        data = controller.get_predict_data(
+            uf, syndrome, year, evolution, forecast_steps, independence_lags, num_lags_correlogram, alpha_correlogram
+        )
         return JSONResponse(status_code=200, content=data)
     except Exception as e:
         print(e)
