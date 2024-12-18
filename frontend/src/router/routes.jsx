@@ -23,7 +23,7 @@ const routes = () => [
   },
   {
     path: "/predictions",
-    title: "Predições e Classificações",
+    title: "Predições",
     element: <PredictionPage />,
   },
 ];

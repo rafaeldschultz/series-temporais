@@ -10,6 +10,8 @@ import ResidualsChart from "./ResidualsChart";
 import BigNumberCard from "../../../components/Cards/BigNumberCard";
 import CorrelogramChart from "./CorrelogramChart";
 import PartialCorrelogramChart from "./PartialCorrelogramChart";
+import PredictChart from "./PredictChart";
+import BigNumberTestesCard from "../../../components/Cards/BigNumberTestsCard";
 
 const PlotSection = () => {
   const { filters } = useFilter();
@@ -37,27 +39,17 @@ const PlotSection = () => {
               mb: 4,
             }}
           >
-            <Stack gap={2} width={0.8}>
+            <Stack gap={2} width={0.75}>
               <FilterPanel />
               <Grid container spacing={2}>
-                <Grid size={4}>
-                  <BigNumberCard
-                    title={"AIC"}
-                    isLoading={loading}
-                    number={data?.aic?.toLocaleString("pt-BR", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  />
-                </Grid>
-                <Grid size={4}>
+                <Grid size={6}>
                   <BigNumberCard
                     title={"Ordem Predita"}
                     isLoading={loading}
                     number={data?.order.join("; ")}
                   />
                 </Grid>
-                <Grid size={4}>
+                <Grid size={6}>
                   <BigNumberCard
                     title={"Ordem Sazonal Predita"}
                     isLoading={loading}
@@ -67,27 +59,44 @@ const PlotSection = () => {
                 <Grid size={12}>
                   <TemporalSerieChart />
                 </Grid>
-                <Grid size={8}>
+                <Grid size={12}>
+                  <PredictChart />
+                </Grid>
+                <Grid size={9}>
                   <ResidualsChart />
                 </Grid>
-                <Grid size={4}>
+                <Grid size={3}>
                   <Grid container direction={"column"} spacing={2}>
                     <Grid size={12}>
                       <BigNumberCard
+                        title={"AIC"}
+                        isLoading={loading}
+                        number={data?.aic?.toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      />
+                    </Grid>
+                    <Grid size={12}>
+                      <BigNumberTestesCard
                         title={"Independência - Resíduos"}
                         isLoading={loading}
-                        number={
+                        result={
                           data?.independenceTest.independenceResid
                             ? "Sim"
                             : "Não"
                         }
+                        statisticName={"Ljung-Box"}
+                        statisticNumber={data?.independenceTest["Ljung-Box"]}
                       />
                     </Grid>
                     <Grid size={12}>
-                      <BigNumberCard
+                      <BigNumberTestesCard
                         title={"Normalidade - Resíduos"}
                         isLoading={loading}
-                        number={data?.normTest.normResid ? "Sim" : "Não"}
+                        result={data?.normTest.normResid ? "Sim" : "Não"}
+                        statisticName={"Jarque-Bera"}
+                        statisticNumber={data?.normTest["Jarque-Bera"]}
                       />
                     </Grid>
                   </Grid>

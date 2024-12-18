@@ -33,7 +33,7 @@ const FilterPanel = () => {
       <Grid container justifyContent={"space-between"} width={1}>
         <Grid size={5}>
           <Typography variant={"h5"} color="primary">
-            Overview
+            Predições
           </Typography>
           <Typography variant={"body2"} color="textSecondary">
             Filtre os dados de acordo com sua necessidade
