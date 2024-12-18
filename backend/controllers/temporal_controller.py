@@ -479,7 +479,7 @@ class TemporalController:
         teste = jarque_bera(residuos)
         return {
             "Jarque-Bera": teste.pvalue,
-            "normResid": "True" if teste.pvalue > 0.05 else "False",
+            "normResid": bool(teste.pvalue > 0.05),
         }
 
     @staticmethod
@@ -487,7 +487,7 @@ class TemporalController:
         df = acorr_ljungbox(residuos, lags=[lags], return_df=False)
         return {
             "Ljung-Box": df.iloc[0]["lb_pvalue"],
-            "independenceResid": "True" if df.iloc[0]["lb_pvalue"] > 0.05 else "False",
+            "independenceResid": bool(df.iloc[0]["lb_pvalue"] > 0.05),
         }
 
     def get_predict_data(

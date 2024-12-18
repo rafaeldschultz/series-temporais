@@ -8,6 +8,8 @@ import Grid from "@mui/material/Grid2";
 import TemporalSerieChart from "./TemporalSerieChart";
 import ResidualsChart from "./ResidualsChart";
 import BigNumberCard from "../../../components/Cards/BigNumberCard";
+import CorrelogramChart from "./CorrelogramChart";
+import PartialCorrelogramChart from "./PartialCorrelogramChart";
 
 const PlotSection = () => {
   const { filters } = useFilter();
@@ -38,7 +40,7 @@ const PlotSection = () => {
             <Stack gap={2} width={0.8}>
               <FilterPanel />
               <Grid container spacing={2}>
-                <Grid size={3}>
+                <Grid size={4}>
                   <BigNumberCard
                     title={"AIC"}
                     isLoading={loading}
@@ -48,20 +50,53 @@ const PlotSection = () => {
                     })}
                   />
                 </Grid>
-                <Grid size={3}>
+                <Grid size={4}>
                   <BigNumberCard
-                    title={"Ljung-Box"}
+                    title={"Ordem Predita"}
                     isLoading={loading}
-                    number={data?.independenceTest["Ljung-Box"].toExponential(
-                      2
-                    )}
+                    number={data?.order.join("; ")}
+                  />
+                </Grid>
+                <Grid size={4}>
+                  <BigNumberCard
+                    title={"Ordem Sazonal Predita"}
+                    isLoading={loading}
+                    number={data?.seasonalOrder.join("; ")}
                   />
                 </Grid>
                 <Grid size={12}>
                   <TemporalSerieChart />
                 </Grid>
-                <Grid size={12}>
+                <Grid size={8}>
                   <ResidualsChart />
+                </Grid>
+                <Grid size={4}>
+                  <Grid container direction={"column"} spacing={2}>
+                    <Grid size={12}>
+                      <BigNumberCard
+                        title={"Independência - Resíduos"}
+                        isLoading={loading}
+                        number={
+                          data?.independenceTest.independenceResid
+                            ? "Sim"
+                            : "Não"
+                        }
+                      />
+                    </Grid>
+                    <Grid size={12}>
+                      <BigNumberCard
+                        title={"Normalidade - Resíduos"}
+                        isLoading={loading}
+                        number={data?.normTest.normResid ? "Sim" : "Não"}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid size={6}>
+                  <CorrelogramChart />
+                </Grid>
+                <Grid size={6}>
+                  <PartialCorrelogramChart />
                 </Grid>
               </Grid>
             </Stack>

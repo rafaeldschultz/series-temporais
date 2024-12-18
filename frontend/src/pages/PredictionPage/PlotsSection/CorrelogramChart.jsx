@@ -1,41 +1,54 @@
 import React, { useState } from "react";
-import { Box, Chip, CircularProgress, useTheme } from "@mui/material";
+
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFilter } from "../../../contexts/FilterContext";
 import DashboardCard from "../../../components/Cards/DashboardCard";
-import LinePlot from "../../../components/Charts/LinePlot";
+import useTemporal, { useCorrelogram } from "../../../hooks/useTemporal";
+import CorrelogramPlot from "../../../components/Charts/CorrelogramPlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
+import StaticChipHorizontalGrid from "../../../components/Chip/StaticChipHorizontalGrid";
 import usePredict from "../../../hooks/usePredict";
 
-const TemporalSerieChart = () => {
-  const theme = useTheme();
+const CorrelogramChart = () => {
   const { filters } = useFilter();
   const { data, isPending: loading } = usePredict(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
-    (data) => ({
-      serieStlDecomposition: [
-        {
-          x: data.originalSerie["DT_NOTIFIC"],
-          y: data.originalSerie["Count"],
-          name: "Ocorrências",
-        },
-        {
-          x: data.originalSerie["DT_NOTIFIC"],
-          y: data.originalSerie["Predict"],
-          color: theme.palette.error.dark,
-          name: "Predição",
-        },
-      ],
-      axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },
-    })
+    (data) => data.predictCorrelogram
   );
 
+  const items = [
+    {
+      name: "granularity",
+      label: "Granularidade",
+      currentValue: "3D",
+    },
+    {
+      name: "order",
+      label: "Ordem",
+      currentValue: "3D",
+    },
+    {
+      name: "numLags",
+      label: "Número de Lags",
+      currentValue: 25,
+    },
+    {
+      name: "alpha",
+      label: "Alpha",
+      currentValue: 0.01,
+    },
+  ];
+
   return (
-    <DashboardCard title={"Predição"}>
+    <DashboardCard
+      title={"Correlograma"}
+      actions={<StaticChipHorizontalGrid items={items} />}
+    >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (
@@ -49,11 +62,12 @@ const TemporalSerieChart = () => {
               <CircularProgress />
             </Box>
           ) : (
-            <LinePlot data={data.serieStlDecomposition} />
+            <CorrelogramPlot data={data} />
           )}
         </Grid>
       </Grid>
     </DashboardCard>
   );
 };
-export default TemporalSerieChart;
+
+export default CorrelogramChart;
