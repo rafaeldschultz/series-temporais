@@ -11,6 +11,8 @@ import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
 // import TemporalLagsSection from "./TemporalLagsSection";
 import AnimationRoundedIcon from "@mui/icons-material/AnimationRounded";
 import { lazy } from "react";
+import SeasonalDecompositionSection from "./SeasonalDecompositionSection";
+import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
 
 const OverviewSection = lazy(() => import("./OverviewSection"));
 const RawDataSection = lazy(() => import("./RawDataSection"));
@@ -49,6 +51,12 @@ export const navigationItems = [
     title: "Decomposição STL",
     component: <DecompositionSection />,
     icon: <GrainRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Decomposição Sazonal",
+    component: <SeasonalDecompositionSection />,
+    icon: <ScatterPlotRoundedIcon />,
   },
   {
     kind: "item",

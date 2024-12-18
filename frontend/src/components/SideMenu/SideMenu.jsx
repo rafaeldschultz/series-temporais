@@ -19,7 +19,7 @@ import { memo, useMemo, useState } from "react";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -199,7 +199,7 @@ const SideMenu = memo(
                           },
                           open
                             ? {
-                                mr: 3,
+                                mr: 2,
                               }
                             : {
                                 mr: "auto",
