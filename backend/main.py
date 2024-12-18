@@ -1,3 +1,5 @@
+import warnings
+
 import uvicorn
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,4 +23,5 @@ api.include_router(api_raw)
 app.include_router(api)
 
 if __name__ == "__main__":
+    warnings.simplefilter(action="ignore", category=FutureWarning)
     uvicorn.run(app, port=8000, host="0.0.0.0")

@@ -256,8 +256,8 @@ async def serie_lag_plot(
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-@api_temporal.get("/get_predict_data")
-async def get_predict_data(
+@api_temporal.get("/predict_data")
+async def predict_data(
     uf: Optional[str] = None,
     syndrome: Optional[str] = None,
     year: Optional[int] = None,

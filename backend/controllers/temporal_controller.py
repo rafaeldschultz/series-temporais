@@ -537,16 +537,16 @@ class TemporalController:
         )
         pred_resid["DT_NOTIFIC"] = pred_resid["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
-        pred_resid_correlogram = self.correlogram(
-            serie=pred_resid["Resid"],
-            num_lags=num_lags_correlogram,
-            alpha=alpha_correlogram,
-        )
-        pred_resid_partial_correlogram = self.partial_correlogram(
-            serie=pred_resid["Resid"],
-            num_lags=num_lags_correlogram,
-            alpha=alpha_correlogram,
-        )
+        # pred_resid_correlogram = self.correlogram(
+        #     serie=pred_resid["Resid"],
+        #     num_lags=num_lags_correlogram,
+        #     alpha=alpha_correlogram,
+        # )
+        # pred_resid_partial_correlogram = self.partial_correlogram(
+        #     serie=pred_resid["Resid"],
+        #     num_lags=num_lags_correlogram,
+        #     alpha=alpha_correlogram,
+        # )
 
         serie = serie.reset_index()
         serie = serie.rename(columns={0: "Count"})
@@ -565,8 +565,8 @@ class TemporalController:
             "predictResid": pred_resid.to_dict(orient="list"),  # Serie
             "predictMean": pred_mean.to_dict(orient="list"),  # Serie
             "predictConf": pred_conf.to_dict(orient="list"),  # Serie
-            "predictCorrelogram": pred_resid_correlogram,  # Corr
-            "predictPartialCorrelogram": pred_resid_partial_correlogram,  # Corr
+            # "predictCorrelogram": pred_resid_correlogram,  # Corr
+            # "predictPartialCorrelogram": pred_resid_partial_correlogram,  # Corr
         }
 
     def serie_lag_plot(
