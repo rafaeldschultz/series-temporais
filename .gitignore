@@ -179,3 +179,5 @@ dist-stores
 *.sw?
 **/__pycache__/
 backend/utils/*
+backend/*.ipynb
+backend/.ipynb_checkpoints
