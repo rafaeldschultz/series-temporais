@@ -23,24 +23,14 @@ const PartialCorrelogramChart = () => {
 
   const items = [
     {
-      name: "granularity",
-      label: "Granularidade",
-      currentValue: "3D",
-    },
-    {
-      name: "order",
-      label: "Ordem",
-      currentValue: "3D",
-    },
-    {
       name: "numLags",
       label: "Número de Lags",
-      currentValue: 25,
+      currentValue: 40,
     },
     {
       name: "alpha",
       label: "Alpha",
-      currentValue: 0.01,
+      currentValue: 0.05,
     },
   ];
 
