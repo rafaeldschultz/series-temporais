@@ -129,14 +129,14 @@ class ReportController:
             warnings.simplefilter("ignore")
 
             # Ajustar um modelo ARIMA com os dados
-            predict_data = self.temporal_controller.get_predict_data(uf, syndrome, year, evolution)
+            # predict_data = self.temporal_controller.get_predict_data(uf, syndrome, year, evolution)
 
-        arima_chart = self.render_arima(predict_data)
-        arima_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
-                                      title="Correlograma dos Resíduos do Modelo")
+        # arima_chart = self.render_arima(predict_data)
+        # arima_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
+        #                               title="Correlograma dos Resíduos do Modelo")
 
-        arima_partial_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
-                                              title="Correlograma Parcial dos Resíduos do Modelo")
+        # arima_partial_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
+        #                                      title="Correlograma Parcial dos Resíduos do Modelo")
 
         report = self.compile_report(
             metadata={
@@ -150,14 +150,14 @@ class ReportController:
                 ("Teste de Estacionariedade na Série Temporal",
                  self.stationarity_test_msg(stl_decomposition_data)),
 
-                ("Teste de Normalidade dos Resíduos",
-                 self.normality_test_msg(predict_data)),
+                #("Teste de Normalidade dos Resíduos",
+                # self.normality_test_msg(predict_data)),
 
-                ("Teste de Indepêndencia dos Resíduos",
-                 self.independence_test_msg(predict_data)),
+                #("Teste de Indepêndencia dos Resíduos",
+                # self.independence_test_msg(predict_data)),
 
-                ("Ajuste do Modelo ARIMA à Série Temporal",
-                 self.arima_fit_msg(predict_data))
+                #("Ajuste do Modelo ARIMA à Série Temporal",
+                # self.arima_fit_msg(predict_data))
             ],
             charts=[
                 ("time_series", time_series,
@@ -197,14 +197,14 @@ class ReportController:
                 ("EMA", ema,
                  "Texto do Plot de Médias Móveis Exponênciais"),
 
-                ("arima_chart", arima_chart,
-                 "Texto do Plot do Modelo ARIMA"),
+                #("arima_chart", arima_chart,
+                # "Texto do Plot do Modelo ARIMA"),
 
-                ("arima_corr", arima_corr,
-                 "Texto do Plot de Autocorrelações do Modelo ARIMA"),
+                #("arima_corr", arima_corr,
+                # "Texto do Plot de Autocorrelações do Modelo ARIMA"),
 
-                ("arima_partial_corr", arima_partial_corr,
-                 "Texto do Plot de Autocorrelações Parciais do Modelo ARIMA")
+                #("arima_partial_corr", arima_partial_corr,
+                # "Texto do Plot de Autocorrelações Parciais do Modelo ARIMA")
             ],
             json_charts=[
                 ("geoplot", open(os.path.join("datasets", "geoplot.json")).read(),
