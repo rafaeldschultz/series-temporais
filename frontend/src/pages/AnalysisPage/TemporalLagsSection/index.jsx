@@ -6,8 +6,9 @@ import Grid from "@mui/material/Grid2";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
 import SerieLagChart from "./SerieLagChart";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import useTemporalLags from "../../../hooks/useTemporalLags";
+import useDebounce from "../../../hooks/useDebounce";
 
 const TemporalLagsSection = () => {
   const { filters } = useFilter();
@@ -22,19 +23,23 @@ const TemporalLagsSection = () => {
   );
 
   const transitionTimeout = 500;
+
+  const debouncedSetInitialLag = useCallback(
+    useDebounce((value) => setInitialLag(value), 300),
+    []
+  );
+
   const mappedData = useMemo(() => {
     if (!loading)
-      return Object.values(data).map((item, index) => {
-        return (
-          <Grid size={6} key={index}>
-            <SerieLagChart
-              data={item}
-              index={initialLag * (index + 1)}
-              loading={loading}
-            />
-          </Grid>
-        );
-      });
+      return Object.values(data).map((item, index) => (
+        <Grid size={6} key={index}>
+          <SerieLagChart
+            data={item}
+            index={initialLag * (index + 1)}
+            loading={loading}
+          />
+        </Grid>
+      ));
     return <></>;
   }, [data, initialLag, loading]);
 
@@ -53,7 +58,7 @@ const TemporalLagsSection = () => {
           >
             <Stack gap={2} width={0.8}>
               <FilterPanel
-                onChangeCustomFilter={setInitialLag}
+                onChangeCustomFilter={debouncedSetInitialLag}
                 currentValueCustomFilter={initialLag}
               />
               <Grid container spacing={2}>

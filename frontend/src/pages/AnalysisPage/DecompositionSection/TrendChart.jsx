@@ -7,49 +7,27 @@ import LinePlot from "../../../components/Charts/LinePlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
 
-const TrendChart = () => {
+const TrendChart = ({ seasonal }) => {
   const { filters } = useFilter();
-  const [order, setOrder] = useState("first");
   const { data, isPending: loading } = useDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
+    seasonal,
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data["DT_NOTIFIC"],
-          y: data["Trend_values"],
+          x: data.stlData["DT_NOTIFIC"],
+          y: data.stlData["Trend_values"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },
     })
   );
 
-  const items = [
-    {
-      name: "seasonal",
-      label: "Sazonalidade",
-      values: [
-        {
-          value: "first",
-          label: "Primeira",
-        },
-        {
-          value: "second",
-          label: "Segunda",
-        },
-      ],
-      currentValue: order,
-      onChange: (value) => setOrder(value),
-    },
-  ];
-
   return (
-    <DashboardCard
-      title={"Tendência"}
-      actions={<ChipHorizontalGrid items={items} />}
-    >
+    <DashboardCard title={"Tendência"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import {
   Button,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Tooltip,
@@ -15,14 +19,20 @@ import DashboardCard from "../../../components/Cards/DashboardCard";
 import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRounded";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
-const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
+const FilterPanel = ({
+  onChangePeriod,
+  currentPeriod,
+  onChangeModel,
+  currentModel,
+}) => {
   const { filters, updateFilter } = useFilter();
 
   const [federalState, setFederalState] = useState(filters.federalState);
   const [syndrome, setSyndrome] = useState(filters.syndrome);
   const [evolution, setEvolution] = useState(filters.evolution);
   const [year, setYear] = useState(filters.year);
-  const [seasonal, setSeasonal] = useState(currentValueCustomFilter);
+  const [period, setPeriod] = useState(currentPeriod);
+  const [model, setModel] = useState(currentModel);
   const [error, setError] = useState(false);
 
   const handleSubmit = () => {
@@ -30,21 +40,22 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
     updateFilter("syndrome", syndrome);
     updateFilter("evolution", evolution);
     updateFilter("year", year);
-    onChangeCustomFilter(seasonal);
+    onChangePeriod(period);
+    onChangeModel(model);
   };
 
   return (
     <DashboardCard>
       <Grid container justifyContent={"space-between"} width={1}>
-        <Grid size={5}>
+        <Grid size={4}>
           <Typography variant={"h5"} color="primary">
-            Decomposição STL
+            Decomposição Sazonal
           </Typography>
           <Typography variant={"body2"} color="textSecondary">
             Filtre os dados de acordo com sua necessidade
           </Typography>
         </Grid>
-        <Grid size={7}>
+        <Grid size={8}>
           <Grid
             container
             spacing={2}
@@ -154,7 +165,7 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
             <Grid size={"grow"}>
               <TextField
                 size="small"
-                label="Sazonalidade"
+                label="Período"
                 type="number"
                 slotProps={{
                   inputLabel: {
@@ -165,14 +176,14 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
                     step: 2,
                   },
                 }}
-                value={seasonal}
+                value={period}
                 onChange={(e) => {
                   const newValue = e.target.value;
                   if (
                     newValue === "" ||
                     (parseInt(newValue) >= 3 && parseInt(newValue) % 2 !== 0)
                   ) {
-                    setSeasonal(newValue);
+                    setPeriod(newValue);
                     setError(false); // Reset error if input is valid
                   } else {
                     setError(true); // Show error if input is invalid
@@ -180,6 +191,19 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
                 }}
                 error={error} // Enable error state based on validation
               />
+            </Grid>
+            <Grid size={"grow"}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Modelo</InputLabel>
+                <Select
+                  value={model}
+                  label="Modelo"
+                  onChange={(event) => setModel(event.target.value)}
+                >
+                  <MenuItem value={"additive"}>Aditivo</MenuItem>
+                  <MenuItem value={"multiplicative"}>Multiplicativo</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid>
               <Tooltip title="Atualizar Gráficos">

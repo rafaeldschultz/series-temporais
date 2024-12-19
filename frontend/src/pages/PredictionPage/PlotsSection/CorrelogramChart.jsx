@@ -1,33 +1,44 @@
 import React, { useState } from "react";
-import { Box, Chip, CircularProgress } from "@mui/material";
+
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFilter } from "../../../contexts/FilterContext";
 import DashboardCard from "../../../components/Cards/DashboardCard";
-import LinePlot from "../../../components/Charts/LinePlot";
+import useTemporal, { useCorrelogram } from "../../../hooks/useTemporal";
+import CorrelogramPlot from "../../../components/Charts/CorrelogramPlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
+import StaticChipHorizontalGrid from "../../../components/Chip/StaticChipHorizontalGrid";
+import usePredict from "../../../hooks/usePredict";
 
-const CountChart = ({ seasonal }) => {
+const CorrelogramChart = () => {
   const { filters } = useFilter();
-  const { data, isPending: loading } = useDecomposition(
+  const { data, isPending: loading } = usePredict(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
-    seasonal,
-    (data) => ({
-      serieStlDecomposition: [
-        {
-          x: data.stlData["DT_NOTIFIC"],
-          y: data.stlData["Count"],
-        },
-      ],
-      axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },
-    })
+    (data) => data.predictCorrelogram
   );
 
+  const items = [
+    {
+      name: "numLags",
+      label: "Número de Lags",
+      currentValue: 40,
+    },
+    {
+      name: "alpha",
+      label: "Alpha",
+      currentValue: 0.05,
+    },
+  ];
+
   return (
-    <DashboardCard title={"Ocorrências"}>
+    <DashboardCard
+      title={"Correlograma"}
+      actions={<StaticChipHorizontalGrid items={items} />}
+    >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (
@@ -41,11 +52,12 @@ const CountChart = ({ seasonal }) => {
               <CircularProgress />
             </Box>
           ) : (
-            <LinePlot data={data.serieStlDecomposition} />
+            <CorrelogramPlot data={data} />
           )}
         </Grid>
       </Grid>
     </DashboardCard>
   );
 };
-export default CountChart;
+
+export default CorrelogramChart;

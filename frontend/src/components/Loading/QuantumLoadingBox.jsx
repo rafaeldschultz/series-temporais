@@ -1,22 +1,27 @@
 import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { quantum } from "ldrs";
 
 quantum.register();
 
-const QuantumLoadingBox = () => {
+const QuantumLoadingBox = ({ verbose }) => {
   const theme = useTheme();
 
   return (
-    <Box
+    <Stack
       width={1}
       height={1}
-      display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
+      spacing={2}
     >
       <l-quantum size="50" speed="1.75" color={theme.palette.primary.main} />
-    </Box>
+      {verbose && (
+        <Typography variant={"h6"} color="primary">
+          Isso pode demorar um pouco...
+        </Typography>
+      )}
+    </Stack>
   );
 };
 

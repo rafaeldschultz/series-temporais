@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import AnalysisPage from "../pages/AnalysisPage";
 import UnderDevelopmentPage from "../pages/UnderDevelopmentPage";
+import PredictionPage from "../pages/PredictionPage";
 
 const routes = () => [
   {
@@ -22,8 +23,8 @@ const routes = () => [
   },
   {
     path: "/predictions",
-    title: "Predições e Classificações",
-    element: <UnderDevelopmentPage />,
+    title: "Predições",
+    element: <PredictionPage />,
   },
 ];
 

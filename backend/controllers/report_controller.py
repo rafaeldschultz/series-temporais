@@ -544,7 +544,7 @@ class ReportController:
 
     @staticmethod
     def render_arima(predict_data: dict):
-        predict = pd.DataFrame(predict_data['serie'])
+        predict = pd.DataFrame(predict_data['originalSerie'])
         predictMean = pd.DataFrame(predict_data['predictMean'])
         predictConf = pd.DataFrame(predict_data['predictConf'])
 

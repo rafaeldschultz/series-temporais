@@ -7,7 +7,7 @@ import LinePlot from "../../../components/Charts/LinePlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
 
-const SerieStlDecompositionChart = () => {
+const SerieStlDecompositionChart = ({ seasonal }) => {
   const { filters } = useFilter();
   const [order, setOrder] = useState("first");
   const { data, isPending: loading } = useDecomposition(
@@ -15,6 +15,7 @@ const SerieStlDecompositionChart = () => {
     filters.syndrome,
     filters.year,
     filters.evolution,
+    seasonal,
     (data) => ({
       serieStlDecomposition: [
         {

@@ -4,7 +4,6 @@ import {
   IconButton,
   Stack,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -13,24 +12,20 @@ import Grid from "@mui/material/Grid2";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRounded";
-import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
-const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
+const FilterPanel = () => {
   const { filters, updateFilter } = useFilter();
 
   const [federalState, setFederalState] = useState(filters.federalState);
   const [syndrome, setSyndrome] = useState(filters.syndrome);
   const [evolution, setEvolution] = useState(filters.evolution);
   const [year, setYear] = useState(filters.year);
-  const [seasonal, setSeasonal] = useState(currentValueCustomFilter);
-  const [error, setError] = useState(false);
 
   const handleSubmit = () => {
     updateFilter("federalState", federalState);
     updateFilter("syndrome", syndrome);
     updateFilter("evolution", evolution);
     updateFilter("year", year);
-    onChangeCustomFilter(seasonal);
   };
 
   return (
@@ -38,7 +33,7 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
       <Grid container justifyContent={"space-between"} width={1}>
         <Grid size={5}>
           <Typography variant={"h5"} color="primary">
-            Decomposição STL
+            Predições
           </Typography>
           <Typography variant={"body2"} color="textSecondary">
             Filtre os dados de acordo com sua necessidade
@@ -151,46 +146,14 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
                 value={evolution}
               />
             </Grid>
-            <Grid size={"grow"}>
-              <TextField
-                size="small"
-                label="Sazonalidade"
-                type="number"
-                slotProps={{
-                  inputLabel: {
-                    shrink: true,
-                  },
-                  htmlInput: {
-                    min: 3,
-                    step: 2,
-                  },
-                }}
-                value={seasonal}
-                onChange={(e) => {
-                  const newValue = e.target.value;
-                  if (
-                    newValue === "" ||
-                    (parseInt(newValue) >= 3 && parseInt(newValue) % 2 !== 0)
-                  ) {
-                    setSeasonal(newValue);
-                    setError(false); // Reset error if input is valid
-                  } else {
-                    setError(true); // Show error if input is invalid
-                  }
-                }}
-                error={error} // Enable error state based on validation
-              />
-            </Grid>
             <Grid>
-              <Tooltip title="Atualizar Gráficos">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={handleSubmit}
-                >
-                  <RefreshRoundedIcon />
-                </Button>
-              </Tooltip>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={handleSubmit}
+              >
+                <SystemUpdateAltRoundedIcon />
+              </Button>
             </Grid>
           </Grid>
         </Grid>

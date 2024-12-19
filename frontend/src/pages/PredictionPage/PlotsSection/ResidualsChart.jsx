@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import { Box, Chip, CircularProgress } from "@mui/material";
+import { Box, Chip, CircularProgress, useTheme } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFilter } from "../../../contexts/FilterContext";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import LinePlot from "../../../components/Charts/LinePlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
+import usePredict from "../../../hooks/usePredict";
 
-const CountChart = ({ seasonal }) => {
+const ResidualsChart = () => {
+  const theme = useTheme();
   const { filters } = useFilter();
-  const { data, isPending: loading } = useDecomposition(
+  const { data, isPending: loading } = usePredict(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
-    seasonal,
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data.stlData["DT_NOTIFIC"],
-          y: data.stlData["Count"],
+          x: data.predictResid["DT_NOTIFIC"],
+          y: data.predictResid["Resid"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },
@@ -27,7 +28,7 @@ const CountChart = ({ seasonal }) => {
   );
 
   return (
-    <DashboardCard title={"Ocorrências"}>
+    <DashboardCard title={"Resíduos"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (
@@ -48,4 +49,4 @@ const CountChart = ({ seasonal }) => {
     </DashboardCard>
   );
 };
-export default CountChart;
+export default ResidualsChart;

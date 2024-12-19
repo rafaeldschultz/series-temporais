@@ -6,20 +6,22 @@ import DashboardCard from "../../../components/Cards/DashboardCard";
 import LinePlot from "../../../components/Charts/LinePlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import useDecomposition from "../../../hooks/useDecomposition";
+import useSeasonalDecomposition from "../../../hooks/useSeasonalDecomposition";
 
-const CountChart = ({ seasonal }) => {
+const ResidualsChart = ({ period, model }) => {
   const { filters } = useFilter();
-  const { data, isPending: loading } = useDecomposition(
+  const { data, isPending: loading } = useSeasonalDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
-    seasonal,
+    period,
+    model,
     (data) => ({
       serieStlDecomposition: [
         {
-          x: data.stlData["DT_NOTIFIC"],
-          y: data.stlData["Count"],
+          x: data.seasonalData["DT_NOTIFIC"],
+          y: data.seasonalData["Resid_values"],
         },
       ],
       axisLabels: { x: "Data de Notificação", y: "Número de Ocorrências" },
@@ -27,7 +29,7 @@ const CountChart = ({ seasonal }) => {
   );
 
   return (
-    <DashboardCard title={"Ocorrências"}>
+    <DashboardCard title={"Resíduo"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (
@@ -48,4 +50,4 @@ const CountChart = ({ seasonal }) => {
     </DashboardCard>
   );
 };
-export default CountChart;
+export default ResidualsChart;

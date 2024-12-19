@@ -1,18 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../helpers/axios";
 
-const fetch = async (federalState, syndrome, year, evolution, seasonal) => {
+const fetch = async (
+  federalState,
+  syndrome,
+  year,
+  evolution,
+  period,
+  model
+) => {
   const params = {
     params: {
       uf: federalState,
       syndrome: syndrome,
       year: year,
       evolution: evolution,
-      seasonal: seasonal,
+      period: period,
+      model: model,
     },
   };
   const response = await api
-    .get("stl_decomposition_data", params)
+    .get("seasonal_decomposition_data", params)
     .then((res) => res["data"])
     .catch((err) => {
       console.error(err);
@@ -21,26 +29,29 @@ const fetch = async (federalState, syndrome, year, evolution, seasonal) => {
   return response;
 };
 
-const useDecomposition = (
+const useSeasonalDecomposition = (
   federalState,
   syndrome,
   year,
   evolution,
-  seasonal,
+  period,
+  model,
   select
 ) => {
   return useQuery({
     queryKey: [
-      "decomposition",
+      "SeasonalDecomposition",
       federalState,
       syndrome,
       year,
       evolution,
-      seasonal,
+      period,
+      model,
     ],
-    queryFn: () => fetch(federalState, syndrome, year, evolution, seasonal),
+    queryFn: () =>
+      fetch(federalState, syndrome, year, evolution, period, model),
     select,
   });
 };
 
-export default useDecomposition;
+export default useSeasonalDecomposition;

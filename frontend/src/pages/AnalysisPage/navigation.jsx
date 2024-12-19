@@ -1,15 +1,24 @@
-import OverviewSection from "./OverviewSection";
-import RawDataSection from "./RawDataSection";
+// import OverviewSection from "./OverviewSection";
+// import RawDataSection from "./RawDataSection";
 import TemporalAnalysisSection from "./TemporalAnalysisSection";
 import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
-import UnderDevelopmentPage from "../UnderDevelopmentPage";
+// import UnderDevelopmentPage from "../UnderDevelopmentPage";
 import MapRoundedIcon from "@mui/icons-material/MapRounded";
 import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
-import DecompositionSection from "./DecompositionSection";
-import TemporalLagsSection from "./TemporalLagsSection";
+// import DecompositionSection from "./DecompositionSection";
+// import TemporalLagsSection from "./TemporalLagsSection";
 import AnimationRoundedIcon from "@mui/icons-material/AnimationRounded";
+import { lazy } from "react";
+import SeasonalDecompositionSection from "./SeasonalDecompositionSection";
+import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
+
+const OverviewSection = lazy(() => import("./OverviewSection"));
+const RawDataSection = lazy(() => import("./RawDataSection"));
+const DecompositionSection = lazy(() => import("./DecompositionSection"));
+const TemporalLagsSection = lazy(() => import("./TemporalLagsSection"));
+const UnderDevelopmentPage = lazy(() => import("../UnderDevelopmentPage"));
 
 export const navigationItems = [
   {
@@ -39,9 +48,15 @@ export const navigationItems = [
   },
   {
     kind: "item",
-    title: "Decomposição",
+    title: "Decomposição STL",
     component: <DecompositionSection />,
     icon: <GrainRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Decomposição Sazonal",
+    component: <SeasonalDecompositionSection />,
+    icon: <ScatterPlotRoundedIcon />,
   },
   {
     kind: "item",

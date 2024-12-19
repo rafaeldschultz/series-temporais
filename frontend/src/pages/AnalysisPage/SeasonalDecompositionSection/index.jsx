@@ -5,34 +5,35 @@ import { useFilter } from "../../../contexts/FilterContext";
 import Grid from "@mui/material/Grid2";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
-import SerieStlDecompositionChart from "./SerieStlDecompositionChart";
 import CountChart from "./CountChart";
 import ResidualsChart from "./ResidualsChart";
 import SeasonalChart from "./SeasonalChart";
 import TrendChart from "./TrendChart";
-import useDecomposition from "../../../hooks/useDecomposition";
 import CorrelogramChart from "./CorrelogramChart";
 import PartialCorrelogramChart from "./PartialCorrelogramChart";
 import { useCallback, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import BigNumberCard from "../../../components/Cards/BigNumberCard";
+import useSeasonalDecomposition from "../../../hooks/useSeasonalDecomposition";
 
-const DecompositionSection = () => {
+const SeasonalDecompositionSection = () => {
   const { filters } = useFilter();
-  const [initialSeasonzal, setInitialSeasonal] = useState(13);
+  const [period, setPeriod] = useState(13);
+  const [model, setModel] = useState("additive");
 
-  const { data, isPending: loading } = useDecomposition(
+  const { data, isPending: loading } = useSeasonalDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
-    initialSeasonzal
+    period,
+    model
   );
 
   console.log(data);
 
-  const debouncedSetInitialSeasonal = useCallback(
-    useDebounce((value) => setInitialSeasonal(value), 300),
+  const debouncedSetPeriod = useCallback(
+    useDebounce((value) => setPeriod(value), 300),
     []
   );
 
@@ -53,22 +54,24 @@ const DecompositionSection = () => {
           >
             <Stack gap={2} width={0.8}>
               <FilterPanel
-                onChangeCustomFilter={debouncedSetInitialSeasonal}
-                currentValueCustomFilter={initialSeasonzal}
+                onChangePeriod={debouncedSetPeriod}
+                currentPeriod={period}
+                onChangeModel={setModel}
+                currentModel={model}
               />
 
               <Grid container spacing={2}>
                 <Grid size={6}>
-                  <CountChart seasonal={initialSeasonzal} />
+                  <CountChart seasonal={period} />
                 </Grid>
                 <Grid size={6}>
-                  <TrendChart seasonal={initialSeasonzal} />
+                  <TrendChart seasonal={period} />
                 </Grid>
                 <Grid size={6}>
-                  <SeasonalChart seasonal={initialSeasonzal} />
+                  <SeasonalChart seasonal={period} />
                 </Grid>
                 <Grid size={6}>
-                  <ResidualsChart seasonal={initialSeasonzal} />
+                  <ResidualsChart seasonal={period} />
                 </Grid>
                 <Grid size={12}>
                   <Typography
@@ -120,10 +123,10 @@ const DecompositionSection = () => {
                   </Typography>
                 </Grid>
                 <Grid size={6}>
-                  <CorrelogramChart seasonal={initialSeasonzal} />
+                  <CorrelogramChart seasonal={period} />
                 </Grid>
                 <Grid size={6}>
-                  <PartialCorrelogramChart seasonal={initialSeasonzal} />
+                  <PartialCorrelogramChart seasonal={period} />
                 </Grid>
               </Grid>
             </Stack>
@@ -134,4 +137,4 @@ const DecompositionSection = () => {
   );
 };
 
-export default DecompositionSection;
+export default SeasonalDecompositionSection;
