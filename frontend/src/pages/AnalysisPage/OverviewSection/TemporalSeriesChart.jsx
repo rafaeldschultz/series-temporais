@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import useTemporalSeries from "../../../hooks/dataLoaders/useTemporalSeries";
 import { useFilter } from "../../../contexts/FilterContext";
-import React from "react";
+import React, { useMemo } from "react";
 import Plot from "react-plotly.js";
 import Grid from "@mui/material/Grid2";
 import LinePlot from "../../../components/Charts/LinePlot";
@@ -58,6 +58,8 @@ const generateAnnotations = (data) => {
   return newAnnotations.filter((annotation) => annotation !== null);
 };
 
+const info = "teste info";
+
 const TemporalSeriesChart = () => {
   const { filters } = useFilter();
   const { data, isPending: loading } = useOverview(
@@ -79,7 +81,7 @@ const TemporalSeriesChart = () => {
   );
 
   return (
-    <DashboardCard title={"Série Temporal"}>
+    <DashboardCard title={"Série Temporal"} info={info}>
       {loading ? (
         <Box
           width={1}
