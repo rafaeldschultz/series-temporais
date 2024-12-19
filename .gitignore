@@ -181,3 +181,4 @@ dist-stores
 backend/utils/*
 backend/*.ipynb
 backend/.ipynb_checkpoints
+cache/

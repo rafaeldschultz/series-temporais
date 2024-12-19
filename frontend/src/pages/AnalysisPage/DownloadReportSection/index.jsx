@@ -1,10 +1,34 @@
+import FilterPanel from "./FilterPanel";
+import { useFilter } from "../../../contexts/FilterContext";
+
 import { Box, Stack, Typography, Button } from "@mui/material";
 import GetAppRoundedIcon from "@mui/icons-material/GetAppRounded";
 
 const DownloadReportPage = () => {
+
   const handleDownload = () => {
-    window.location.href = "http://0.0.0.0:8000/api/report";
+    const baseUrl = "http://0.0.0.0:8000/api/report";
+
+    const params = {
+        uf: filters.federalState,
+        syndrome: filters.syndrome,
+        year: filters.year,
+        evolution: filters.evolution,
+    };
+
+    const url = new URL(baseUrl);
+    Object.keys(params).forEach((key) => {
+        if (params[key] != null) {
+            url.searchParams.append(key, params[key]);
+        }
+    });
+
+    window.location.href = url.toString();
   };
+
+  const { filters } = useFilter();
+
+  console.log(filters.federalState);
 
   return (
     <Stack
@@ -24,6 +48,7 @@ const DownloadReportPage = () => {
       <Typography variant="h6" color="text.secondary" sx={{ textAlign: "center" }}>
         Tem certeza que deseja realizar o download do relatório? Isso pode levar algum tempo.
       </Typography>
+      <FilterPanel />
       <Box>
         <Button
           variant="contained"

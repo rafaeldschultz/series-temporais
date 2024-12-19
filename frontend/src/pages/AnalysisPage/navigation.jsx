@@ -30,6 +30,9 @@ export const navigationItems = [
     icon: <SummarizeIcon />,
   },
   {
+    kind: "divider",
+  },
+  {
     kind: "header",
     title: "Análise Espacial",
   },

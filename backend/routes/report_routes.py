@@ -1,8 +1,13 @@
+import os
 from typing import Optional
 from fastapi import APIRouter, HTTPException, Response
+from fastapi.responses import FileResponse
 from controllers.report_controller import ReportController
 
 api_report = APIRouter()
+
+CACHE_DIR = "./cache"
+os.makedirs(CACHE_DIR, exist_ok=True)
 
 @api_report.get("/report")
 async def overview(
@@ -12,17 +17,22 @@ async def overview(
     evolution: Optional[str] = None,
 ):
     try:
-        controller = ReportController()
+        request = "_".join([str(uf), str(syndrome), str(year), str(evolution)])
+        cache_file = os.path.join(CACHE_DIR, f"{request}.html")
 
-        report = controller.general_report(uf, syndrome, year, evolution)
+        if os.path.exists(cache_file):
+            return FileResponse(path=cache_file, filename="report.html")
 
-        headers = {
-            "content-length": str(len(report.encode('utf-8'))),
-            "content-disposition": 'attachment; filename="report.html"'
-        }
+        else:
 
-        return Response(content=report, status_code=200,
-                        media_type="application/octet-stream", headers=headers)
+            controller = ReportController()
+
+            report = controller.general_report(uf, syndrome, year, evolution)
+
+            with open(cache_file, "w") as f:
+                f.write(report)
+
+            return FileResponse(path=cache_file, filename="report.html")
 
     except Exception as e:
         print(e)
