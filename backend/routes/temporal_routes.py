@@ -184,15 +184,6 @@ async def stl_decomposition_data(
     num_lags: Optional[int] = None,
     alpha: Optional[int] = None,
 ):
-    if seasonal is None:
-        seasonal = 13
-
-    if num_lags is None:
-        num_lags = 25
-
-    if alpha is None:
-        alpha = 0.01
-
     try:
         controller = TemporalController()
         data = controller.get_stl_decomposition_data(
@@ -215,18 +206,6 @@ async def seasonal_decomposition_data(
     num_lags: Optional[int] = None,
     alpha: Optional[int] = None,
 ):
-    if period is None:
-        period = 5
-
-    if model is None:
-        model = "additive"
-
-    if num_lags is None:
-        num_lags = 25
-
-    if alpha is None:
-        alpha = 0.01
-
     try:
         controller = TemporalController()
         data = controller.get_seasonal_decomposition_data(
@@ -256,8 +235,8 @@ async def serie_lag_plot(
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-@api_temporal.get("/get_predict_data")
-async def get_predict_data(
+@api_temporal.get("/predict_data")
+async def predict_data(
     uf: Optional[str] = None,
     syndrome: Optional[str] = None,
     year: Optional[int] = None,

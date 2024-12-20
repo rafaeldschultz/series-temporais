@@ -2,24 +2,8 @@ import { useTheme } from "@emotion/react";
 import { useMemo } from "react";
 import Plot from "react-plotly.js";
 
-const LinePlot = ({ data, axisLabels, annotations }) => {
+const GeneralLinePlot = ({ plotData, axisLabels, annotations }) => {
   const theme = useTheme();
-  const plotData = useMemo(() => {
-    return data.map((item) => ({
-      name: item?.name,
-      x: item.x,
-      y: item.y,
-      type: "scatter",
-      mode: "points+lines",
-      line: {
-        width: 1.5,
-        color: item.color ? item.color : theme.palette.primary.main,
-      },
-      fillcolor: "#0077b6",
-      hovertemplate:
-        "%{x|%d - %b - %Y}<br>Número de casos: %{y}<extra></extra>",
-    }));
-  }, [data, theme.palette.primary.main, theme.palette.info.contrast]);
 
   const layout = useMemo(
     () => ({
@@ -88,4 +72,4 @@ const LinePlot = ({ data, axisLabels, annotations }) => {
   );
 };
 
-export default LinePlot;
+export default GeneralLinePlot;

@@ -1,17 +1,14 @@
-import os
 from pathlib import Path
 from typing import Optional
 
-import numpy as np
 import pandas as pd
 from pmdarima import auto_arima
 from scipy.stats import jarque_bera
 from statsmodels.api import tsa
-from statsmodels.graphics.tsaplots import plot_pacf
 from statsmodels.stats.diagnostic import acorr_ljungbox
 from statsmodels.tsa.seasonal import STL, seasonal_decompose
 from statsmodels.tsa.statespace.sarimax import SARIMAX
-from statsmodels.tsa.stattools import adfuller, pacf
+from statsmodels.tsa.stattools import adfuller
 
 
 class TemporalController:
@@ -117,7 +114,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: str = "3D",
+        granularity: Optional[str] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -135,7 +132,11 @@ class TemporalController:
             self.df["DT_NOTIFIC"].value_counts().reset_index().sort_values("DT_NOTIFIC")
         )
 
-        serie = serie.resample(granularity, on="DT_NOTIFIC").mean()
+        if granularity:
+            serie = serie.resample(granularity, on="DT_NOTIFIC").mean()
+        else:
+            serie = serie.resample("3D", on="DT_NOTIFIC").mean()
+
         serie = serie.reset_index()
         serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
@@ -147,7 +148,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        order: int = 1,
+        order: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -167,12 +168,18 @@ class TemporalController:
         serie = serie.set_index("DT_NOTIFIC")
         serie = serie.resample("1D").sum()
 
-        # Max order is Two
-        if order == 2:
-            serie = serie.diff(1)
-            serie = serie.diff(1)
-            serie = serie.iloc[2:]
+        if order:
+            # Max order is Two
+            if order == 2:
+                serie = serie.diff(1)
+                serie = serie.diff(1)
+                serie = serie.iloc[2:]
 
+            else:
+                serie = serie.diff(1)
+                serie = serie.iloc[1:]
+
+        # Default diffirentiation - 1º order
         else:
             serie = serie.diff(1)
             serie = serie.iloc[1:]
@@ -188,7 +195,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: int = 3,
+        granularity: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -207,7 +214,11 @@ class TemporalController:
         )
         serie = serie.set_index("DT_NOTIFIC")
 
-        serie = serie.ewm(span=granularity, adjust=True).mean()
+        if granularity:
+            serie = serie.ewm(span=granularity, adjust=True).mean()
+        else:
+            serie = serie.ewm(span=3, adjust=True).mean()
+
         serie = serie.reset_index()
         serie["DT_NOTIFIC"] = serie["DT_NOTIFIC"].dt.strftime("%Y-%m-%d")
 
@@ -219,10 +230,10 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: int = 7,
-        diff_order: int = 7,
-        num_lags: int = 25,
-        alpha: int = 0.01,
+        granularity: Optional[int] = None,
+        diff_order: Optional[int] = None,
+        num_lags: Optional[int] = None,
+        alpha: Optional[int] = None,
         serie: Optional[pd.Series] = None,
     ):
         if serie is None:
@@ -238,9 +249,12 @@ class TemporalController:
             if evolution:
                 self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
-            serie = self.df.groupby(
-                self.df["DT_NOTIFIC"].dt.to_period(f"{granularity}D")
-            ).size()
+            if granularity:
+                serie = self.df.groupby(
+                    self.df["DT_NOTIFIC"].dt.to_period(f"{granularity}D")
+                ).size()
+            else:
+                serie = self.df.groupby(self.df["DT_NOTIFIC"].dt.to_period("W")).size()
 
             serie.index = serie.index.to_timestamp()
 
@@ -248,9 +262,15 @@ class TemporalController:
             serie = serie.diff().dropna()
 
             # Remove Seasonality of the time series
-            serie = serie.diff(diff_order).dropna()
+            if diff_order:
+                serie = serie.diff(diff_order).dropna()
+            else:
+                serie = serie.diff(7).dropna()
 
-        corr_array = tsa.acf(serie, nlags=num_lags, alpha=alpha)
+        aux_num_lags = num_lags if num_lags else 25
+        aux_alpha = alpha if alpha else 0.01
+
+        corr_array = tsa.acf(serie, nlags=aux_num_lags, alpha=aux_alpha)
 
         lower_y = corr_array[1][:, 0] - corr_array[0]
         upper_y = corr_array[1][:, 1] - corr_array[0]
@@ -268,10 +288,10 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        granularity: int = 7,
-        diff_order: int = 7,
-        num_lags: int = 25,
-        alpha: int = 0.01,
+        granularity: Optional[int] = None,
+        diff_order: Optional[int] = None,
+        num_lags: Optional[int] = None,
+        alpha: Optional[int] = None,
         serie: Optional[pd.Series] = None,
     ):
         if serie is None:
@@ -287,16 +307,26 @@ class TemporalController:
             if evolution:
                 self.df = self.df[self.df["EVOLUCAO"] == evolution]
 
-            serie = self.df.groupby(
-                self.df["DT_NOTIFIC"].dt.to_period(f"{granularity}D")
-            ).size()
+            if granularity:
+                serie = self.df.groupby(
+                    self.df["DT_NOTIFIC"].dt.to_period(f"{granularity}D")
+                ).size()
+            else:
+                serie = self.df.groupby(self.df["DT_NOTIFIC"].dt.to_period("W")).size()
 
             serie.index = serie.index.to_timestamp()
 
             serie = serie.diff().dropna()
-            serie = serie.diff(diff_order).dropna()
 
-        corr_array = tsa.pacf(serie, nlags=num_lags, alpha=alpha)
+            if diff_order:
+                serie = serie.diff(diff_order).dropna()
+            else:
+                serie = serie.diff(7).dropna()
+
+        aux_num_lags = num_lags if num_lags else 25
+        aux_alpha = alpha if alpha else 0.01
+
+        corr_array = tsa.pacf(serie, nlags=aux_num_lags, alpha=aux_alpha)
 
         lower_y = corr_array[1][:, 0] - corr_array[0]
         upper_y = corr_array[1][:, 1] - corr_array[0]
@@ -314,7 +344,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        significance_level: float = 0.05,
+        significance_level: Optional[float] = 0.05,
         serie: Optional[pd.Series] = None,
     ):
         if serie is None:
@@ -347,9 +377,9 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        seasonal: int = 13,
-        num_lags: int = 25,  # Auto Correlogram and P.A.C plot
-        alpha: int = 0.01,
+        seasonal: Optional[int] = None,
+        num_lags: Optional[int] = None,  # Auto Correlogram and P.A.C plot
+        alpha: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -365,7 +395,7 @@ class TemporalController:
 
         serie = self.df.groupby("DT_NOTIFIC").size()
 
-        stl = STL(serie, seasonal=seasonal)
+        stl = STL(serie, seasonal=seasonal if seasonal else 13)
         results = stl.fit()
 
         serie = serie.reset_index().rename(columns={0: "Count"})
@@ -395,10 +425,12 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        period: int = 5,  # Default to daily data if no frequency is specified
-        model: str = "additive",  # The type of decomposition ('additive' or 'multiplicative')
-        num_lags: int = 25,  # Auto Correlogram and P.A.C plot
-        alpha: int = 0.01,
+        period: Optional[int] = 5,  # Default to daily data if no frequency is specified
+        model: Optional[
+            str
+        ] = "additive",  # The type of decomposition ('additive' or 'multiplicative')
+        num_lags: Optional[int] = None,  # Auto Correlogram and P.A.C plot
+        alpha: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -444,7 +476,7 @@ class TemporalController:
         teste = jarque_bera(residuos)
         return {
             "Jarque-Bera": teste.pvalue,
-            "normResid": "True" if teste.pvalue > 0.05 else "False",
+            "normResid": bool(teste.pvalue > 0.05),
         }
 
     @staticmethod
@@ -452,7 +484,7 @@ class TemporalController:
         df = acorr_ljungbox(residuos, lags=[lags], return_df=False)
         return {
             "Ljung-Box": df.iloc[0]["lb_pvalue"],
-            "independenceResid": "True" if df.iloc[0]["lb_pvalue"] > 0.05 else "False",
+            "independenceResid": bool(df.iloc[0]["lb_pvalue"] > 0.05),
         }
 
     def get_predict_data(
@@ -461,10 +493,10 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        forecast_steps: int = 30,
-        independence_lags: int = 4,
-        num_lags_correlogram: int = 10,  # Auto Correlogram and P.A.C plot
-        alpha_correlogram: int = 0.01,
+        forecast_steps: Optional[int] = 30,
+        independence_lags: Optional[int] = 4,
+        num_lags_correlogram: Optional[int] = 25,  # Auto Correlogram and P.A.C plot
+        alpha_correlogram: Optional[int] = 0.01,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -558,7 +590,7 @@ class TemporalController:
             "order": order,  # Card
             "seasonalOrder": seasonal_order,  # Card
             "summary": model_search.summary().as_text(),  # Text base64
-            "serie": serie.to_dict(orient="list"),  # Serie
+            "originalSerie": serie.to_dict(orient="list"),  # Serie
             # "adjustedSerie":adjusted_serie.to_dict(orient="list"),   # Serie
             "normTest": norm_result,  # Card
             "independenceTest": independence_result,  # Card
@@ -575,7 +607,7 @@ class TemporalController:
         syndrome: Optional[str] = None,
         year: Optional[int] = None,
         evolution: Optional[str] = None,
-        lag: int = 4,
+        lag: Optional[int] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Automatizado</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-bottom: 2px solid #ddd;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header h2 {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .summary div {
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .summary div h3 {
+            margin-bottom: 10px;
+            font-size: 3em;
+			margin-top: 0px;
+        }
+
+        .params {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #f9f9f9;
+			font-size: large;
+        }
+
+        .params div {
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .params div h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .message {
+            text-align: justify;
+            color: darkslategray;
+            padding: 0px 120px 0px 120px;
+        }
+
+        .chart {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        .chart h4 {
+            text-align: center;
+            margin: 0 0 10px;
+        }
+
+		.custom-hr {
+		  border: none;
+		  border-top: 1px solid #ccc; /* Cor e espessura da linha */
+		  margin: 0px;            /* Espaçamento vertical */
+		  width: 100%;               /* Atravessa a página */
+		}
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #777;
+            border-top: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+	
+	<center>
+
+        <header>
+            <h1>Relatório Automatizado</h1>
+            <h2>SME0808 - Séries Temporais e Aprendizado Dinâmico</h2>
+        </header>
+
+        <section class="params">
+            <div>
+                <p>Estado</p>
+                <h3>{ESTADO}</h3>
+            </div>
+            <div>
+                <p>Síndrome</p>
+                <h3>{SINDROME}</h3>
+            </div>
+            <div>
+                <p>Ano</p>
+                <h3>{ANO}</h3>
+            </div>
+            <div>
+                <p>Evolução do Caso</p>
+                <h3>{EVOLUCAO}</h3>
+            </div>
+        </section>
+
+	   <hr class="custom-hr" />
+
+       <section class="summary">
+            <div>
+                <h3 style="color: #0077b6">{TOTAL_CASOS}</h3>
+                <p>Total de Casos</p>
+            </div>
+            <div>
+                <h3 style="color: #bc4749">{TOTAL_OBITOS}</h3>
+                <p>Total de Óbitos</p>
+            </div>
+            <div>
+                <h3 style="color: #386641">{TOTAL_RECUPERADOS}</h3>
+                <p>Total de Recuperados</p>
+            </div>
+        </section>
+
+        {CHARTS}
+
+        <footer>
+            <p>Relatório gerado automaticamente - SME0808</p>
+        </footer>
+
+	</center>
+
+	{SCRIPT}
+
+</body>
+</html>
+

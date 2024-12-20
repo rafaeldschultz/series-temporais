@@ -1,0 +1,1705 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "data": [
+    {
+      "name": "_server_source_0",
+      "values": [
+        {
+          "Ano": "2021",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Covid-19",
+          "count": 193003
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Influenza",
+          "count": 108
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Não especificado",
+          "count": 34271
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro agente",
+          "count": 414
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1439
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Covid-19",
+          "count": 58077
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Influenza",
+          "count": 65
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Não especificado",
+          "count": 33840
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro agente",
+          "count": 555
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1712
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 10409
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 8873
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 30570
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 494
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2319
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 105373
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 47
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 33094
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 348
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1182
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 65487
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 55
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 28015
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 319
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 589
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 95727
+        },
+        {"Ano": "2021", "Mes": "Julho", "CLASSI_FIN": "Influenza", "count": 92},
+        {
+          "Ano": "2021",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 35533
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 636
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1770
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 168819
+        },
+        {"Ano": "2021", "Mes": "Junho", "CLASSI_FIN": "Influenza", "count": 96},
+        {
+          "Ano": "2021",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 34849
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 485
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1497
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Covid-19",
+          "count": 187233
+        },
+        {"Ano": "2021", "Mes": "Maio", "CLASSI_FIN": "Influenza", "count": 116},
+        {
+          "Ano": "2021",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Não especificado",
+          "count": 37415
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro agente",
+          "count": 422
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1571
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Março",
+          "CLASSI_FIN": "Covid-19",
+          "count": 244926
+        },
+        {"Ano": "2021", "Mes": "Março", "CLASSI_FIN": "Influenza", "count": 93},
+        {
+          "Ano": "2021",
+          "Mes": "Março",
+          "CLASSI_FIN": "Não especificado",
+          "count": 39044
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro agente",
+          "count": 417
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1888
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 14512
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 268
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 25444
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 366
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2156
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 21497
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Influenza",
+          "count": 98
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 25846
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 369
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1902
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 35896
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 55
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 27852
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 412
+        },
+        {
+          "Ano": "2021",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1694
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Covid-19",
+          "count": 4656
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Influenza",
+          "count": 300
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Não especificado",
+          "count": 19891
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro agente",
+          "count": 429
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 4677
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Covid-19",
+          "count": 8801
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Influenza",
+          "count": 305
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Não especificado",
+          "count": 17472
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro agente",
+          "count": 325
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1890
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 19444
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 370
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12510
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 258
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2377
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 49981
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 701
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 23002
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 353
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1221
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 69111
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 9015
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 40882
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 673
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1567
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 24732
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Influenza",
+          "count": 517
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 19744
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 277
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2449
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 26434
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Influenza",
+          "count": 895
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 25036
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 401
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3633
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Covid-19",
+          "count": 10481
+        },
+        {"Ano": "2022", "Mes": "Maio", "CLASSI_FIN": "Influenza", "count": 659},
+        {
+          "Ano": "2022",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Não especificado",
+          "count": 24329
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro agente",
+          "count": 457
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 4907
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Março",
+          "CLASSI_FIN": "Covid-19",
+          "count": 11135
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Março",
+          "CLASSI_FIN": "Influenza",
+          "count": 320
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Março",
+          "CLASSI_FIN": "Não especificado",
+          "count": 24150
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro agente",
+          "count": 435
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3219
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 13107
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 770
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12819
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 284
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2470
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 2261
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Influenza",
+          "count": 1222
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12401
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 280
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2230
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3168
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 985
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 14217
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 297
+        },
+        {
+          "Ano": "2022",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1639
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Covid-19",
+          "count": 4526
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Influenza",
+          "count": 2902
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Não especificado",
+          "count": 14425
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro agente",
+          "count": 348
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 6526
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Covid-19",
+          "count": 2057
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Influenza",
+          "count": 357
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12584
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro agente",
+          "count": 328
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3930
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3425
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 180
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 8474
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 221
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Dezembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1850
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 4646
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 454
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12058
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 226
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2613
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 8032
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 184
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 10942
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 185
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1874
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 1781
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Influenza",
+          "count": 842
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 14451
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 369
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 4544
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 2705
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Influenza",
+          "count": 2077
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 17012
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 357
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 5782
+        },
+        {"Ano": "2023", "Mes": "Maio", "CLASSI_FIN": "Covid-19", "count": 3958},
+        {
+          "Ano": "2023",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Influenza",
+          "count": 4007
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Não especificado",
+          "count": 18117
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro agente",
+          "count": 450
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 7341
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Março",
+          "CLASSI_FIN": "Covid-19",
+          "count": 6402
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Março",
+          "CLASSI_FIN": "Influenza",
+          "count": 1856
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Março",
+          "CLASSI_FIN": "Não especificado",
+          "count": 15036
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro agente",
+          "count": 288
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 5598
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 5056
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 119
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 10236
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 239
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Novembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2096
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 6561
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Influenza",
+          "count": 158
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 10496
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 277
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Outubro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 2938
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3630
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 224
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 10545
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 332
+        },
+        {
+          "Ano": "2023",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 3055
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Covid-19",
+          "count": 1533
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Influenza",
+          "count": 4997
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12270
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro agente",
+          "count": 543
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Abril",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 10477
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Covid-19",
+          "count": 2266
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Influenza",
+          "count": 1489
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Não especificado",
+          "count": 10623
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro agente",
+          "count": 309
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Agosto",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 4325
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 6033
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 823
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 7439
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 185
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Fevereiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1545
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 3940
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Influenza",
+          "count": 326
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 7287
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 243
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Janeiro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1381
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Covid-19",
+          "count": 1164
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Influenza",
+          "count": 2325
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 11495
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 315
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Julho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 6054
+        },
+        {"Ano": "2024", "Mes": "Junho", "CLASSI_FIN": "Covid-19", "count": 837},
+        {
+          "Ano": "2024",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Influenza",
+          "count": 2880
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Não especificado",
+          "count": 12918
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro agente",
+          "count": 367
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Junho",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 8770
+        },
+        {"Ano": "2024", "Mes": "Maio", "CLASSI_FIN": "Covid-19", "count": 771},
+        {
+          "Ano": "2024",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Influenza",
+          "count": 4278
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Não especificado",
+          "count": 13116
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro agente",
+          "count": 498
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Maio",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 10561
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Março",
+          "CLASSI_FIN": "Covid-19",
+          "count": 4431
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Março",
+          "CLASSI_FIN": "Influenza",
+          "count": 2335
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Março",
+          "CLASSI_FIN": "Não especificado",
+          "count": 9871
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro agente",
+          "count": 301
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Março",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 5150
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Covid-19",
+          "count": 1707
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Influenza",
+          "count": 824
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Não especificado",
+          "count": 4666
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro agente",
+          "count": 180
+        },
+        {
+          "Ano": "2024",
+          "Mes": "Setembro",
+          "CLASSI_FIN": "Outro vírus",
+          "count": 1617
+        }
+      ]
+    },
+    {"name": "param_6_store"},
+    {
+      "name": "source_0",
+      "source": "_server_source_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!length(data(\"param_6_store\")) || vlSelectionTest(\"param_6_store\", datum)"
+        },
+        {
+          "type": "formula",
+          "expr": "datum[\"Mes\"]===\"Janeiro\" ? 0 : datum[\"Mes\"]===\"Fevereiro\" ? 1 : datum[\"Mes\"]===\"Março\" ? 2 : datum[\"Mes\"]===\"Abril\" ? 3 : datum[\"Mes\"]===\"Maio\" ? 4 : datum[\"Mes\"]===\"Junho\" ? 5 : datum[\"Mes\"]===\"Julho\" ? 6 : datum[\"Mes\"]===\"Agosto\" ? 7 : datum[\"Mes\"]===\"Setembro\" ? 8 : datum[\"Mes\"]===\"Outubro\" ? 9 : datum[\"Mes\"]===\"Novembro\" ? 10 : datum[\"Mes\"]===\"Dezembro\" ? 11 : 12",
+          "as": "facet_Mes_sort_index"
+        },
+        {
+          "type": "formula",
+          "expr": "datum[\"Mes\"]===\"Janeiro\" ? 0 : datum[\"Mes\"]===\"Fevereiro\" ? 1 : datum[\"Mes\"]===\"Março\" ? 2 : datum[\"Mes\"]===\"Abril\" ? 3 : datum[\"Mes\"]===\"Maio\" ? 4 : datum[\"Mes\"]===\"Junho\" ? 5 : datum[\"Mes\"]===\"Julho\" ? 6 : datum[\"Mes\"]===\"Agosto\" ? 7 : datum[\"Mes\"]===\"Setembro\" ? 8 : datum[\"Mes\"]===\"Outubro\" ? 9 : datum[\"Mes\"]===\"Novembro\" ? 10 : datum[\"Mes\"]===\"Dezembro\" ? 11 : 12",
+          "as": "color_Mes_sort_index"
+        },
+        {
+          "type": "project",
+          "fields": [
+            "Ano",
+            "Mes",
+            "color_Mes_sort_index",
+            "count",
+            "facet_Mes_sort_index"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "facet_domain",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Mes"],
+          "fields": ["facet_Mes_sort_index"],
+          "ops": ["max"],
+          "as": ["facet_Mes_sort_index"]
+        }
+      ]
+    },
+    {
+      "name": "facet_domain_row",
+      "transform": [
+        {
+          "type": "sequence",
+          "start": 0,
+          "stop": {"signal": "ceil(length(data(\"facet_domain\")) / 4)"}
+        }
+      ]
+    },
+    {
+      "name": "facet_domain_column",
+      "transform": [
+        {
+          "type": "sequence",
+          "start": 0,
+          "stop": {"signal": "min(length(data(\"facet_domain\")), 4)"}
+        }
+      ]
+    },
+    {
+      "name": "data_2",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Ano", "Mes"],
+          "fields": ["count"],
+          "ops": ["sum"],
+          "as": ["sum_count"]
+        },
+        {"type": "project", "fields": ["Ano", "sum_count"]}
+      ]
+    },
+    {
+      "name": "data_2_x_domain_Ano",
+      "source": "data_2",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Ano"],
+          "fields": [],
+          "ops": [],
+          "as": []
+        },
+        {"type": "formula", "expr": "datum['Ano']", "as": "sort_field"},
+        {"type": "project", "fields": ["Ano"]}
+      ]
+    },
+    {
+      "name": "data_2_y_domain_sum_count",
+      "source": "data_2",
+      "transform": [
+        {"type": "formula", "expr": "+datum['sum_count']", "as": "sum_count"},
+        {
+          "type": "aggregate",
+          "groupby": [],
+          "fields": ["sum_count", "sum_count"],
+          "ops": ["min", "max"],
+          "as": ["min", "max"]
+        }
+      ]
+    },
+    {
+      "name": "source_0_color_domain_Mes",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Mes"],
+          "fields": ["color_Mes_sort_index"],
+          "ops": ["min"],
+          "as": ["sort_field"]
+        },
+        {"type": "project", "fields": ["Mes", "sort_field"]}
+      ]
+    },
+    {
+      "name": "source_0_facet_facet0",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "joinaggregate",
+          "groupby": ["Mes"],
+          "fields": ["facet_Mes_sort_index"],
+          "ops": ["max"],
+          "as": ["facet_Mes_sort_index"]
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["Ano", "Mes", "Mes"],
+          "fields": ["count", "facet_Mes_sort_index"],
+          "ops": ["sum", "min"],
+          "as": ["sum_count", "facet_Mes_sort_index"]
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {"name": "child_width", "value": 200},
+    {"name": "child_height", "value": 100},
+    {
+      "name": "unit",
+      "value": {},
+      "on": [
+        {"events": "pointermove", "update": "isTuple(group()) ? group() : unit"}
+      ]
+    },
+    {
+      "name": "param_6_CLASSI_FIN",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [
+          "Covid-19",
+          "Influenza",
+          "Não especificado",
+          "Outro agente",
+          "Outro vírus"
+        ],
+        "name": "Diagnóstico"
+      }
+    },
+    {
+      "name": "param_6",
+      "update": "vlSelectionResolve(\"param_6_store\", \"union\", true, true)"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "name": "facet-title",
+      "title": {"text": "Mes", "offset": 10, "style": "guide-title"},
+      "role": "column-title"
+    },
+    {
+      "type": "group",
+      "name": "row_header",
+      "from": {"data": "facet_domain_row"},
+      "encode": {"update": {"height": {"signal": "child_height"}}},
+      "axes": [
+        {
+          "scale": "y",
+          "grid": false,
+          "labelOverlap": true,
+          "orient": "left",
+          "tickCount": {"signal": "ceil(child_height/40)"},
+          "zindex": 0,
+          "title": "Notificações"
+        }
+      ],
+      "role": "row-header"
+    },
+    {
+      "type": "group",
+      "name": "column_footer",
+      "from": {"data": "facet_domain_column"},
+      "encode": {"update": {"width": {"signal": "child_width"}}},
+      "axes": [
+        {
+          "scale": "x",
+          "labelAlign": "right",
+          "zindex": 0,
+          "orient": "bottom",
+          "title": "Ano",
+          "grid": false,
+          "labelAngle": 270,
+          "labelBaseline": "middle"
+        }
+      ],
+      "role": "column-footer"
+    },
+    {
+      "type": "group",
+      "name": "cell",
+      "from": {
+        "facet": {
+          "data": "source_0_facet_facet0",
+          "name": "facet",
+          "groupby": ["Mes"],
+          "aggregate": {
+            "fields": ["facet_Mes_sort_index"],
+            "ops": ["min"],
+            "as": ["facet_Mes_sort_index"]
+          }
+        }
+      },
+      "sort": {
+        "field": ["datum[\"facet_Mes_sort_index\"]"],
+        "order": ["ascending"]
+      },
+      "encode": {
+        "update": {
+          "width": {"signal": "child_width"},
+          "height": {"signal": "child_height"}
+        }
+      },
+      "data": [{"name": "data_0", "source": "facet"}],
+      "signals": [
+        {
+          "name": "facet",
+          "value": {},
+          "on": [
+            {
+              "events": [{"source": "scope", "type": "pointermove"}],
+              "update": "isTuple(facet) ? facet : group(\"cell\").datum"
+            }
+          ]
+        },
+        {
+          "name": "param_6_tuple",
+          "update": "param_6_CLASSI_FIN !== null ? {fields: param_6_tuple_fields, values: [param_6_CLASSI_FIN]} : null"
+        },
+        {
+          "name": "param_6_tuple_fields",
+          "value": [{"type": "E", "field": "CLASSI_FIN"}]
+        },
+        {
+          "name": "param_6_modify",
+          "on": [
+            {
+              "events": {"signal": "param_6_tuple"},
+              "update": "modify(\"param_6_store\", param_6_tuple, true)"
+            }
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "type": "group",
+          "name": "child_pathgroup",
+          "from": {
+            "facet": {
+              "data": "data_0",
+              "name": "faceted_path_child_main",
+              "groupby": ["Mes"]
+            }
+          },
+          "encode": {
+            "update": {
+              "width": {
+                "field": {
+                  "signal": null,
+                  "datum": null,
+                  "group": "width",
+                  "parent": null
+                }
+              },
+              "height": {
+                "field": {
+                  "signal": null,
+                  "datum": null,
+                  "group": "height",
+                  "parent": null
+                }
+              }
+            }
+          },
+          "marks": [
+            {
+              "type": "line",
+              "name": "child_marks",
+              "from": {"data": "faceted_path_child_main"},
+              "sort": {"field": "x"},
+              "encode": {
+                "update": {
+                  "defined": {
+                    "signal": "isValid(datum[\"sum_count\"]) && isFinite(+datum[\"sum_count\"])"
+                  },
+                  "stroke": {"field": "Mes", "scale": "color"},
+                  "x": {"field": "Ano", "scale": "x"},
+                  "y": {"field": "sum_count", "scale": "y"}
+                }
+              },
+              "style": ["line"],
+              "interactive": true
+            }
+          ]
+        }
+      ],
+      "axes": [
+        {
+          "scale": "y",
+          "minExtent": 0,
+          "aria": false,
+          "ticks": false,
+          "labels": false,
+          "grid": true,
+          "orient": "left",
+          "tickCount": {"signal": "ceil(child_height/40)"},
+          "zindex": 0,
+          "maxExtent": 0,
+          "domain": false,
+          "gridScale": "x"
+        }
+      ],
+      "title": {
+        "text": {
+          "signal": "isValid(parent[\"Mes\"]) ? parent[\"Mes\"] : \"\"+parent[\"Mes\"]"
+        },
+        "frame": "group",
+        "style": "guide-label",
+        "offset": 10
+      },
+      "style": "cell"
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "point",
+      "domain": {"data": "data_2_x_domain_Ano", "field": "Ano", "sort": true},
+      "range": [0, {"signal": "child_width"}],
+      "padding": 0.5
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": [
+        {"signal": "(data(\"data_2_y_domain_sum_count\")[0] || {}).min"},
+        {"signal": "(data(\"data_2_y_domain_sum_count\")[0] || {}).max"}
+      ],
+      "range": [{"signal": "child_height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {
+        "data": "source_0_color_domain_Mes",
+        "field": "Mes",
+        "sort": {"op": "max", "field": "sort_field"}
+      },
+      "range": "category"
+    }
+  ],
+  "legends": [{"stroke": "color", "symbolType": "stroke", "title": "Mes"}],
+  "padding": 5,
+  "background": "white",
+  "layout": {"padding": 20, "bounds": "full", "align": "all", "columns": 4},
+  "config": {}
+}
