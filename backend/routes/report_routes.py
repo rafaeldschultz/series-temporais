@@ -1,12 +1,12 @@
 import os
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from controllers.report_controller import ReportController
 
 api_report = APIRouter()
 
-CACHE_DIR = "./cache"
+CACHE_DIR = "./.cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
 @api_report.get("/report")

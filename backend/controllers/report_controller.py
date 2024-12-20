@@ -106,37 +106,174 @@ class ReportController:
         time_series = self.render_time_series(data)
         occurrences = self.render_occurrences(data)
 
-        correlation = plot_correlogram(
-            CORR=self.temporal_controller.correlogram(uf, syndrome, year, evolution)
-        )
+        correlation = plot_correlogram(CORR=self.temporal_controller.correlogram(uf, syndrome, year, evolution),
+                                       title="Gráfico de Autocorrelações da Série Temporal")
+        partial_correlation = plot_correlogram(CORR=self.temporal_controller.partial_correlogram(uf, syndrome, year, evolution),
+                                               title="Gráfico de Autocorrelações Parciais da Série Temporal")
 
         lag_plots = self.render_lag_plots(uf, syndrome, year, evolution)
         differentiation = self.render_diff(uf, syndrome, year, evolution)
 
         stl_decomposition_data = self.temporal_controller.get_stl_decomposition_data(uf, syndrome, year, evolution)
         stl_decomposition = plot_decomposition(data=stl_decomposition_data['stlData'])
-        stl_correlogram = plot_correlogram(CORR=stl_decomposition_data['correlogram'])
+        stl_correlogram = plot_correlogram(CORR=stl_decomposition_data['correlogram'],
+                                           title="Gráfico de Autocorrelações dos Resíduos da Decomposição STL")
 
         seasonal_decomposition_data = self.temporal_controller.get_seasonal_decomposition_data(uf, syndrome, year, evolution)
         seasonal_decomposition = plot_decomposition(data=seasonal_decomposition_data['seasonalData'])
-        seasonal_correlogram = plot_correlogram(CORR=seasonal_decomposition_data['correlogram'])
+        seasonal_correlogram = plot_correlogram(CORR=seasonal_decomposition_data['correlogram'],
+                                                title="Gráfico de Autocorrelações dos Resíduos da Decomposição Sasonal")
 
         moving_mean = self.render_moving_mean(uf, syndrome, year, evolution)
         ema = self.render_EMA(uf, syndrome, year, evolution)
+        mean_chart = (moving_mean + ema).properties(title="Gráfico das Médias Móveis")
 
         with warnings.catch_warnings():
             # Ignorar todos os avisos do segmento de código
             warnings.simplefilter("ignore")
 
             # Ajustar um modelo ARIMA com os dados
-            # predict_data = self.temporal_controller.get_predict_data(uf, syndrome, year, evolution)
+            predict_data = self.temporal_controller.get_predict_data(uf, syndrome, year, evolution)
 
-        # arima_chart = self.render_arima(predict_data)
-        # arima_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
-        #                               title="Correlograma dos Resíduos do Modelo")
+        arima_chart = self.render_arima(predict_data)
+        arima_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
+                                       title="Correlograma dos Resíduos do Modelo")
 
-        # arima_partial_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
-        #                                      title="Correlograma Parcial dos Resíduos do Modelo")
+        arima_partial_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
+                                              title="Correlograma Parcial dos Resíduos do Modelo")
+
+        objects = [
+            {"type": "section", "title": "1. Análises Gerais do Dataset"},
+
+            {"type": "chart", "id": "geoplot", "fig_num": "1.1",
+             "text": "Apresenta dados organizados geograficamente, com totais absolutos "
+                     "e gráficos normalizados por região e estado. A seleção de uma região "
+                     "ajusta automaticamente os dados exibidos nos gráficos estaduais, "
+                     "destacando proporções e evoluções entre localidades.",
+             "json": open(os.path.join("datasets", "geoplot.json")).read()},
+
+            {"type": "chart", "id": "mensal", "fig_num": "1.2",
+             "text": "Exibe a série temporal com granularidade mensal, permitindo "
+                     "identificar tendências sazonais e comparar variações entre "
+                     "diferentes meses. A análise destaca padrões de longo prazo para "
+                     "diagnósticos como COVID-19 e Influenza.",
+             "json": open(os.path.join("datasets", "mensal.json")).read()},
+
+            {"type": "chart", "id": "semanal", "fig_num": "1.3",
+             "text": "Mostra a série temporal com granularidade semanal, evidenciando "
+                     "padrões como subnotificações aos finais de semana e aumentos nas "
+                     "segundas-feiras. Essa visualização é ideal para capturar particularidades "
+                     "em ciclos semanais, auxiliando na análise de notificações periódicas.",
+             "json": open(os.path.join("datasets", "semanal.json")).read()},
+
+            {"type": "chart", "id": "occurrences", "fig_num": "1.4",
+             "text": "A figura ilustra a distribuição de ocorrências categorizadas por "
+                     "características específicas, como sexo, faixa etária ou outros "
+                     "atributos relevantes. A disposição visual facilita a comparação "
+                     "direta entre diferentes grupos e categorias, promovendo insights "
+                     "sobre padrões demográficos e comportamentais.",
+             "json": occurrences.to_dict()},
+
+            {"type": "section", "title": "2. Análise Temporal"},
+
+            {"type": "subsection", "title": "2.1 Série Temporal"},
+            {"type": "chart", "id": "time_series", "fig_num": "2.1",
+             "text": "Apresenta a série temporal em sua forma bruta, permitindo a análise "
+                     "inicial de tendências gerais e possíveis padrões. Essa visualização "
+                     "é fundamental para o entendimento da estrutura básica dos dados.",
+             "json": time_series.to_dict()},
+
+            {"type": "subsection", "title": "2.2 Diferenciação de Primeira e Segunda Ordem da Série"},
+            {"type": "chart", "id": "differentiation", "fig_num": "2.2",
+             "text": "Exibe a diferenciação de primeira e segunda ordem da série, "
+                     "destacando transformações aplicadas para torná-la estacionária. "
+                     "É útil para validar a preparação dos dados para modelos estatísticos.",
+             "json": differentiation.to_dict()},
+
+            {"type": "subsection", "title": "2.3 Autocorrelações e Autocorrelações Parciais da Série"},
+            {"type": "chart", "id": "correlation", "fig_num": "2.3",
+             "text": "Mostra a função de autocorrelação (ACF) e autocorrelação parcial (PACF) da "
+                     "série temporal, úteis para identificar dependências entre os dados e determinar "
+                     "parâmetros adequados para modelos ARIMA.",
+             "json": correlation.to_dict()},
+            {"type": "chart", "id": "partial_correlation", "fig_num": "2.4",
+             "text": "Demonstra as autocorrelações sazonais, permitindo a identificação de ciclos "
+                     "específicos no comportamento dos dados ao longo do tempo.",
+             "json": partial_correlation.to_dict()},
+
+            {"type": "subsection", "title": "2.4 Lag Plots"},
+            {"type": "chart", "id": "lag_plots", "fig_num": "2.5",
+             "text": "Exibe os lag plots, ajudando a visualizar padrões de dependência linear entre "
+                     "os valores da série em diferentes atrasos, fundamental para validar a "
+                     "estacionariedade e a estrutura do modelo.",
+             "json": lag_plots.to_dict()},
+
+            {"type": "subsection", "title": "2.5 Médias Móveis e Médias Móveis Exponênciais"},
+            {"type": "chart", "id": "mean_chart", "fig_num": "2.6",
+             "text": "Mostra as médias móveis simples e exponenciais, úteis para suavizar a série "
+                     "temporal e destacar tendências subjacentes ao longo do tempo.",
+             "json": mean_chart.to_dict()},
+
+            {"type": "subsection", "title": "2.6 Decomposição STL"},
+            {"type": "message", "title": "Teste de Estacionariedade na Série Temporal por Decomposição STL",
+             "text": self.stationarity_test_msg(stl_decomposition_data, decomposition_type='STL')},
+
+            {"type": "chart", "id": "stl_decomposition", "fig_num": "2.7",
+             "text": "Ilustra a decomposição STL da série temporal, separando os componentes de "
+                     "tendência, sazonalidade e ruído. É essencial para entender a composição dos "
+                     "dados.",
+             "json": stl_decomposition.to_dict()},
+
+            {"type": "chart", "id": "stl_correlogram", "fig_num": "2.8",
+             "text": "Demonstra uma decomposição sazonal mais detalhada, ajudando a identificar "
+                     "padrões repetitivos em ciclos específicos e como eles afetam a série temporal.",
+             "json": stl_correlogram.to_dict()},
+
+            {"type": "subsection", "title": "2.7 Decomposição Sasonal"},
+            {"type": "message", "title": "Teste de Estacionariedade na Série Temporal por Decomposição Sasonal",
+             "text": self.stationarity_test_msg(seasonal_decomposition_data, decomposition_type='Sasonal')},
+
+            {"type": "chart", "id": "seasonal_decomposition", "fig_num": "2.9",
+             "text": "Apresenta os resíduos da decomposição sazonal, úteis para verificar a presença "
+                     "de tendências ou padrões não modelados pela sazonalidade.",
+             "json": seasonal_decomposition.to_dict()},
+
+            {"type": "chart", "id": "seasonal_correlogram", "fig_num": "2.10",
+             "text": "Este gráfico apresenta as autocorrelações dos resíduos da decomposição sazonal "
+                     "ao longo de diferentes atrasos (lags). Os pontos azuis representam os valores "
+                     "das autocorrelações, enquanto a faixa laranja indica o intervalo de confiança. "
+                     "Valores fora desse intervalo sugerem a presença de padrões ou estrutura nos "
+                     "resíduos, indicando que o modelo pode não ter capturado completamente as "
+                     "dependências nos dados. Esse gráfico é útil para validar a qualidade do ajuste "
+                     "sazonal e identificar possíveis ajustes adicionais necessários no modelo.",
+             "json": seasonal_correlogram.to_dict()},
+
+            {"type": "section", "title": "3. Predição"},
+
+            {"type": "message", "title": "Teste de Normalidade dos Resíduos do Modelo",
+             "text": self.normality_test_msg(predict_data)},
+
+            {"type": "message", "title": "Teste de Independência dos Resíduos do Modelo",
+             "text": self.independence_test_msg(predict_data)},
+
+            {"type": "message", "title": "Parâmetros Ajustados do Modelo ARIMA à Série Temporal",
+             "text": self.arima_fit_msg(predict_data)},
+
+            {"type": "chart", "id": "arima_chart", "fig_num": "3.1",
+             "text": "Ilustra os resultados de predições com base no modelo ajustado, "
+                     "destacando a precisão e confiabilidade das previsões geradas.",
+             "json": arima_chart.to_dict()},
+
+            {"type": "chart", "id": "arima_corr", "fig_num": "3.2",
+             "text": "Apresenta os resíduos do modelo ajustado, permitindo analisar sua "
+                     "normalidade e independência, fundamentais para validar o modelo.",
+             "json": arima_corr.to_dict()},
+
+            {"type": "chart", "id": "arima_partial_corr", "fig_num": "3.3",
+             "text": "Demonstra os intervalos de confiança das previsões, úteis para avaliar "
+                     "o grau de incerteza associado às estimativas geradas pelo modelo.",
+             "json": arima_partial_corr.to_dict()},
+        ]
 
         report = self.compile_report(
             metadata={
@@ -146,94 +283,14 @@ class ReportController:
 
                 "uf": uf, "syndrome": syndrome, "year": year, "evolution": evolution,
             },
-            messages=[
-                ("Teste de Estacionariedade na Série Temporal",
-                 self.stationarity_test_msg(stl_decomposition_data)),
-
-                #("Teste de Normalidade dos Resíduos",
-                # self.normality_test_msg(predict_data)),
-
-                #("Teste de Indepêndencia dos Resíduos",
-                # self.independence_test_msg(predict_data)),
-
-                #("Ajuste do Modelo ARIMA à Série Temporal",
-                # self.arima_fit_msg(predict_data))
-            ],
-            charts=[
-                ("time_series", time_series,
-                 self.time_series_text()),
-
-                ("occurrences", occurrences,
-                 "A figura ilustra a distribuição de ocorrências categorizadas por "
-                 "características específicas, como sexo, faixa etária ou outros "
-                 "atributos relevantes. A disposição visual facilita a comparação "
-                 "direta entre diferentes grupos e categorias, promovendo insights "
-                 "sobre padrões demográficos e comportamentais."),
-
-                ("correlation", correlation,
-                 "Texto do Plot de Autocorrelação"),
-
-                ("lag_plots", lag_plots,
-                 "Texto dos Plots de Lag"),
-
-                ("stl_decomposition", stl_decomposition,
-                 "Texto do Plot de Decomposição STL"),
-
-                ("stl_correlogram", stl_correlogram,
-                 "Texto do Plot de Correlograma do STL"),
-
-                ("season_decomposition", seasonal_decomposition,
-                 "Texto do Plot de Decomposição Sasonal"),
-
-                ("season_correlogram", seasonal_correlogram,
-                 "Texto do Plot de Correlograma da Decomposição Sasonal"),
-
-                ("differentiation", differentiation,
-                 "Texto do Plot de Diferenciação"),
-
-                ("moving_mean", moving_mean,
-                 "Texto do Plot de Médias Móveis"),
-
-                ("EMA", ema,
-                 "Texto do Plot de Médias Móveis Exponênciais"),
-
-                #("arima_chart", arima_chart,
-                # "Texto do Plot do Modelo ARIMA"),
-
-                #("arima_corr", arima_corr,
-                # "Texto do Plot de Autocorrelações do Modelo ARIMA"),
-
-                #("arima_partial_corr", arima_partial_corr,
-                # "Texto do Plot de Autocorrelações Parciais do Modelo ARIMA")
-            ],
-            json_charts=[
-                ("geoplot", open(os.path.join("datasets", "geoplot.json")).read(),
-                 "Apresenta dados organizados geograficamente, com totais absolutos "
-                 "e gráficos normalizados por região e estado. A seleção de uma região "
-                 "ajusta automaticamente os dados exibidos nos gráficos estaduais, "
-                 "destacando proporções e evoluções entre localidades."),
-
-                ("mensal", open(os.path.join("datasets", "mensal.json")).read(),
-                 "Exibe a série temporal com granularidade mensal, permitindo "
-                 "identificar tendências sazonais e comparar variações entre "
-                 "diferentes meses. A análise destaca padrões de longo prazo para "
-                 "diagnósticos como COVID-19 e Influenza."),
-
-                ("semanal", open(os.path.join("datasets", "semanal.json")).read(),
-                 "Mostra a série temporal com granularidade semanal, evidenciando "
-                 "padrões como subnotificações aos finais de semana e aumentos nas "
-                 "segundas-feiras. Essa visualização é ideal para capturar particularidades "
-                 "em ciclos semanais, auxiliando na análise de notificações periódicas."),
-            ],
+            objects=objects
         )
 
         return report
 
     def compile_report(self,
                        metadata: dict,
-                       messages: list = None,
-                       charts: list = None,
-                       json_charts: list = None) -> str:
+                       objects: list) -> str:
 
         """
         Função para compilar os dados do relatório para um arquivo HTML
@@ -244,13 +301,8 @@ class ReportController:
             Dicionário com os metadados para adicionar ao banner do relatório.
                 Formato: {"totalCases": 123, "totalDeaths": 123, "totalRecovered": 123}
 
-        charts: list
-            Lista com os gráficos para adicionar ao relatório no formato:
-                ("Identificador da Figura", Plot do VEGA, "Texto da Figura")
-
-        json_charts: list
-            Lista com os gráficos estáticos para adicionar ao relatório no formato:
-                ("Identificador da Figura", "Código JSON", "Texto da Figura")
+        objects: list
+            Lista com os objetos para adicionar ao relatório.
 
         Retorno
         -------
@@ -261,33 +313,29 @@ class ReportController:
         chart_divs = []
         chart_scripts = []
 
-        if messages is not None:
+        for obj in objects:
 
-            for title, msg in messages:
-                chart_divs.append(f"<h2>{title}</h2>")
-                chart_divs.append(f"<h3 class='message'>{msg}</h3>")
+            if obj['type'] == "section":
+                style = "text-align: left;padding: 0px 0px 0px 50px"
+                chart_divs.append(f"<h1 style='{style}'>{obj['title']}</h1>")
 
-        if charts is not None:
+            if obj['type'] == "subsection":
+                style = "text-align: left;padding: 0px 0px 0px 50px"
+                chart_divs.append(f"<h2 style='{style}'>{obj['title']}</h2>")
 
-            if metadata['uf'] is not None:
-                chart_divs.append(f"<h1>Análises para o Estado {metadata['uf']}</h1>")
-            else:
-                chart_divs.append("<h1>Análises do Dataset para os Dados Filtrados</h1>")
+            if obj['type'] == "message":
+                chart_divs.append(f"<h2>{obj['title']}</h2>")
+                chart_divs.append(f"<h3 class='message'>{obj['text']}</h3>")
 
-            for idx, (chart_id, chart, chart_text) in enumerate(charts):
-                chart_div = chart_template.format(chart_id=chart_id, fig_num=idx + 1, text=chart_text)
-                chart_script = script_template.replace("CHART_ID", chart_id).replace("JSON_CODE", str(chart.to_dict()))
+            elif obj['type'] == "chart":
+                chart_div = chart_template.format(
+                    chart_id=obj['id'],
+                    fig_num=obj['fig_num'],
+                    text=obj['text']
+                )
 
-                chart_divs.append(chart_div)
-                chart_scripts.append(chart_script)
-
-        if json_charts is not None:
-
-            chart_divs.append("<h1>Análises do Dataset Geral</h1>")
-
-            for idx, (chart_id, chart_json, chart_text) in enumerate(json_charts):
-                chart_div = chart_template.format(chart_id=chart_id, fig_num=idx + 1, text=chart_text)
-                chart_script = script_template.replace("CHART_ID", chart_id).replace("JSON_CODE", chart_json)
+                chart_script = script_template.replace("CHART_ID", obj['id'])
+                chart_script = chart_script.replace("JSON_CODE", str(obj['json']))
 
                 chart_divs.append(chart_div)
                 chart_scripts.append(chart_script)
@@ -304,6 +352,11 @@ class ReportController:
         report = report.replace("{TOTAL_CASOS}", metadata['totalCases'])
         report = report.replace("{TOTAL_OBITOS}", metadata['totalDeaths'])
         report = report.replace("{TOTAL_RECUPERADOS}", metadata['totalRecovered'])
+
+        report = report.replace("{ESTADO}", metadata['uf'] if metadata['uf'] else "Todos")
+        report = report.replace("{SINDROME}", metadata['syndrome'] if metadata['syndrome'] else "Todas")
+        report = report.replace("{ANO}", metadata['year'] if metadata['year'] else "2021 até 2024")
+        report = report.replace("{EVOLUCAO}", metadata['evolution'] if metadata['evolution'] else "Todas")
 
         return report
 
@@ -493,9 +546,10 @@ class ReportController:
 
         chart = alt.Chart(SERA).mark_line().encode(
             x=alt.X("DT_NOTIFIC:T", title="Data"),
-            y=alt.Y("count:Q", title="Número de Casos")
+            y=alt.Y("count:Q", title="Número de Casos"),
+            color=alt.datum(f"Médias Móveis Exponenciais ({granularity} dias)")
         ).properties(
-            title=f"Médias Móveis Exponenciais ({granularity} dias)",
+            #title=f"Médias Móveis Exponenciais ({granularity} dias)",
             width=800
         )
 
@@ -534,9 +588,10 @@ class ReportController:
 
         chart = alt.Chart(SERA).mark_line().encode(
             x=alt.X("DT_NOTIFIC:T", title="Data"),
-            y=alt.Y("count:Q", title="Número de Casos")
+            y=alt.Y("count:Q", title="Número de Casos"),
+            color=alt.datum(f"Médias Móveis ({granularity} dias)")
         ).properties(
-            title=f"Médias Móveis ({granularity} dias)",
+            # title=f"Médias Móveis ({granularity} dias)",
             width=800
         )
 
@@ -589,9 +644,9 @@ class ReportController:
 
 
     @staticmethod
-    def stationarity_test_msg(stl_decomposition_data: dict):
+    def stationarity_test_msg(decomposition_data: dict, decomposition_type: str = "STL"):
         # Teste estatístico pra saber se a serie é Estacionaria
-        stationarityTest = stl_decomposition_data['stationarityTest']
+        stationarityTest = decomposition_data['stationarityTest']
 
         test_result = "POSITIVO" if stationarityTest['stationary'] else "NEGATIVO"
         meaning = "não variam" if stationarityTest['stationary'] else "variam"
@@ -599,7 +654,7 @@ class ReportController:
         meaning3 = "persistentes" if stationarityTest['stationary'] else "inconsistentes"
         meaning4 = "facilitando" if stationarityTest['stationary'] else "dificultando"
 
-        stationarityTestMsg = f"O teste de estacionariedade resultou em {test_result}, com p-valor de {stationarityTest['pValue']} e estatística {stationarityTest['testStatistic']}. Isso indica que as propriedades estatísticas da série temporal, como média, variância e autocovariância, {meaning} ao longo do tempo. Isso significa que a série {meaning2} tendências ou padrões sazonais {meaning3}, {meaning4} o uso de modelos estatísticos como ARIMA ou SARIMA."
+        stationarityTestMsg = f"Utilizamos os resíduos da decomposição {decomposition_type} para realizar um Teste de Estacionariedade. O teste resultou em {test_result}, com p-valor de {stationarityTest['pValue']} e estatística {stationarityTest['testStatistic']}. Isso indica que as propriedades estatísticas da série temporal, como média, variância e autocovariância, {meaning} ao longo do tempo. Isso significa que a série {meaning2} tendências ou padrões sazonais {meaning3}, {meaning4} o uso de modelos estatísticos como ARIMA ou SARIMA."
 
         return stationarityTestMsg
 
@@ -607,11 +662,14 @@ class ReportController:
     def normality_test_msg(predict_data: dict):
         normTest = predict_data['normTest']
 
-        test_result = "POSITIVO" if normTest['normResid'] else "NEGATIVO"
-        meaning = "são" if normTest['normResid'] else "não são"
-        meaning2 = "está" if normTest['normResid'] else "não está"
+        result = bool(normTest['normResid'])
+        p_value = normTest['Jarque-Bera']
 
-        norm_msg = f"O teste Jarque-Bera de normalidade obteve resultado {test_result}, indicando que os resíduos da série temporal {meaning} normalmente distribuidos. Isso indica que o modelo ajustado {meaning2} capturando adequadamente a estrutura dos dados, e os erros (ou resíduos) {meaning} puramente aleatórios."
+        test_result = "POSITIVO" if result else "NEGATIVO"
+        meaning = "são" if result else "não são"
+        meaning2 = "está" if result else "não está"
+
+        norm_msg = f"O teste Jarque-Bera de normalidade obteve resultado {test_result}, com p-valor igual a {p_value}, indicando que os resíduos da série temporal {meaning} normalmente distribuidos. Isso indica que o modelo ajustado {meaning2} capturando adequadamente a estrutura dos dados, e os erros (ou resíduos) {meaning} puramente aleatórios."
 
         return norm_msg
 
@@ -619,14 +677,16 @@ class ReportController:
     def independence_test_msg(predict_data: dict):
         # Test est. pra saber se os resíduos são independentes
         independenceTest = predict_data['independenceTest']
-        independenceTest['independenceResid'] = bool(independenceTest['independenceResid'])
+
+        p_valor = independenceTest['Ljung-Box']
+        result = bool(independenceTest['independenceResid'])
 
         # Formatação para o teste de independência
-        test_result = "POSITIVO" if independenceTest['independenceResid'] else "NEGATIVO"
-        meaning = "são" if independenceTest['independenceResid'] else "não são"
-        meaning2 = "está" if independenceTest['independenceResid'] else "não está"
+        test_result = "POSITIVO" if result else "NEGATIVO"
+        meaning = "são" if result else "não são"
+        meaning2 = "está" if result else "não está"
 
-        indep_msg = f"O teste Ljung-Box de independência obteve resultado {test_result}, indicando que os resíduos da série temporal {meaning} independentes. Isso indica que o modelo ajustado {meaning2} capturando toda a estrutura dos dados, e os erros (ou resíduos) {meaning} livres de autocorrelação, uma das principais suposições de modelos de séries temporais."
+        indep_msg = f"O teste Ljung-Box de independência obteve resultado {test_result}, com p-valor igual a {p_valor}, indicando que os resíduos da série temporal {meaning} independentes. Isso indica que o modelo ajustado {meaning2} capturando toda a estrutura dos dados, e os erros (ou resíduos) {meaning} livres de autocorrelação, uma das principais suposições de modelos de séries temporais."
 
         return indep_msg
 
@@ -649,15 +709,3 @@ class ReportController:
         )
 
         return arima_msg
-
-    @staticmethod
-    def time_series_text(year: Optional[int] = None):
-        year = f"{year}" if year is not None else f"2021 a 2024"
-        text = f"""O gráfico de linha apresenta a evolução temporal do número de ocorrências de Síndrome Respiratória Aguda no período de {year}, com o eixo X representando as datas de ocorrência e o eixo Y o número de casos registrados. O gráfico facilita a análise de padrões temporais, possibilitando a identificação de períodos críticos, surtos epidêmicos ou mudanças sazonais.
-
-      - Tendências Gerais: O gráfico permite identificar o comportamento dos casos ao longo do tempo, como aumentos graduais ou quedas acentuadas.
-      - Períodos de Queda: As quedas podem refletir estabilização dos casos, impactos de medidas preventivas (como campanhas de vacinação ou distanciamento social) ou alterações nas condições ambientais.
-      - Ciclos Anuais: Caso haja repetições de padrões em intervalos regulares, pode-se inferir uma sazonalidade dos casos, como o aumento em determinados meses ou estações do ano.
-      """
-
-        return text

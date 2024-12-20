@@ -495,7 +495,7 @@ class TemporalController:
         evolution: Optional[str] = None,
         forecast_steps: Optional[int] = 30,
         independence_lags: Optional[int] = 4,
-        num_lags_correlogram: Optional[int] = 10,  # Auto Correlogram and P.A.C plot
+        num_lags_correlogram: Optional[int] = 25,  # Auto Correlogram and P.A.C plot
         alpha_correlogram: Optional[int] = 0.01,
     ):
         if uf:
