@@ -141,6 +141,8 @@ class ReportController:
 
         arima_partial_corr = plot_correlogram(CORR=predict_data['predictCorrelogram'],
                                               title="Correlograma Parcial dos Resíduos do Modelo")
+        
+        arima_resid = self.render_arima_resid(predict_data)
 
         objects = [
             {"type": "section", "title": "1. Análises Gerais do Dataset"},
@@ -173,10 +175,13 @@ class ReportController:
                      "direta entre diferentes grupos e categorias, promovendo insights "
                      "sobre padrões demográficos e comportamentais.",
              "json": occurrences.to_dict()},
+            {"type": "message", "title": "", "text": self.occurrences_msg()},
 
             {"type": "section", "title": "2. Análise Temporal"},
 
             {"type": "subsection", "title": "2.1 Série Temporal"},
+            {"type": "message", "title": "", "text": self.time_series_msg(year)},
+
             {"type": "chart", "id": "time_series", "fig_num": "2.1",
              "text": "Apresenta a série temporal em sua forma bruta, permitindo a análise "
                      "inicial de tendências gerais e possíveis padrões. Essa visualização "
@@ -191,17 +196,20 @@ class ReportController:
              "json": differentiation.to_dict()},
 
             {"type": "subsection", "title": "2.3 Autocorrelações e Autocorrelações Parciais da Série"},
+            {"type": "message", "title": "", "text": self.correlogram_msg()},
             {"type": "chart", "id": "correlation", "fig_num": "2.3",
              "text": "Mostra a função de autocorrelação (ACF) e autocorrelação parcial (PACF) da "
                      "série temporal, úteis para identificar dependências entre os dados e determinar "
                      "parâmetros adequados para modelos ARIMA.",
              "json": correlation.to_dict()},
+            {"type": "message", "title": "", "text": self.partial_correlogram_msg()},
             {"type": "chart", "id": "partial_correlation", "fig_num": "2.4",
              "text": "Demonstra as autocorrelações sazonais, permitindo a identificação de ciclos "
                      "específicos no comportamento dos dados ao longo do tempo.",
              "json": partial_correlation.to_dict()},
 
             {"type": "subsection", "title": "2.4 Lag Plots"},
+            {"type": "message", "title": "", "text": self.lag_plots_msg()},
             {"type": "chart", "id": "lag_plots", "fig_num": "2.5",
              "text": "Exibe os lag plots, ajudando a visualizar padrões de dependência linear entre "
                      "os valores da série em diferentes atrasos, fundamental para validar a "
@@ -209,20 +217,22 @@ class ReportController:
              "json": lag_plots.to_dict()},
 
             {"type": "subsection", "title": "2.5 Médias Móveis e Médias Móveis Exponênciais"},
+            {"type": "message", "title": "", "text": self.moving_mean_and_ema_msg()},
             {"type": "chart", "id": "mean_chart", "fig_num": "2.6",
              "text": "Mostra as médias móveis simples e exponenciais, úteis para suavizar a série "
                      "temporal e destacar tendências subjacentes ao longo do tempo.",
              "json": mean_chart.to_dict()},
 
             {"type": "subsection", "title": "2.6 Decomposição STL"},
-            {"type": "message", "title": "Teste de Estacionariedade na Série Temporal por Decomposição STL",
-             "text": self.stationarity_test_msg(stl_decomposition_data, decomposition_type='STL')},
+            {"type": "message", "title": "", "text": self.stl_decomposition_msg()},
 
             {"type": "chart", "id": "stl_decomposition", "fig_num": "2.7",
              "text": "Ilustra a decomposição STL da série temporal, separando os componentes de "
                      "tendência, sazonalidade e ruído. É essencial para entender a composição dos "
                      "dados.",
              "json": stl_decomposition.to_dict()},
+            {"type": "message", "title": "Teste de Estacionariedade na Série Temporal por Decomposição STL",
+             "text": self.stationarity_test_msg(stl_decomposition_data, decomposition_type='STL')},
 
             {"type": "chart", "id": "stl_correlogram", "fig_num": "2.8",
              "text": "Demonstra uma decomposição sazonal mais detalhada, ajudando a identificar "
@@ -230,13 +240,13 @@ class ReportController:
              "json": stl_correlogram.to_dict()},
 
             {"type": "subsection", "title": "2.7 Decomposição Sasonal"},
-            {"type": "message", "title": "Teste de Estacionariedade na Série Temporal por Decomposição Sasonal",
-             "text": self.stationarity_test_msg(seasonal_decomposition_data, decomposition_type='Sasonal')},
-
+            {"type": "message", "title": "", "text": self.seasonal_decomposition_msg()},
             {"type": "chart", "id": "seasonal_decomposition", "fig_num": "2.9",
              "text": "Apresenta os resíduos da decomposição sazonal, úteis para verificar a presença "
                      "de tendências ou padrões não modelados pela sazonalidade.",
              "json": seasonal_decomposition.to_dict()},
+            {"type": "message", "title": "Teste de Estacionariedade na Série Temporal por Decomposição Sasonal",
+            "text": self.stationarity_test_msg(seasonal_decomposition_data, decomposition_type='Sasonal')},
 
             {"type": "chart", "id": "seasonal_correlogram", "fig_num": "2.10",
              "text": "Este gráfico apresenta as autocorrelações dos resíduos da decomposição sazonal "
@@ -249,13 +259,7 @@ class ReportController:
              "json": seasonal_correlogram.to_dict()},
 
             {"type": "section", "title": "3. Predição"},
-
-            {"type": "message", "title": "Teste de Normalidade dos Resíduos do Modelo",
-             "text": self.normality_test_msg(predict_data)},
-
-            {"type": "message", "title": "Teste de Independência dos Resíduos do Modelo",
-             "text": self.independence_test_msg(predict_data)},
-
+            {"type": "subsection", "title": "3.1 Modelo Ajustado"},
             {"type": "message", "title": "Parâmetros Ajustados do Modelo ARIMA à Série Temporal",
              "text": self.arima_fit_msg(predict_data)},
 
@@ -263,13 +267,27 @@ class ReportController:
              "text": "Ilustra os resultados de predições com base no modelo ajustado, "
                      "destacando a precisão e confiabilidade das previsões geradas.",
              "json": arima_chart.to_dict()},
+            
+            {"type": "subsection", "title": "3.2 Resíduos - Testes Estatísticos"},
+            {"type": "chart", "id": "arima_resid", "fig_num": "3.2",
+             "text": "Ilustra os resultados de predições com base no modelo ajustado, "
+                     "destacando a precisão e confiabilidade das previsões geradas.",
+             "json": arima_resid.to_dict()},
 
-            {"type": "chart", "id": "arima_corr", "fig_num": "3.2",
+            {"type": "message", "title": "Teste de Normalidade dos Resíduos do Modelo",
+             "text": self.normality_test_msg(predict_data)},
+
+            {"type": "message", "title": "Teste de Independência dos Resíduos do Modelo",
+             "text": self.independence_test_msg(predict_data)},
+
+            {"type": "subsection", "title": "3.3 Resíduos - Correlogramas"},
+            {"type": "message", "title": "", "text": self.resid_correlogram_msg()},
+            {"type": "chart", "id": "arima_corr", "fig_num": "3.3",
              "text": "Apresenta os resíduos do modelo ajustado, permitindo analisar sua "
                      "normalidade e independência, fundamentais para validar o modelo.",
              "json": arima_corr.to_dict()},
 
-            {"type": "chart", "id": "arima_partial_corr", "fig_num": "3.3",
+            {"type": "chart", "id": "arima_partial_corr", "fig_num": "3.4",
              "text": "Demonstra os intervalos de confiança das previsões, úteis para avaliar "
                      "o grau de incerteza associado às estimativas geradas pelo modelo.",
              "json": arima_partial_corr.to_dict()},
@@ -642,6 +660,23 @@ class ReportController:
 
         return chart
 
+    @staticmethod
+    def render_arima_resid(predict_data: dict):
+        resid = pd.DataFrame(predict_data["predictResid"])
+
+        chart = alt.Chart(resid).encode(
+            x=alt.X("DT_NOTIFIC:T", title="Data"),
+            y=alt.Y("Resid:Q", title="Resíduo"),
+            color=alt.datum("Resíduos do Modelo Ajsutado")
+        ).mark_line(
+            opacity=0.6
+        ).properties(
+            title="Resíduos do Modelo Ajsutado",
+            width=800
+        )
+
+        return chart
+
 
     @staticmethod
     def stationarity_test_msg(decomposition_data: dict, decomposition_type: str = "STL"):
@@ -709,3 +744,120 @@ class ReportController:
         )
 
         return arima_msg
+
+    @staticmethod
+    def time_series_msg(year: Optional[int] = None) -> str:
+        year = f"{year}" if year is not None else "2021 a 2024"
+        text = f"""
+        <p>O gráfico de linha apresenta a evolução temporal do número de ocorrências de Síndrome Respiratória Aguda no período de {year}, com o eixo X representando as datas de ocorrência e o eixo Y o número de casos registrados. O gráfico facilita a análise de padrões temporais, possibilitando a identificação de períodos críticos, surtos epidêmicos ou mudanças sazonais.</p>
+        <ul>
+            <li><strong>Tendências Gerais:</strong> O gráfico permite identificar o comportamento dos casos ao longo do tempo, como aumentos graduais ou quedas acentuadas.</li>
+            <li><strong>Períodos de Queda:</strong> As quedas podem refletir estabilização dos casos, impactos de medidas preventivas (como campanhas de vacinação ou distanciamento social) ou alterações nas condições ambientais.</li>
+            <li><strong>Ciclos Anuais:</strong> Caso haja repetições de padrões em intervalos regulares, pode-se inferir uma sazonalidade dos casos, como o aumento em determinados meses ou estações do ano.</li>
+        </ul>
+        """
+        return text
+    
+    @staticmethod
+    def lag_plots_msg() -> str:
+        text = """
+        <p>Um gráfico de defasagem ou lag plot é uma ferramenta visual usada para identificar padrões de autocorrelação em dados ao longo do tempo. O gráfico é criado plotando os valores da série temporal no eixo X contra os mesmos valores deslocados por um determinado número de períodos (defasagem ou lag) no eixo Y, de modo que o gráfico possa:</p>
+        <ul>
+            <li>Revelar se há uma dependência temporal nos dados, ou seja, se o número de casos em um período influencia ou está correlacionado com o número de casos em períodos distintos.</li>
+            <li><strong>Correlação Forte:</strong> se os pontos formam uma distribuição linear ou concentrada, isso indica que períodos com alta incidência tendem a ser seguidos por novos períodos de alta, sugerindo uma persistência ou continuidade dos casos ao longo do tempo.</li>
+            <li><strong>Dispersão Aleatória:</strong> caso os pontos estejam espalhados de forma irregular, pode-se concluir que não há um padrão temporal consistente entre os períodos analisados.</li>
+        </ul>
+        <p>Portanto, o gráfico permite avaliar a dinâmica temporal dos casos, ajudando a prever tendências futuras com base no comportamento passado.</p>
+        """
+        return text
+
+    @staticmethod
+    def occurrences_msg() -> str:
+        text = """
+        <p>Os gráficos de barras apresentam a distribuição do número de casos de Síndrome Respiratória Aguda conforme o sexo dos indivíduos (masculino e feminino), bem como faixa etária e dias de semana. As barras ilustram se há predominância de casos em determinadas categorias, como dias de semana, no qual, uma barra mais alta pode indicar maior vulnerabilidade ou maior exposição desse grupo a fatores de risco. Permitindo compreender fatores como:</p>
+        <ul>
+            <li><strong>Comportamentais:</strong> maior exposição ocupacional em grupos específicos.</li>
+            <li><strong>Condições Socioeconômicas:</strong> acesso desigual aos serviços de saúde, moradia inadequada ou ocupações de risco.</li>
+        </ul>
+        <p>Este gráfico permite identificar possíveis desigualdades de saúde entre grupos étnicos, bem como ajuda a identificar disparidades entre os sexos e a direcionar ações de prevenção e cuidado para os grupos mais afetados.</p>
+        """
+        return text
+    
+    @staticmethod
+    def moving_mean_and_ema_msg() -> str:
+        text = """
+        <p>O gráfico de médias móveis apresenta a suavização da série temporal original de número de ocorrências de Síndrome Respiratória Aguda (do primeiro gráfico), com o objetivo de eliminar variações aleatórias de curto prazo e destacar tendências gerais ao longo do período.</p>
+        <ul>
+            <li><strong>Suavização da Série:</strong> A linha das médias móveis reduz as oscilações diárias ou semanais, facilitando a identificação de tendências de longo prazo, como aumentos ou quedas contínuas no número de casos.</li>
+            <li><strong>Tendências Ascendentes:</strong> Sugerem surtos ou aumentos graduais nos casos, possivelmente relacionados a fatores como sazonalidade, novas variantes ou falhas nas intervenções.</li>
+            <li><strong>Tendências Descendentes:</strong> Indicam controle da situação, possivelmente devido a intervenções bem-sucedidas (como vacinação, distanciamento social, etc.).</li>
+        </ul>
+        <p>As médias móveis permitem uma visão mais clara e suave da série temporal, facilitando a análise de padrões e tendências de longo prazo. O gráfico de médias móveis exponenciais (EMA) apresenta uma variação da média móvel simples, dando mais peso aos dados mais recentes da série temporal de número de ocorrências.</p>
+        """
+        return text
+    
+    @staticmethod
+    def stl_decomposition_msg() -> str: 
+        text = """
+        <p>A decomposição STL é uma técnica que separa a série temporal original (número de ocorrências de Síndrome Respiratória Aguda) em três componentes principais: tendência (trend), sazonalidade (seasonal) e resíduos (remainder). Isso permite uma análise mais clara dos padrões subjacentes na série temporal.</p>
+        <ul>
+            <li><strong>Tendência:</strong> Refere-se ao comportamento de longo prazo da série, mostrando a direção geral dos casos, como crescimento, queda ou estabilização ao longo do período.</li>
+            <li><strong>Sazonalidade:</strong> Captura os padrões sazonais recorrentes nos dados, como aumentos ou quedas em determinados meses do ano. A presença de picos sazonais em meses específicos pode sugerir uma relação com fatores climáticos (ex.: aumento de casos em estações mais frias) ou comportamentos populacionais.</li>
+            <li><strong>Resíduos:</strong> Representa as flutuações aleatórias da série, ou seja, variações que não são explicadas pela tendência ou sazonalidade.</li>
+        </ul>
+        <p>Portanto, a decomposição STL oferece uma visão mais detalhada da série temporal, facilitando a identificação de padrões estruturais (tendência e sazonalidade) e de flutuações inesperadas (resíduos).</p>
+        """
+        return text
+    
+    @staticmethod
+    def seasonal_decomposition_msg() -> str: 
+        text = """
+        <p>A decomposição sazonal clássica é um método que separa uma série temporal (como o número de ocorrências de Síndrome Respiratória Aguda) em três componentes principais: tendência (trend), sazonalidade (seasonal) e resíduos (remainder). Essa abordagem ajuda a entender os padrões regulares e as variações da série temporal.</p>
+        <ul>
+            <li><strong>Tendência:</strong> Indica a direção geral dos dados ao longo do tempo, como crescimento, declínio ou estabilidade, representando o comportamento de longo prazo da série.</li>
+            <li><strong>Sazonalidade:</strong> Capta os ciclos recorrentes em intervalos regulares, como variações mensais ou anuais. Esse componente é fixo ao longo do tempo, assumindo que os padrões sazonais não mudam em intensidade ou forma.</li>
+            <li><strong>Resíduos:</strong> Refere-se às flutuações aleatórias ou inexplicadas nos dados, após a remoção dos efeitos da tendência e da sazonalidade.</li>
+        </ul>
+        <p>A decomposição sazonal clássica é mais adequada para séries temporais com sazonalidade regular e constante ao longo do tempo, sendo uma solução simples e eficiente para identificar padrões de longo prazo e ciclos recorrentes.</p>
+        """
+        return text
+    
+    @staticmethod
+    def correlogram_msg() -> str: 
+        text = """
+        <p>O correlograma é uma ferramenta visual usada para analisar a autocorrelação de uma série temporal. Ele mostra a correlação entre o valor atual e os valores passados da série temporal para diferentes defasagens (lags). Cada ponto no gráfico representa a correlação entre o valor atual e os valores deslocados para uma determinada defasagem no tempo.</p>
+        <ul>
+            <li><strong>Corrente e Anterior:</strong> Se os pontos formam uma linha quase reta ou um agrupamento ao redor de um valor específico, isso indica uma forte autocorrelação, sugerindo que os valores atuais são influenciados pelos valores passados.</li>
+            <li><strong>Padrões de Correlação:</strong> A forma do gráfico pode indicar padrões sazonais, como picos e vales periódicos que se repetem a cada certo número de defasagens, ajudando a entender a dinâmica temporal dos dados.</li>
+            <li><strong>Aplicação:</strong> O correlograma é útil para entender a relação entre os dados ao longo do tempo, auxiliando na modelagem estatística e na previsão de séries temporais.</li>
+        </ul>
+        <p>Portanto, o correlograma oferece uma visão clara da autocorrelação, ajudando a identificar dependências e padrões nos dados ao longo do tempo.</p>
+        """
+        return text
+
+    @staticmethod
+    def partial_correlogram_msg() -> str: 
+        text = """
+        <p>O correlograma parcial é uma extensão do correlograma que controla para outras defasagens e foca apenas nas correlações entre os valores atuais e os valores passados. Ele permite isolar o efeito de cada defasagem individualmente, ajustando para outras influências externas.</p>
+        <ul>
+            <li><strong>Corrente e Resíduos:</strong> Ao diferenciar entre correlações diretas e efeitos indiretos de defasagens anteriores, o correlograma parcial oferece uma visão mais detalhada da relação entre os valores atuais e passados da série temporal.</li>
+            <li><strong>Padrões Ajustados:</strong> Esse método ajuda a identificar padrões autocorrelacionados mais claros, isolando influências específicas e evitando confusões com outras correlações não desejadas.</li>
+            <li><strong>Aplicação:</strong> O correlograma parcial é útil para detectar correlações diretas e controlar para variáveis externas, sendo especialmente útil na análise de séries temporais complexas onde múltiplas defasagens podem estar interligadas.</li>
+        </ul>
+        <p>Portanto, o correlograma parcial permite uma análise mais refinada da autocorrelação, isolando os efeitos de diferentes defasagens e facilitando a interpretação dos padrões temporais nos dados.</p>
+        """
+        return text
+
+    @staticmethod
+    def resid_correlogram_msg() -> str: 
+        text = """
+        <p>O correlograma e o correlograma parcial são ferramentas fundamentais na análise dos resíduos de um modelo ajustado. Eles ajudam a verificar se os resíduos seguem um comportamento aleatório, condição essencial para validar a adequação do modelo.</p>
+        <ul>
+            <li><strong>Correlograma:</strong> Exibe a autocorrelação dos resíduos em diferentes defasagens (lags). Valores significativos de autocorrelação indicam padrões ou dependências temporais nos resíduos, o que sugere que o modelo ajustado pode não estar capturando todos os padrões subjacentes.</li>
+            <li><strong>Correlograma Parcial:</strong> Mostra a autocorrelação parcial, ou seja, a correlação dos resíduos com uma defasagem específica, eliminando os efeitos das defasagens intermediárias. Ele é útil para identificar as defasagens diretamente associadas aos resíduos, destacando relações que não são mediadas por outras defasagens.</li>
+        </ul>
+        <p>A análise conjunta do correlograma e do correlograma parcial permite identificar sinais de falta de ajuste no modelo, como dependências temporais residuais, auxiliando na melhoria do modelo ao sugerir a inclusão de termos adicionais ou ajustes nos parâmetros.</p>
+        """
+        return text
+
+
