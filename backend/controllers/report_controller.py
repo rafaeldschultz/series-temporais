@@ -656,7 +656,7 @@ class ReportController:
         chart = chart.properties(
             title="Ajuste do Modelo ARIMA e Previsões",
             width=800
-        )
+        ).interactive()
 
         return chart
 
