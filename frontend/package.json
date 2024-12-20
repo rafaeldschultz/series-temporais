@@ -23,10 +23,12 @@
     "chroma-js": "^3.1.2",
     "dayjs": "^1.11.13",
     "ldrs": "^1.0.2",
+    "leaflet": "^1.9.4",
     "motion": "^11.11.17",
     "plotly.js": "^2.35.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
     "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.26.2",
     "react-transition-group": "^4.4.5"
