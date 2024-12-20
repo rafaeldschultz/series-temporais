@@ -8,3 +8,4 @@ pyarrow
 fastparquet
 geopandas
 numpy==1.26.4
+altair
