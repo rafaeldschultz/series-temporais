@@ -205,7 +205,9 @@ class ReportController:
                 "e gráficos normalizados por região e estado. A seleção de uma região "
                 "ajusta automaticamente os dados exibidos nos gráficos estaduais, "
                 "destacando proporções e evoluções entre localidades.",
-                "json": self.base_path.joinpath("datasets", "geoplot.json").read_text(),
+                "json": self.base_path.joinpath("datasets", "geoplot.json").read_text(
+                    encoding="utf-8"
+                ),
                 # "json": open(os.path.join("/backend/datasets", "geoplot.json")).read(),
             },
             {
@@ -216,7 +218,9 @@ class ReportController:
                 "identificar tendências sazonais e comparar variações entre "
                 "diferentes meses. A análise destaca padrões de longo prazo para "
                 "diagnósticos como COVID-19 e Influenza.",
-                "json": self.base_path.joinpath("datasets", "mensal.json").read_text(),
+                "json": self.base_path.joinpath("datasets", "mensal.json").read_text(
+                    encoding="utf-8"
+                ),
                 # "json": open(os.path.join("datasets", "mensal.json")).read(),
             },
             {
@@ -227,7 +231,9 @@ class ReportController:
                 "padrões como subnotificações aos finais de semana e aumentos nas "
                 "segundas-feiras. Essa visualização é ideal para capturar particularidades "
                 "em ciclos semanais, auxiliando na análise de notificações periódicas.",
-                "json": self.base_path.joinpath("datasets", "semanal.json").read_text(),
+                "json": self.base_path.joinpath("datasets", "semanal.json").read_text(
+                    encoding="utf-8"
+                ),
                 # "json": open(os.path.join("datasets", "semanal.json")).read(),
             },
             {
@@ -489,7 +495,7 @@ class ReportController:
         chart_scripts = "<script>{code}</script>".format(code="".join(chart_scripts))
         chart_scripts = chart_scripts.replace("True", "true")
 
-        template = open(self.template_path).read()
+        template = self.template_path.read_text(encoding="utf-8")
 
         report = template.replace("{CHARTS}", chart_divs)
         report = report.replace("{SCRIPT}", chart_scripts)
