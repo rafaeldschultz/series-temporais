@@ -17,10 +17,14 @@ import SeasonalChart from "./SeasonalChart";
 import TrendChart from "./TrendChart";
 
 const DecompositionSection = () => {
-  const { filters } = useFilter();
+  const { filters, updateFilter } = useFilter();
   const [initialSeasonzal, setInitialSeasonal] = useState(13);
 
-  const { data, isPending: loading } = useDecomposition(
+  const {
+    data,
+    isPending: loading,
+    error,
+  } = useDecomposition(
     filters.federalState,
     filters.syndrome,
     filters.year,
@@ -28,7 +32,12 @@ const DecompositionSection = () => {
     initialSeasonzal
   );
 
-  console.log(data);
+  if (error) {
+    updateFilter("federalState", null);
+    updateFilter("syndrome", null);
+    updateFilter("year", null);
+    updateFilter("evolution", null);
+  }
 
   const debouncedSetInitialSeasonal = useCallback(
     useDebounce((value) => setInitialSeasonal(value), 300),

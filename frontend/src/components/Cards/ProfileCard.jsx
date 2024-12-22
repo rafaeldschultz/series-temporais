@@ -1,5 +1,8 @@
 import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 
+import DomainRoundedIcon from "@mui/icons-material/DomainRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+
 const ProfileCard = ({ user, sx }) => {
   return (
     <Card
@@ -21,12 +24,22 @@ const ProfileCard = ({ user, sx }) => {
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             {user.area}
           </Typography>
-          {/* <Stack direction={"row"} alignItems={"center"} spacing={1}>
-            <EmailRoundedIcon color={"primary"} />
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {user.email}
-            </Typography>
-          </Stack> */}
+          {user?.institute && (
+            <Stack direction={"row"} alignItems={"center"} spacing={1}>
+              <DomainRoundedIcon color={"primary"} />
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                {user.institute}
+              </Typography>
+            </Stack>
+          )}
+          {user?.email && (
+            <Stack direction={"row"} alignItems={"center"} spacing={1}>
+              <EmailRoundedIcon color={"primary"} />
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                {user.email}
+              </Typography>
+            </Stack>
+          )}
         </Stack>
       </CardContent>
     </Card>

@@ -10,16 +10,27 @@ import FilterPanel from "./FilterPanel";
 import SerieLagChart from "./SerieLagChart";
 
 const TemporalLagsSection = () => {
-  const { filters } = useFilter();
+  const { filters, updateFilter } = useFilter();
   const [initialLag, setInitialLag] = useState(3);
 
-  const { data, isPending: loading } = useTemporalLags(
+  const {
+    data,
+    isPending: loading,
+    error,
+  } = useTemporalLags(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution,
     initialLag
   );
+
+  if (error) {
+    updateFilter("federalState", null);
+    updateFilter("syndrome", null);
+    updateFilter("year", null);
+    updateFilter("evolution", null);
+  }
 
   const transitionTimeout = 500;
 

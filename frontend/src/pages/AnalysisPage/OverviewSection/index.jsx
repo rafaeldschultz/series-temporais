@@ -13,13 +13,23 @@ import OccurrenceBySexChart from "./OccurrenceBySexChart";
 import TemporalSeriesChart from "./TemporalSeriesChart";
 
 const OverviewSection = () => {
-  const { filters } = useFilter();
-  const { data, isPending: loading } = useOverview(
+  const { filters, updateFilter } = useFilter();
+  const {
+    data,
+    isPending: loading,
+    error,
+  } = useOverview(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution
   );
+  if (error) {
+    updateFilter("federalState", null);
+    updateFilter("syndrome", null);
+    updateFilter("year", null);
+    updateFilter("evolution", null);
+  }
 
   const transitionTimeout = 500;
 

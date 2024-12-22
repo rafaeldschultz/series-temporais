@@ -2,16 +2,17 @@ import {
   AppBar,
   Box,
   Button,
-  FormControlLabel,
-  FormGroup,
+  Divider,
+  Stack,
   styled,
   Toolbar,
+  Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import ColorModeSwitch from "../Switch/ColorModeSwitch";
 import useAppContext from "../../hooks/useAppContext";
+import GitHubIcon from "../Icons/Github";
+import ColorModeSwitch from "../Switch/ColorModeSwitch";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => {
   const { darkMode } = useAppContext();
@@ -59,19 +60,42 @@ const PageHeader = ({ routes }) => {
           py: 2,
         }}
       >
-        <Typography
-          variant="h4"
-          textTransform={"none"}
-          sx={{
-            color: "#FFFFFF",
-          }}
+        <Stack
+          direction={"row"}
+          spacing={2}
+          justifyContent={"center"}
+          alignItems={"center"}
         >
-          OpenDataSUS
-        </Typography>
+          <Typography
+            variant="h4"
+            textTransform={"none"}
+            sx={{
+              color: "#FFFFFF",
+            }}
+          >
+            DataSRAG
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ borderColor: "#e0e0e0", height: 50 }}
+          />
+          <Typography
+            variant="h6"
+            textTransform={"none"}
+            sx={{
+              color: "#FFFFFF",
+            }}
+          >
+            Análise Temporal de Síndromes
+            <br />
+            Respiratórias Agudas Graves
+          </Typography>
+        </Stack>
         <Box
           sx={{
             display: { xs: "none", md: "flex" },
-            gap: 1,
+            gap: 2,
             alignItems: "center",
           }}
         >
@@ -97,71 +121,31 @@ const PageHeader = ({ routes }) => {
                 </Typography>
               </Button>
             ))}
-          <ColorModeSwitch
-            sx={{ m: 1 }}
-            checked={darkMode}
-            onChange={handleDarkModeChange}
-          />
+          <Button
+            variant="outlined"
+            startIcon={<GitHubIcon />}
+            sx={(theme) => ({
+              color: "#ffffff",
+              borderColor: theme.palette.primary.dark,
+              px: 3,
+              borderRadius: 20,
+              backgroundColor: theme.palette.primary.dark,
+            })}
+            href="https://github.com/rafaeldschultz/series-temporais"
+            target="_blank"
+          >
+            Fork
+          </Button>
+          <Tooltip title="Alterar tema" arrow>
+            <ColorModeSwitch
+              sx={{ m: 1 }}
+              checked={darkMode}
+              onChange={handleDarkModeChange}
+            />
+          </Tooltip>
         </Box>
       </Toolbar>
     </StyledAppBar>
-
-    // // <AppBar
-    // //   position="fixed"
-    // //   sx={{
-    // //     backgroundImage: "none",
-    // //     bgcolor: "#2969bd",
-    // //   }}
-    // // >
-    // //   <StyledToolbar variant="dense" disableGutters>
-    // //     <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}>
-    // //       <Button
-    // //         onClick={() => currentPath !== "/" && handleNavigate("/")}
-    // //         variant="text"
-    // //       >
-    // //         <Typography
-    // //           variant="h4"
-    // //           textTransform={"none"}
-    // //           sx={{
-    // //             color: "#FFFFFF",
-    // //           }}
-    // //         >
-    // //           OpenDataSUS
-    // //         </Typography>
-    // //       </Button>
-    // //     </Box>
-    // //     <Box
-    // //       sx={{
-    // //         display: { xs: "none", md: "flex" },
-    // //         gap: 1,
-    // //         alignItems: "center",
-    // //       }}
-    // //     >
-    // //       {routes
-    // //         ?.filter((item) => !item.removed)
-    // //         .map(({ title, path }) => (
-    // //           <Button
-    // //             key={path} // Ensure a unique key for each route
-    // //             onClick={() =>
-    // //               currentPath !== path && handleNavigate(path ?? "/")
-    // //             }
-    // //             variant="text"
-    // //             color="info"
-    // //           >
-    // //             <Typography
-    // //               variant={"body2"}
-    // //               textTransform={"none"}
-    // //               sx={{
-    // //                 color: "#FFFFFF",
-    // //               }}
-    // //             >
-    // //               {title}
-    // //             </Typography>
-    // //           </Button>
-    // //         ))}
-    // //     </Box>
-    //   </StyledToolbar>
-    // </AppBar>
   );
 };
 
