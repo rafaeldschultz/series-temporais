@@ -25,7 +25,9 @@ async def report(
             content=file_bytes,
             status_code=200,
         )
-
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")

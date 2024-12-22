@@ -13,11 +13,8 @@ const fetch = async (federalState, syndrome, year, evolution, seasonal) => {
   };
   const response = await api
     .get("stl_decomposition_data", params)
-    .then((res) => res["data"])
-    .catch((err) => {
-      console.error(err);
-      return null;
-    });
+    .then((res) => res["data"]);
+
   return response;
 };
 

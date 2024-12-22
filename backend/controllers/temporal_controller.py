@@ -233,7 +233,7 @@ class TemporalController:
         granularity: Optional[int] = None,
         diff_order: Optional[int] = None,
         num_lags: Optional[int] = None,
-        alpha: Optional[int] = None,
+        alpha: Optional[float] = None,
         serie: Optional[pd.Series] = None,
     ):
         if serie is None:
@@ -291,7 +291,7 @@ class TemporalController:
         granularity: Optional[int] = None,
         diff_order: Optional[int] = None,
         num_lags: Optional[int] = None,
-        alpha: Optional[int] = None,
+        alpha: Optional[float] = None,
         serie: Optional[pd.Series] = None,
     ):
         if serie is None:
@@ -379,7 +379,7 @@ class TemporalController:
         evolution: Optional[str] = None,
         seasonal: Optional[int] = None,
         num_lags: Optional[int] = None,  # Auto Correlogram and P.A.C plot
-        alpha: Optional[int] = None,
+        alpha: Optional[float] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]
@@ -395,8 +395,13 @@ class TemporalController:
 
         serie = self.df.groupby("DT_NOTIFIC").size()
 
-        stl = STL(serie, seasonal=seasonal if seasonal else 13)
-        results = stl.fit()
+        try:
+            stl = STL(serie, seasonal=seasonal if seasonal else 13)
+            results = stl.fit()
+        except ValueError:
+            raise ValueError(
+                "Há poucos dados para realizar a decomposição. Tente flexibilizar os filtros."
+            )
 
         serie = serie.reset_index().rename(columns={0: "Count"})
         serie["Trend_values"] = results.trend.values
@@ -430,7 +435,7 @@ class TemporalController:
             str
         ] = "additive",  # The type of decomposition ('additive' or 'multiplicative')
         num_lags: Optional[int] = None,  # Auto Correlogram and P.A.C plot
-        alpha: Optional[int] = None,
+        alpha: Optional[float] = None,
     ):
         if uf:
             self.df = self.df[self.df["SIGLA_UF"] == uf]

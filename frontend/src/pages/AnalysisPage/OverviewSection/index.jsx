@@ -1,16 +1,16 @@
-import { Box, CircularProgress, Fade, Grow, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import BigNumberCard from "../../../components/Cards/BigNumberCard";
+import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
+import FadeBox from "../../../components/Transition/FadeBox";
+import { useFilter } from "../../../contexts/FilterContext";
+import useOverview from "../../../hooks/useOverview";
+import FilterPanel from "./FilterPanel";
+import OccurrenceByAgeChart from "./OccurrenceByAgeChart";
+import OccurrenceByDayChart from "./OccurrenceByDayChart";
 import OccurrenceByRaceChart from "./OccurrenceByRaceChart";
 import OccurrenceBySexChart from "./OccurrenceBySexChart";
 import TemporalSeriesChart from "./TemporalSeriesChart";
-import Grid from "@mui/material/Grid2";
-import BigNumberCard from "../../../components/Cards/BigNumberCard";
-import FilterPanel from "./FilterPanel";
-import useOverview from "../../../hooks/useOverview";
-import { useFilter } from "../../../contexts/FilterContext";
-import OccurrenceByAgeChart from "./OccurrenceByAgeChart";
-import OccurrenceByDayChart from "./OccurrenceByDayChart";
-import FadeBox from "../../../components/Transition/FadeBox";
-import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 
 const OverviewSection = () => {
   const { filters } = useFilter();
@@ -25,7 +25,7 @@ const OverviewSection = () => {
 
   return (
     <>
-      {loading ? (
+      {loading || !data ? (
         <QuantumLoadingBox />
       ) : (
         <FadeBox in={!loading} timeout={transitionTimeout} sx={{ pb: 4 }}>
@@ -40,10 +40,10 @@ const OverviewSection = () => {
             <Stack gap={2} width={0.8}>
               <FilterPanel />
               <Grid container spacing={2}>
-                <Grid size={9}>
+                <Grid size={8}>
                   <TemporalSeriesChart />
                 </Grid>
-                <Grid size={3}>
+                <Grid size={4}>
                   <Grid
                     container
                     direction={"column"}
@@ -61,6 +61,7 @@ const OverviewSection = () => {
                             ? data.general.totalDeaths / data.general.totalCases
                             : 0
                         }
+                        info={"Número de óbitos confirmados."}
                       />
                     </Grid>
                     <Grid>
@@ -74,6 +75,7 @@ const OverviewSection = () => {
                               data.general.totalCases
                             : 0
                         }
+                        info={"Número de casos recuperados."}
                       />
                     </Grid>
                     <Grid>
@@ -93,6 +95,7 @@ const OverviewSection = () => {
                               data.general.totalCases
                             : 0
                         }
+                        info={"Número de casos restantes."}
                       />
                     </Grid>
                   </Grid>

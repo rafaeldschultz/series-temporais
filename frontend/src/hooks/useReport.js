@@ -10,17 +10,18 @@ const fetch = async (federalState, syndrome, year, evolution) => {
       evolution: evolution,
     },
   };
-  const response = await api.get("overview", params).then((res) => res["data"]);
 
+  const response = await api.get("report", params).then((res) => res["data"]);
   return response;
 };
 
-const useOverview = (federalState, syndrome, year, evolution, select) => {
+const useReport = (federalState, syndrome, year, evolution, select) => {
   return useQuery({
-    queryKey: ["overview", federalState, syndrome, year, evolution],
+    enabled: false,
+    queryKey: ["report", federalState, syndrome, year, evolution],
     queryFn: () => fetch(federalState, syndrome, year, evolution),
     select,
   });
 };
 
-export default useOverview;
+export default useReport;

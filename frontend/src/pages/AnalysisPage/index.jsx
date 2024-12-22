@@ -1,10 +1,10 @@
 import Grid from "@mui/material/Grid2";
 
-import Page from "../../layouts/Page";
-import SideMenu from "../../components/SideMenu/SideMenu";
-import { navigationItems } from "./navigation";
-import { FilterProvider } from "../../contexts/FilterContext";
 import { Suspense, useState } from "react";
+import SideMenu from "../../components/SideMenu/SideMenu";
+import { FilterProvider } from "../../contexts/FilterContext";
+import Page from "../../layouts/Page";
+import { navigationItems } from "./navigation";
 
 const AnalysisPage = () => {
   const [visibleChart, setVisibleChart] = useState(0);

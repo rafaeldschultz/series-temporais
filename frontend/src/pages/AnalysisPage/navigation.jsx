@@ -1,19 +1,19 @@
 // import OverviewSection from "./OverviewSection";
 // import RawDataSection from "./RawDataSection";
-import TemporalAnalysisSection from "./TemporalAnalysisSection";
-import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
+import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
+import TemporalAnalysisSection from "./TemporalAnalysisSection";
 // import UnderDevelopmentPage from "../UnderDevelopmentPage";
-import MapRoundedIcon from "@mui/icons-material/MapRounded";
 import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
+import MapRoundedIcon from "@mui/icons-material/MapRounded";
 // import DecompositionSection from "./DecompositionSection";
 // import TemporalLagsSection from "./TemporalLagsSection";
 import AnimationRoundedIcon from "@mui/icons-material/AnimationRounded";
+import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
 import SummarizeRoundedIcon from "@mui/icons-material/SummarizeRounded";
 import { lazy } from "react";
 import SeasonalDecompositionSection from "./SeasonalDecompositionSection";
-import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
 
 import MapSection from "./MapSection";
 

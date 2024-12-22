@@ -12,11 +12,8 @@ const fetch = async (federalState, syndrome, year, evolution) => {
   };
   const response = await api
     .get("predict_data", params)
-    .then((res) => res["data"])
-    .catch((err) => {
-      console.error(err);
-      return null;
-    });
+    .then((res) => res["data"]);
+
   return response;
 };
 

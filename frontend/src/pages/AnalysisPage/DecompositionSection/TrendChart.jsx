@@ -1,11 +1,38 @@
-import React, { useState } from "react";
-import { Box, Chip, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useFilter } from "../../../contexts/FilterContext";
+import React from "react";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import LinePlot from "../../../components/Charts/LinePlot";
-import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
+import { useFilter } from "../../../contexts/FilterContext";
 import useDecomposition from "../../../hooks/useDecomposition";
+
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
+
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Comportamento de longo prazo da série, evidenciando a tendência geral dos
+      casos, como crescimento, queda ou estabilização ao longo do período
+      analisado.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Data de notificação
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Número de casos notificados.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
 
 const TrendChart = ({ seasonal }) => {
   const { filters } = useFilter();
@@ -27,10 +54,10 @@ const TrendChart = ({ seasonal }) => {
   );
 
   return (
-    <DashboardCard title={"Tendência"}>
+    <DashboardCard title={"Tendência"} info={info}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
-          {loading ? (
+          {loading || !data ? (
             <Box
               width={1}
               height={1}

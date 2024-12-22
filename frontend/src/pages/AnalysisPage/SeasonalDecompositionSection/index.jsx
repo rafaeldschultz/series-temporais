@@ -1,20 +1,20 @@
 import { Box, Stack, Typography } from "@mui/material";
 
-import FilterPanel from "./FilterPanel";
-import { useFilter } from "../../../contexts/FilterContext";
 import Grid from "@mui/material/Grid2";
+import { useCallback, useState } from "react";
+import BigNumberCard from "../../../components/Cards/BigNumberCard";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
+import { useFilter } from "../../../contexts/FilterContext";
+import useDebounce from "../../../hooks/useDebounce";
+import useSeasonalDecomposition from "../../../hooks/useSeasonalDecomposition";
+import CorrelogramChart from "./CorrelogramChart";
 import CountChart from "./CountChart";
+import FilterPanel from "./FilterPanel";
+import PartialCorrelogramChart from "./PartialCorrelogramChart";
 import ResidualsChart from "./ResidualsChart";
 import SeasonalChart from "./SeasonalChart";
 import TrendChart from "./TrendChart";
-import CorrelogramChart from "./CorrelogramChart";
-import PartialCorrelogramChart from "./PartialCorrelogramChart";
-import { useCallback, useState } from "react";
-import useDebounce from "../../../hooks/useDebounce";
-import BigNumberCard from "../../../components/Cards/BigNumberCard";
-import useSeasonalDecomposition from "../../../hooks/useSeasonalDecomposition";
 
 const SeasonalDecompositionSection = () => {
   const { filters } = useFilter();
@@ -41,7 +41,7 @@ const SeasonalDecompositionSection = () => {
 
   return (
     <>
-      {loading ? (
+      {loading || !data ? (
         <QuantumLoadingBox />
       ) : (
         <FadeBox in={!loading} timeout={transitionTimeout} sx={{ pb: 4 }}>

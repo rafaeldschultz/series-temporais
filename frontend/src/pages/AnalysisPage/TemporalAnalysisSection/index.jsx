@@ -1,16 +1,15 @@
 import { Box, Stack } from "@mui/material";
 
-import FilterPanel from "./FilterPanel";
+import Grid from "@mui/material/Grid2";
+import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
+import FadeBox from "../../../components/Transition/FadeBox";
 import { useFilter } from "../../../contexts/FilterContext";
 import useTemporal from "../../../hooks/useTemporal";
 import CorrelogramChart from "./CorrelogramChart";
-import Grid from "@mui/material/Grid2";
+import FilterPanel from "./FilterPanel";
 import SerieDifferetiationChart from "./SerieDifferentiationChart";
 import SerieExponentialRoolingAverageChart from "./SerieExponentialRoolingAverageChart";
 import SerieRoolingAverageChart from "./SerieRoolingAverageChart";
-import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
-import FadeBox from "../../../components/Transition/FadeBox";
-import SerieLagChart from "./SerieLagChart";
 
 const TemporalAnalysisSection = () => {
   const { filters } = useFilter();
@@ -23,11 +22,10 @@ const TemporalAnalysisSection = () => {
   );
 
   const transitionTimeout = 500;
-  console.log(data);
 
   return (
     <>
-      {loading ? (
+      {loading || !data ? (
         <QuantumLoadingBox />
       ) : (
         <FadeBox in={!loading} timeout={transitionTimeout} sx={{ pb: 4 }}>

@@ -1,21 +1,20 @@
 import { Box, Stack, Typography } from "@mui/material";
 
-import FilterPanel from "./FilterPanel";
-import { useFilter } from "../../../contexts/FilterContext";
 import Grid from "@mui/material/Grid2";
+import { useCallback, useState } from "react";
+import BigNumberCard from "../../../components/Cards/BigNumberCard";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
-import SerieStlDecompositionChart from "./SerieStlDecompositionChart";
+import { useFilter } from "../../../contexts/FilterContext";
+import useDebounce from "../../../hooks/useDebounce";
+import useDecomposition from "../../../hooks/useDecomposition";
+import CorrelogramChart from "./CorrelogramChart";
 import CountChart from "./CountChart";
+import FilterPanel from "./FilterPanel";
+import PartialCorrelogramChart from "./PartialCorrelogramChart";
 import ResidualsChart from "./ResidualsChart";
 import SeasonalChart from "./SeasonalChart";
 import TrendChart from "./TrendChart";
-import useDecomposition from "../../../hooks/useDecomposition";
-import CorrelogramChart from "./CorrelogramChart";
-import PartialCorrelogramChart from "./PartialCorrelogramChart";
-import { useCallback, useState } from "react";
-import useDebounce from "../../../hooks/useDebounce";
-import BigNumberCard from "../../../components/Cards/BigNumberCard";
 
 const DecompositionSection = () => {
   const { filters } = useFilter();
@@ -40,7 +39,7 @@ const DecompositionSection = () => {
 
   return (
     <>
-      {loading ? (
+      {loading || !data ? (
         <QuantumLoadingBox />
       ) : (
         <FadeBox in={!loading} timeout={transitionTimeout} sx={{ pb: 4 }}>

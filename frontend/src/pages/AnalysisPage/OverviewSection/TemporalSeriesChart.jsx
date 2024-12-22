@@ -1,21 +1,17 @@
+import { useTheme } from "@emotion/react";
 import {
-  Autocomplete,
   Box,
   CircularProgress,
-  Container,
-  Skeleton,
-  Stack,
-  TextField,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
 } from "@mui/material";
-import useTemporalSeries from "../../../hooks/dataLoaders/useTemporalSeries";
-import { useFilter } from "../../../contexts/FilterContext";
-import React, { useMemo } from "react";
-import Plot from "react-plotly.js";
-import Grid from "@mui/material/Grid2";
-import LinePlot from "../../../components/Charts/LinePlot";
+import React from "react";
 import DashboardCard from "../../../components/Cards/DashboardCard";
+import LinePlot from "../../../components/Charts/LinePlot";
+import { useFilter } from "../../../contexts/FilterContext";
 import useOverview from "../../../hooks/useOverview";
-import { useTheme } from "@emotion/react";
 
 const generateAnnotations = (data) => {
   const theme = useTheme();
@@ -58,7 +54,36 @@ const generateAnnotations = (data) => {
   return newAnnotations.filter((annotation) => annotation !== null);
 };
 
-const info = "teste info";
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Evolução temporal das notificações de síndrome gripal.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Data de notificação
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Número de casos notificados.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Anotações: </b> Número de casos acumulados por semestre.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
 
 const TemporalSeriesChart = () => {
   const { filters } = useFilter();
@@ -82,7 +107,7 @@ const TemporalSeriesChart = () => {
 
   return (
     <DashboardCard title={"Série Temporal"} info={info}>
-      {loading ? (
+      {loading || !data ? (
         <Box
           width={1}
           height={1}

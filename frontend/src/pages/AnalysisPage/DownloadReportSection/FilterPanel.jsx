@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useFilter } from "../../../contexts/FilterContext";
 import Grid from "@mui/material/Grid2";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import DashboardCard from "../../../components/Cards/DashboardCard";
-import SystemUpdateAltRoundedIcon from "@mui/icons-material/SystemUpdateAltRounded";
+import React, { useEffect, useState } from "react";
+import { useFilter } from "../../../contexts/FilterContext";
 
 const FilterPanel = () => {
   const { filters, updateFilter } = useFilter();

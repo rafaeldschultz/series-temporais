@@ -13,11 +13,7 @@ const fetch = async (federalState, syndrome, year, evolution, initial_lag) => {
   };
   const response = await api
     .get("serie_lag_plot", params)
-    .then((res) => res["data"])
-    .catch((err) => {
-      console.error(err);
-      return null;
-    });
+    .then((res) => res["data"]);
 
   return response;
 };

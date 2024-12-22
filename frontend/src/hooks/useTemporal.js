@@ -45,11 +45,7 @@ const fetchCorrelogram = async (
   };
   const response = await api
     .get("correlogram", params)
-    .then((res) => res["data"])
-    .catch((err) => {
-      console.error(err);
-      return null;
-    });
+    .then((res) => res["data"]);
   return response;
 };
 

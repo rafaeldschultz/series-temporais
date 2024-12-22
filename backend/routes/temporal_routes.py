@@ -18,6 +18,9 @@ async def overview(
         controller = TemporalController()
         data = controller.get_overview_data(uf, syndrome, year, evolution)
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -34,6 +37,9 @@ async def temporal(
         controller = TemporalController()
         data = controller.get_temporal_data(uf, syndrome, year, evolution)
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -54,6 +60,9 @@ async def serie_rooling_average(
             uf, syndrome, year, evolution, granularity
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -72,6 +81,9 @@ async def serie_differentiation(
         controller = TemporalController()
         data = controller.serie_differentiation(uf, syndrome, year, evolution, order)
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -92,6 +104,9 @@ async def serie_exponential_rooling_average(
             uf, syndrome, year, evolution, granularity
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -106,7 +121,7 @@ async def correlogram(
     granularity: Optional[int] = None,
     diff_order: Optional[int] = None,
     num_lags: Optional[int] = None,
-    alpha: Optional[int] = None,
+    alpha: Optional[float] = None,
 ):
     try:
         controller = TemporalController()
@@ -121,6 +136,9 @@ async def correlogram(
             alpha,
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -135,7 +153,7 @@ async def partial_correlogram(
     granularity: Optional[int] = None,
     diff_order: Optional[int] = None,
     num_lags: Optional[int] = None,
-    alpha: Optional[int] = None,
+    alpha: Optional[float] = None,
 ):
     try:
         controller = TemporalController()
@@ -150,6 +168,9 @@ async def partial_correlogram(
             alpha,
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -182,7 +203,7 @@ async def stl_decomposition_data(
     evolution: Optional[str] = None,
     seasonal: Optional[int] = None,
     num_lags: Optional[int] = None,
-    alpha: Optional[int] = None,
+    alpha: Optional[float] = None,
 ):
     try:
         controller = TemporalController()
@@ -190,6 +211,9 @@ async def stl_decomposition_data(
             uf, syndrome, year, evolution, seasonal, num_lags, alpha
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -204,7 +228,7 @@ async def seasonal_decomposition_data(
     period: Optional[int] = 5,
     model: Optional[str] = "additive",
     num_lags: Optional[int] = None,
-    alpha: Optional[int] = None,
+    alpha: Optional[float] = None,
 ):
     try:
         controller = TemporalController()
@@ -212,6 +236,9 @@ async def seasonal_decomposition_data(
             uf, syndrome, year, evolution, period, model, num_lags, alpha
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -230,6 +257,9 @@ async def serie_lag_plot(
         controller = TemporalController()
         data = controller.get_serie_lag_plot(uf, syndrome, year, evolution, lag)
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -259,6 +289,9 @@ async def predict_data(
             alpha_correlogram,
         )
         return JSONResponse(status_code=200, content=data)
+    except ValueError as e:
+        print(e)
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Internal server error")
