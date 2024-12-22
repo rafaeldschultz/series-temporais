@@ -7,13 +7,14 @@ import DashboardCard from "../../../components/Cards/DashboardCard";
 import useTemporal, { useCorrelogram } from "../../../hooks/useTemporal";
 import CorrelogramPlot from "../../../components/Charts/CorrelogramPlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
+import { getAlphaList, getNumLagsList } from "./helpers";
 
 const CorrelogramChart = () => {
   const { filters } = useFilter();
   const [granularity, setGranularity] = useState(3);
   const [order, setOrder] = useState(1);
-  const [numLags, setNumLags] = useState(1);
-  const [alpha, setAlpha] = useState(1);
+  const [numLags, setNumLags] = useState(3);
+  const [alpha, setAlpha] = useState(0.1);
 
   const { data, isPending: loading } = useCorrelogram(
     filters.federalState,
@@ -74,32 +75,14 @@ const CorrelogramChart = () => {
     {
       name: "numLags",
       label: "Número de Lags",
-      values: [
-        {
-          value: 1,
-          label: "Primeira",
-        },
-        {
-          value: 2,
-          label: "Segunda",
-        },
-      ],
+      values: getNumLagsList(),
       currentValue: numLags,
       onChange: (value) => setNumLags(value),
     },
     {
       name: "alpha",
       label: "Alpha",
-      values: [
-        {
-          value: 1,
-          label: "Primeira",
-        },
-        {
-          value: 2,
-          label: "Segunda",
-        },
-      ],
+      values: getAlphaList(),
       currentValue: alpha,
       onChange: (value) => setAlpha(value),
     },
