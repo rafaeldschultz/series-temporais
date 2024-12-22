@@ -15,7 +15,7 @@ import { lazy } from "react";
 import SeasonalDecompositionSection from "./SeasonalDecompositionSection";
 import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
 
-import ChoroplethMap from "../../components/Charts/MapPlot";
+import MapSection from "./MapSection";
 
 const OverviewSection = lazy(() => import("./OverviewSection"));
 const RawDataSection = lazy(() => import("./RawDataSection"));
@@ -84,7 +84,7 @@ export const navigationItems = [
   {
     kind: "item",
     title: "Geral",
-    component: <ChoroplethMap />,
+    component: <MapSection />,
     icon: <MapRoundedIcon />,
   },
   // {
