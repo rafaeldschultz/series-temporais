@@ -7,6 +7,37 @@ import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import { useFilter } from "../../../contexts/FilterContext";
 import useTemporal from "../../../hooks/useTemporal";
 
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
+
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Destaca as transformações aplicadas para tornar a série temporal
+      estacionária.
+    </Typography>
+    <Typography variant="body2" my={1}>
+      Especialmente útil para validar a preparação dos dados para modelos
+      estatísticos.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Data de notificação
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Resultado da diferenciação aplicada à série.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
+
 const SerieDifferetiationChart = () => {
   const { filters } = useFilter();
   const [order, setOrder] = useState("first");
@@ -49,6 +80,7 @@ const SerieDifferetiationChart = () => {
     <DashboardCard
       title={"Diferenciação"}
       actions={<ChipHorizontalGrid items={items} />}
+      info={info}
     >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">

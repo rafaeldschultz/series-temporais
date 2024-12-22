@@ -8,6 +8,38 @@ import StaticChipHorizontalGrid from "../../../components/Chip/StaticChipHorizon
 import { useFilter } from "../../../contexts/FilterContext";
 import useDecomposition from "../../../hooks/useDecomposition";
 
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
+
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Destaca a autocorrelação entre uma observação e as observações anteriores
+      para diferentes <i>lags</i>.
+    </Typography>
+    <Typography variant="body2" my={1}>
+      Valores significativos de autocorrelação indicam padrões ou dependências
+      temporais nos resíduos, o que sugere que o modelo ajustado pode não estar
+      capturando todos os padrões subjacentes.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Número de <i>lags</i>.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Coeficiente de autocorrelação.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
+
 const CorrelogramChart = ({ seasonal }) => {
   const { filters } = useFilter();
 
@@ -47,6 +79,7 @@ const CorrelogramChart = ({ seasonal }) => {
     <DashboardCard
       title={"Correlograma"}
       actions={<StaticChipHorizontalGrid items={items} />}
+      info={info}
     >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">

@@ -7,6 +7,38 @@ import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import { useFilter } from "../../../contexts/FilterContext";
 import useTemporal from "../../../hooks/useTemporal";
 
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
+
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Suaviza a série temporal, eliminando variações de curto prazo e destacando
+      tendências gerais.
+    </Typography>
+    <Typography variant="body2" my={1}>
+      Apresenta uma variação da média móvel simples, dando mais peso aos dados
+      mais recentes da série temporal.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Data de notificação
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Resultado da média móvel exponencial aplicada à
+            série.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
+
 const SerieExponentialRoolingAverageChart = () => {
   const { filters } = useFilter();
   const [granularity, setGranularity] = useState("3D");
@@ -69,6 +101,7 @@ const SerieExponentialRoolingAverageChart = () => {
     <DashboardCard
       title={"Médias Móveis Exponenciais"}
       actions={<ChipHorizontalGrid items={items} />}
+      info={info}
     >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">

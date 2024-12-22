@@ -1,5 +1,12 @@
 import { useTheme } from "@emotion/react";
-import { Box, CircularProgress } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import LinePlot from "../../../components/Charts/LinePlot";
@@ -47,7 +54,36 @@ const generateAnnotations = (data) => {
   return newAnnotations.filter((annotation) => annotation !== null);
 };
 
-const info = "teste info";
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Evolução temporal das notificações de síndrome gripal.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Data de notificação
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Número de casos notificados.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Anotações: </b> Número de casos acumulados por semestre.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
 
 const TemporalSeriesChart = () => {
   const { filters } = useFilter();

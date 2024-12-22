@@ -1,10 +1,10 @@
 import { Box, Chip, Skeleton, Stack, Typography } from "@mui/material";
-import DashboardCard from "./DashboardCard";
 import Grid from "@mui/material/Grid2";
+import DashboardCard from "./DashboardCard";
 
-const BigNumberCard = ({ title, number, percentage, isLoading }) => {
+const BigNumberCard = ({ title, number, percentage, isLoading, info }) => {
   return (
-    <DashboardCard title={title}>
+    <DashboardCard title={title} info={info}>
       <Stack spacing={2} mt={1} width={1}>
         <Grid container justifyContent={"space-between"}>
           <Grid>

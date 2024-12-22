@@ -40,10 +40,10 @@ const OverviewSection = () => {
             <Stack gap={2} width={0.8}>
               <FilterPanel />
               <Grid container spacing={2}>
-                <Grid size={9}>
+                <Grid size={8}>
                   <TemporalSeriesChart />
                 </Grid>
-                <Grid size={3}>
+                <Grid size={4}>
                   <Grid
                     container
                     direction={"column"}
@@ -61,6 +61,7 @@ const OverviewSection = () => {
                             ? data.general.totalDeaths / data.general.totalCases
                             : 0
                         }
+                        info={"Número de óbitos confirmados."}
                       />
                     </Grid>
                     <Grid>
@@ -74,6 +75,7 @@ const OverviewSection = () => {
                               data.general.totalCases
                             : 0
                         }
+                        info={"Número de casos recuperados."}
                       />
                     </Grid>
                     <Grid>
@@ -93,6 +95,7 @@ const OverviewSection = () => {
                               data.general.totalCases
                             : 0
                         }
+                        info={"Número de casos restantes."}
                       />
                     </Grid>
                   </Grid>
