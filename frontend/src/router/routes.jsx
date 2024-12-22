@@ -1,7 +1,6 @@
-import { createBrowserRouter } from "react-router-dom";
-import HomePage from "../pages/HomePage";
+import AboutUsPage from "../pages/AboutUsPage";
 import AnalysisPage from "../pages/AnalysisPage";
-import UnderDevelopmentPage from "../pages/UnderDevelopmentPage";
+import HomePage from "../pages/HomePage";
 import PredictionPage from "../pages/PredictionPage";
 
 const routes = () => [
@@ -25,6 +24,11 @@ const routes = () => [
     path: "/predictions",
     title: "Predições",
     element: <PredictionPage />,
+  },
+  {
+    path: "/aboutUs",
+    title: "Sobre nós",
+    element: <AboutUsPage />,
   },
 ];
 
