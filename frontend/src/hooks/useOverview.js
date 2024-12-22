@@ -10,13 +10,8 @@ const fetch = async (federalState, syndrome, year, evolution) => {
       evolution: evolution,
     },
   };
-  const response = await api
-    .get("overview", params)
-    .then((res) => res["data"])
-    .catch((err) => {
-      console.error(err);
-      return null;
-    });
+  const response = await api.get("overview", params).then((res) => res["data"]);
+
   return response;
 };
 

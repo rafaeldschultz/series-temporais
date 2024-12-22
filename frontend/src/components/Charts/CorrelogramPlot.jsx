@@ -5,6 +5,11 @@ import Plot from "react-plotly.js";
 
 const CorrelogramPlot = ({ data, sx }) => {
   const theme = useTheme();
+
+  if (!data) {
+    return null;
+  }
+
   const { autocorrelations, lowerY, upperY } = data;
 
   const plotData = useMemo(

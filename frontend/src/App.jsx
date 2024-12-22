@@ -1,21 +1,42 @@
-import useAppContext from "./hooks/useAppContext";
 import {
   Box,
   createTheme,
   CssBaseline,
   responsiveFontSizes,
+  ThemeProvider,
 } from "@mui/material";
+import { ptBR } from "@mui/x-data-grid/locales";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import toast, { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
+import { AppContext, AppProvider } from "./contexts/AppContext";
+import router from "./router";
 import darkPalette from "./styles/darkPalette";
 import lightPalette from "./styles/lightPalette";
 import typography from "./styles/typography";
-import { RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "@mui/material";
-import router from "./router";
-import { AppProvider, AppContext } from "./contexts/AppContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ptBR } from "@mui/x-data-grid/locales";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      scaleTime: 1000 * 60 * 60 * 24, // 24 hours
+    },
+  },
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      console.error(error);
+      if (query.state.data !== undefined) {
+        toast.error(`Erro ao atualizar os dados: ${error.message}`);
+      } else {
+        toast.error(`Erro ao carregar os dados: ${error.message}`);
+      }
+    },
+  }),
+});
 
 function App() {
   return (
@@ -32,11 +53,42 @@ function App() {
             )
           );
           return (
-            <Box sx={{ height: "100%", width: "100%", overflowX:"hidden" }}>
+            <Box sx={{ height: "100%", width: "100%", overflowX: "hidden" }}>
               <ThemeProvider theme={theme}>
                 <QueryClientProvider client={queryClient}>
                   <CssBaseline />
                   <RouterProvider router={router()} />
+                  <Toaster
+                    toastOptions={{
+                      loading: {
+                        style: {
+                          fontFamily: typography.fontFamily,
+                          fontSize: 14,
+                          color: theme.palette.text,
+                          fontWeight: "bold",
+                          background: theme.palette.background.paper,
+                        },
+                      },
+                      success: {
+                        style: {
+                          background: theme.palette.success.light,
+                          fontFamily: typography.fontFamily,
+                          fontSize: 14,
+                          color: theme.palette.success.dark,
+                          fontWeight: "bold",
+                        },
+                      },
+                      error: {
+                        style: {
+                          background: theme.palette.error.light,
+                          fontFamily: typography.fontFamily,
+                          fontSize: 14,
+                          color: theme.palette.error.dark,
+                          fontWeight: "bold",
+                        },
+                      },
+                    }}
+                  />
                 </QueryClientProvider>
               </ThemeProvider>
             </Box>

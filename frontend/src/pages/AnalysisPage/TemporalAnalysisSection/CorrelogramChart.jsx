@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useFilter } from "../../../contexts/FilterContext";
 import DashboardCard from "../../../components/Cards/DashboardCard";
-import useTemporal, { useCorrelogram } from "../../../hooks/useTemporal";
 import CorrelogramPlot from "../../../components/Charts/CorrelogramPlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
+import { useFilter } from "../../../contexts/FilterContext";
+import { useCorrelogram } from "../../../hooks/useTemporal";
 import { getAlphaList, getNumLagsList } from "./helpers";
 
 const CorrelogramChart = () => {
@@ -95,7 +95,7 @@ const CorrelogramChart = () => {
     >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
-          {loading ? (
+          {loading || !data ? (
             <Box
               width={1}
               height={1}

@@ -1,14 +1,13 @@
 import { Box, Stack } from "@mui/material";
-import FilterPanel from "./FilterPanel";
-import { useFilter } from "../../../contexts/FilterContext";
-import useTemporal from "../../../hooks/useTemporal";
 import Grid from "@mui/material/Grid2";
+import { useCallback, useMemo, useState } from "react";
 import QuantumLoadingBox from "../../../components/Loading/QuantumLoadingBox";
 import FadeBox from "../../../components/Transition/FadeBox";
-import SerieLagChart from "./SerieLagChart";
-import { useMemo, useState, useCallback } from "react";
-import useTemporalLags from "../../../hooks/useTemporalLags";
+import { useFilter } from "../../../contexts/FilterContext";
 import useDebounce from "../../../hooks/useDebounce";
+import useTemporalLags from "../../../hooks/useTemporalLags";
+import FilterPanel from "./FilterPanel";
+import SerieLagChart from "./SerieLagChart";
 
 const TemporalLagsSection = () => {
   const { filters } = useFilter();
@@ -30,7 +29,7 @@ const TemporalLagsSection = () => {
   );
 
   const mappedData = useMemo(() => {
-    if (!loading)
+    if (!loading && data)
       return Object.values(data).map((item, index) => (
         <Grid size={6} key={index}>
           <SerieLagChart
@@ -45,7 +44,7 @@ const TemporalLagsSection = () => {
 
   return (
     <>
-      {loading ? (
+      {!data ? (
         <QuantumLoadingBox />
       ) : (
         <FadeBox in={!loading} timeout={transitionTimeout} sx={{ pb: 4 }}>

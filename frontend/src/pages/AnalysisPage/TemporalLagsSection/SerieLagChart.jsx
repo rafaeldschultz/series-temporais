@@ -19,7 +19,7 @@ const SerieLagChart = ({ data, index, loading }) => {
     <DashboardCard title={`Lags Temporais ${index}D`}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
-          {loading ? (
+          {!data ? (
             <Box
               width={1}
               height={1}

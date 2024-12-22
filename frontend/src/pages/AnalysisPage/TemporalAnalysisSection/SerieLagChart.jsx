@@ -1,12 +1,11 @@
-import React, { useState } from "react";
 import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useFilter } from "../../../contexts/FilterContext";
+import React, { useState } from "react";
 import DashboardCard from "../../../components/Cards/DashboardCard";
-import useTemporal from "../../../hooks/useTemporal";
-import LinePlot from "../../../components/Charts/LinePlot";
-import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
 import ScatterPlot from "../../../components/Charts/ScatterPlot";
+import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
+import { useFilter } from "../../../contexts/FilterContext";
+import useTemporal from "../../../hooks/useTemporal";
 
 const SerieLagChart = () => {
   const { filters } = useFilter();
@@ -68,7 +67,7 @@ const SerieLagChart = () => {
     >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
-          {loading ? (
+          {loading || !data ? (
             <Box
               width={1}
               height={1}

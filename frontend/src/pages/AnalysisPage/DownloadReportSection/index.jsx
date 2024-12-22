@@ -1,43 +1,32 @@
-import FilterPanel from "./FilterPanel";
 import { useFilter } from "../../../contexts/FilterContext";
+import FilterPanel from "./FilterPanel";
 
+import GetAppRoundedIcon from "@mui/icons-material/GetAppRounded";
 import {
   Box,
+  Button,
+  CircularProgress,
   Stack,
   Typography,
-  Button,
-  Icon,
-  IconButton,
-  CircularProgress,
 } from "@mui/material";
-import GetAppRoundedIcon from "@mui/icons-material/GetAppRounded";
-import api from "../../../helpers/axios";
-import { downloadHtmlBase64File } from "../../../helpers/downloadFile";
-import { useState } from "react";
+import useReport from "../../../hooks/useReport";
 
 const DownloadReportPage = () => {
   const { filters } = useFilter();
-  const [loading, setLoading] = useState(false);
+
+  const {
+    data,
+    isLoading: loading,
+    refetch,
+  } = useReport(
+    filters.federalState,
+    filters.syndrome,
+    filters.year,
+    filters.evolution
+  );
 
   const handleDownload = async () => {
-    setLoading(true);
-    const params = {
-      params: {
-        uf: filters.federalState,
-        syndrome: filters.syndrome,
-        year: filters.year,
-        evolution: filters.evolution,
-      },
-    };
-    const response = await api
-      .get("report", params)
-      .then((res) => downloadHtmlBase64File("report.html", res["data"]))
-      .catch((err) => {
-        console.error(err);
-        return null;
-      });
-    console.log(response);
-    setLoading(false);
+    refetch();
   };
 
   return (

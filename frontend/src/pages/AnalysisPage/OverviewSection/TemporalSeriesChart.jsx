@@ -1,21 +1,10 @@
-import {
-  Autocomplete,
-  Box,
-  CircularProgress,
-  Container,
-  Skeleton,
-  Stack,
-  TextField,
-} from "@mui/material";
-import useTemporalSeries from "../../../hooks/dataLoaders/useTemporalSeries";
-import { useFilter } from "../../../contexts/FilterContext";
-import React, { useMemo } from "react";
-import Plot from "react-plotly.js";
-import Grid from "@mui/material/Grid2";
-import LinePlot from "../../../components/Charts/LinePlot";
-import DashboardCard from "../../../components/Cards/DashboardCard";
-import useOverview from "../../../hooks/useOverview";
 import { useTheme } from "@emotion/react";
+import { Box, CircularProgress } from "@mui/material";
+import React from "react";
+import DashboardCard from "../../../components/Cards/DashboardCard";
+import LinePlot from "../../../components/Charts/LinePlot";
+import { useFilter } from "../../../contexts/FilterContext";
+import useOverview from "../../../hooks/useOverview";
 
 const generateAnnotations = (data) => {
   const theme = useTheme();
@@ -82,7 +71,7 @@ const TemporalSeriesChart = () => {
 
   return (
     <DashboardCard title={"Série Temporal"} info={info}>
-      {loading ? (
+      {loading || !data ? (
         <Box
           width={1}
           height={1}

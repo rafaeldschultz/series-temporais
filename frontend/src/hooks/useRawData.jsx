@@ -19,13 +19,7 @@ const fetch = async (page, pageSize, queryOptions) => {
           page_size: pageSize,
         },
       };
-  const response = await api
-    .get("raw_data", params)
-    .then((res) => res["data"])
-    .catch((err) => {
-      console.error(err);
-      return null;
-    });
+  const response = await api.get("raw_data", params).then((res) => res["data"]);
 
   return response;
 };

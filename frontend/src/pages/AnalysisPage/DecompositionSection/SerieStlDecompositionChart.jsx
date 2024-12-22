@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Box, Chip, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useFilter } from "../../../contexts/FilterContext";
+import React, { useState } from "react";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import LinePlot from "../../../components/Charts/LinePlot";
 import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
+import { useFilter } from "../../../contexts/FilterContext";
 import useDecomposition from "../../../hooks/useDecomposition";
 
 const SerieStlDecompositionChart = ({ seasonal }) => {
@@ -65,7 +65,7 @@ const SerieStlDecompositionChart = ({ seasonal }) => {
     >
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
-          {loading ? (
+          {loading || !data ? (
             <Box
               width={1}
               height={1}

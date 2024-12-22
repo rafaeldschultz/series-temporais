@@ -3,12 +3,9 @@ import React from "react";
 import { Box, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-import Plot from "react-plotly.js";
-
-import { useOccurrenceBySex } from "../../../hooks/dataLoaders/useOccurrence";
-import { useFilter } from "../../../contexts/FilterContext";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import HorizontalBarPlot from "../../../components/Charts/HorizontalBarPlot";
+import { useFilter } from "../../../contexts/FilterContext";
 import useOverview from "../../../hooks/useOverview";
 
 const OccurrenceBySexChart = () => {
@@ -30,7 +27,7 @@ const OccurrenceBySexChart = () => {
     <DashboardCard title={"Ocorrências por Sexo"}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
-          {loading ? (
+          {loading || !data ? (
             <Box
               width={1}
               height={1}
