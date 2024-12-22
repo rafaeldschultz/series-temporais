@@ -26,19 +26,16 @@ const MapSection = () => {
         <Stack gap={2} width={0.8}>
           <FilterPanel />
 
-          {/* Ocorrência da SRAG */}
+          {/* Ocorrência*/}
           <Grid container spacing={2}>
-            <Grid size={8}>
+            <Grid size={5}>
               <DashboardCard title={"Ocorrências"}>
                 <ChoroplethMap  mapType={'occurrences'} geojsonData={data} year={filters.year} state={filters.federalState}/>
               </DashboardCard>
             </Grid>
-          </Grid>
 
-
-        <Grid container spacing={2}>
           {/* MORAN */}
-          <Grid size={6}>
+          <Grid size={5}>
             <DashboardCard title="MORAN">
               <ChoroplethMap mapType={'moran'} geojsonData={data} year={filters.year} state={filters.federalState}/>
             </DashboardCard>
@@ -46,7 +43,7 @@ const MapSection = () => {
 
 
           {/* GETIS */}
-          <Grid size={6}>
+          <Grid size={5}>
             <DashboardCard title="GETIS">
               <ChoroplethMap mapType={'getis'} geojsonData={data} year={filters.year} state={filters.federalState}/>
             </DashboardCard>
