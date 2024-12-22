@@ -1,38 +1,30 @@
+import base64
 import os
+import tempfile
 from typing import Optional
-from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse
+
 from controllers.report_controller import ReportController
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 
 api_report = APIRouter()
 
-CACHE_DIR = "./.cache"
-os.makedirs(CACHE_DIR, exist_ok=True)
 
 @api_report.get("/report")
-async def overview(
+async def report(
     uf: Optional[str] = None,
     syndrome: Optional[str] = None,
     year: Optional[int] = None,
     evolution: Optional[str] = None,
 ):
     try:
-        request = "_".join([str(uf), str(syndrome), str(year), str(evolution)])
-        cache_file = os.path.join(CACHE_DIR, f"{request}.html")
+        controller = ReportController()
+        file_bytes = controller.general_report(uf, syndrome, year, evolution)
 
-        if os.path.exists(cache_file):
-            return FileResponse(path=cache_file, filename="report.html")
-
-        else:
-
-            controller = ReportController()
-
-            report = controller.general_report(uf, syndrome, year, evolution)
-
-            with open(cache_file, "w") as f:
-                f.write(report)
-
-            return FileResponse(path=cache_file, filename="report.html")
+        return JSONResponse(
+            content=file_bytes,
+            status_code=200,
+        )
 
     except Exception as e:
         print(e)

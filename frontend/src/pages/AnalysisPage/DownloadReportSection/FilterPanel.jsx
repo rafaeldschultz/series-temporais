@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  Box,
   Button,
   IconButton,
   Stack,
@@ -33,123 +34,110 @@ const FilterPanel = () => {
   }, [federalState, syndrome, evolution, year]);
 
   return (
-    <DashboardCard>
-      <Grid container justifyContent={"space-between"} width={1}>
-
-        <Grid size={13}>
-          <Grid
-            container
-            spacing={2}
-            alignItems={"center"}
-            justifyContent={"center"}
-          >
-            <Grid size={"grow"}>
-              <Autocomplete
-                disablePortal
-                options={[
-                  "BA",
-                  "PR",
-                  "RS",
-                  "RJ",
-                  "CE",
-                  "SP",
-                  "DF",
-                  "MG",
-                  "SC",
-                  "PB",
-                  "MS",
-                  "AM",
-                  "SE",
-                  "PA",
-                  "MT",
-                  "TO",
-                  "GO",
-                  "AL",
-                  "PE",
-                  "PI",
-                  "ES",
-                  "RR",
-                  "AP",
-                  "AC",
-                  "RN",
-                  "RO",
-                  "MA",
-                ].sort()}
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Estado" size="small" />
-                )}
-                value={federalState}
-                onChange={
-                  (event, newValue) => setFederalState(newValue)
-                  // updateFilter("federalState", newValue)
-                }
-              />
-            </Grid>
-            <Grid size={"grow"}>
-              <Autocomplete
-                disablePortal
-                options={[
-                  "SRAG por influenza",
-                  "SRAG por outro vírus respiratório",
-                  "SRAG por outro agente etiológico",
-                  "SRAG não especificado",
-                  "SRAG por covid-19",
-                ].sort()}
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Sindrome" size="small" />
-                )}
-                onChange={
-                  (event, newValue) => setSyndrome(newValue)
-                  // updateFilter("syndrome", newValue)
-                }
-                value={syndrome}
-              />
-            </Grid>
-            <Grid size={"grow"}>
-              <Autocomplete
-                disablePortal
-                options={[2024, 2023, 2022, 2021].sort()}
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Ano" size="small" />
-                )}
-                onChange={(event, newValue) => setYear(newValue)} //updateFilter("year", newValue)}
-                value={year}
-              />
-            </Grid>
-            <Grid size={"grow"}>
-              <Autocomplete
-                disablePortal
-                options={[
-                  "Cura",
-                  "Óbito",
-                  "Óbito por outras causas",
-                  "Ignorado",
-                ].sort()}
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Evolução do Caso"
-                    size="small"
-                  />
-                )}
-                onChange={
-                  (event, newValue) => setEvolution(newValue)
-                  // updateFilter("evolution", newValue)
-                }
-                value={evolution}
-              />
-            </Grid>
-            <Grid>
-
-            </Grid>
-          </Grid>
-        </Grid>
+    <Grid
+      container
+      spacing={4}
+      alignItems={"center"}
+      justifyContent={"center"}
+      width={0.75}
+    >
+      <Grid size={6}>
+        <Autocomplete
+          disablePortal
+          options={[
+            "BA",
+            "PR",
+            "RS",
+            "RJ",
+            "CE",
+            "SP",
+            "DF",
+            "MG",
+            "SC",
+            "PB",
+            "MS",
+            "AM",
+            "SE",
+            "PA",
+            "MT",
+            "TO",
+            "GO",
+            "AL",
+            "PE",
+            "PI",
+            "ES",
+            "RR",
+            "AP",
+            "AC",
+            "RN",
+            "RO",
+            "MA",
+          ].sort()}
+          sx={{ width: "100%" }}
+          renderInput={(params) => (
+            <TextField {...params} label="Estado" size="small" />
+          )}
+          value={federalState}
+          onChange={
+            (event, newValue) => setFederalState(newValue)
+            // updateFilter("federalState", newValue)
+          }
+        />
       </Grid>
-    </DashboardCard>
+      <Grid size={6}>
+        <Autocomplete
+          disablePortal
+          options={[
+            "SRAG por influenza",
+            "SRAG por outro vírus respiratório",
+            "SRAG por outro agente etiológico",
+            "SRAG não especificado",
+            "SRAG por covid-19",
+          ].sort()}
+          sx={{ width: "100%" }}
+          renderInput={(params) => (
+            <TextField {...params} label="Sindrome" size="small" />
+          )}
+          onChange={
+            (event, newValue) => setSyndrome(newValue)
+            // updateFilter("syndrome", newValue)
+          }
+          value={syndrome}
+        />
+      </Grid>
+      <Grid size={6}>
+        <Autocomplete
+          disablePortal
+          options={[2024, 2023, 2022, 2021].sort()}
+          sx={{ width: "100%" }}
+          renderInput={(params) => (
+            <TextField {...params} label="Ano" size="small" />
+          )}
+          onChange={(event, newValue) => setYear(newValue)} //updateFilter("year", newValue)}
+          value={year}
+        />
+      </Grid>
+      <Grid size={6}>
+        <Autocomplete
+          disablePortal
+          options={[
+            "Cura",
+            "Óbito",
+            "Óbito por outras causas",
+            "Ignorado",
+          ].sort()}
+          sx={{ width: "100%" }}
+          renderInput={(params) => (
+            <TextField {...params} label="Evolução do Caso" size="small" />
+          )}
+          onChange={
+            (event, newValue) => setEvolution(newValue)
+            // updateFilter("evolution", newValue)
+          }
+          value={evolution}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

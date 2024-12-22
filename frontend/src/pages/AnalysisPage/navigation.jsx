@@ -10,7 +10,7 @@ import GrainRoundedIcon from "@mui/icons-material/GrainRounded";
 // import DecompositionSection from "./DecompositionSection";
 // import TemporalLagsSection from "./TemporalLagsSection";
 import AnimationRoundedIcon from "@mui/icons-material/AnimationRounded";
-import SummarizeIcon from '@mui/icons-material/Summarize';
+import SummarizeRoundedIcon from "@mui/icons-material/SummarizeRounded";
 import { lazy } from "react";
 import SeasonalDecompositionSection from "./SeasonalDecompositionSection";
 import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
@@ -24,21 +24,7 @@ const TemporalLagsSection = lazy(() => import("./TemporalLagsSection"));
 const UnderDevelopmentPage = lazy(() => import("../UnderDevelopmentPage"));
 const DownloadReportPage = lazy(() => import("./DownloadReportSection"));
 
-
 export const navigationItems = [
-  {
-    kind: "item",
-    title: "Relatório Automático",
-    component: <DownloadReportPage />,
-    icon: <SummarizeIcon />,
-  },
-  {
-    kind: "divider",
-  },
-  {
-    kind: "header",
-    title: "Análise Espacial",
-  },
   {
     kind: "item",
     title: "Dados Brutos",
@@ -81,6 +67,12 @@ export const navigationItems = [
     title: "Lags Temporais",
     component: <TemporalLagsSection />,
     icon: <AnimationRoundedIcon />,
+  },
+  {
+    kind: "item",
+    title: "Exportar Relatório",
+    component: <DownloadReportPage />,
+    icon: <SummarizeRoundedIcon />,
   },
   {
     kind: "divider",

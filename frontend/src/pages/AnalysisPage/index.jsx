@@ -7,7 +7,7 @@ import { FilterProvider } from "../../contexts/FilterContext";
 import { Suspense, useState } from "react";
 
 const AnalysisPage = () => {
-  const [visibleChart, setVisibleChart] = useState(3);
+  const [visibleChart, setVisibleChart] = useState(0);
 
   const navItems = navigationItems.map((item, index) => ({
     ...item,
