@@ -12,14 +12,25 @@ import SerieExponentialRoolingAverageChart from "./SerieExponentialRoolingAverag
 import SerieRoolingAverageChart from "./SerieRoolingAverageChart";
 
 const TemporalAnalysisSection = () => {
-  const { filters } = useFilter();
+  const { filters, updateFilter } = useFilter();
 
-  const { data, isPending: loading } = useTemporal(
+  const {
+    data,
+    isPending: loading,
+    error,
+  } = useTemporal(
     filters.federalState,
     filters.syndrome,
     filters.year,
     filters.evolution
   );
+
+  if (error) {
+    updateFilter("federalState", null);
+    updateFilter("syndrome", null);
+    updateFilter("year", null);
+    updateFilter("evolution", null);
+  }
 
   const transitionTimeout = 500;
 

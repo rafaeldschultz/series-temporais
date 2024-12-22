@@ -111,6 +111,7 @@ const FilterPanel = ({ onChangeCustomFilter, currentValueCustomFilter }) => {
                 disablePortal
                 options={[2024, 2023, 2022, 2021].sort()}
                 sx={{ width: "100%" }}
+                getOptionLabel={(option) => option.toString()}
                 renderInput={(params) => (
                   <TextField {...params} label="Ano" size="small" />
                 )}
