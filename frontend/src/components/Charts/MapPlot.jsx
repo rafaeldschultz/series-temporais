@@ -2,6 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
+const getProperty = (feature, year) => {
+  if (year === 2021) {
+    console.log("2021")
+    return feature["2021"]
+  }
+
+  if (year === 2022) {
+    console.log("2022")
+    return feature["2022"]
+  }
+
+  if (year === 2023) {
+    console.log("2023")
+    return feature["2023"]
+  }
+
+  if (year === 2024 ){
+    console.log("2024")
+    return feature["2024"]
+  }
+    console.log(year)
+  return feature["aggr"]
+}
+
 
 // Função para determinar a cor com base no valor
 const getColor = (occurrencies, value, min, max) => {
@@ -23,51 +47,49 @@ const getColor = (occurrencies, value, min, max) => {
   return '#800026';
 };
 
+const ChoroplethMap = ({ geojsonData, year }) => {
+  const [mapKey, setMapKey] = useState(Date.now());
+  useEffect(() => {
+    setMapKey(Date.now()); // Força o re-render quando `geojsonData` ou `year` mudam
+  }, [geojsonData, year]);
 
-// Função de estilo para os dados do GeoJSON
-const style = (ocurrencies, feature, min, max) => {
-  return {
-    fillColor: getColor(ocurrencies, feature, min, max), // Substitua "numero de ocorrencias" pela propriedade do seu GeoJSON
-    weight: 0.4,
-    opacity: 1,
-    color: 'white',
-    dashArray: '3',
-    fillOpacity: 0.7,
-  };
-};
-
-const ChoroplethMap = ({ geojsonData, sx }) => {
-  const [mapKey, setMapKey] = useState(Date.now()); // Forçar re-render com chave única
   const [minValue, setMinValue] = useState(null);
   const [maxValue, setMaxValue] = useState(null);
-
-  // Calcular o valor mínimo e máximo de "numero de ocorrencias" entre os estados
+  // Calcular o valor mínimo e máximo de "aggr/pop" entre os estados
   useEffect(() => {
     if (geojsonData) {
       const values = geojsonData.features.map(
-        (feature) => feature.properties.aggr / feature.properties.pop
+        (feature) => getProperty(feature.properties, year) / feature.properties.pop
       );
-
       const min = Math.min(...values);
       const max = Math.max(...values);
 
       setMinValue(min);
       setMaxValue(max);
     }
-  }, [geojsonData]);
+  }, [geojsonData, year]);
 
-  // Atualizar a chave para forçar re-render quando geojsonData mudar
-  useEffect(() => {
-    setMapKey(Date.now()); // Atualiza a chave para re-renderizar o mapa
-  }, [geojsonData]);
-
-  if (!geojsonData || minValue === null || maxValue === null) {
+  if (!geojsonData) {
     return <div>Carregando dados do mapa...</div>;
   }
 
+  // Atualize o estilo com a função `getProperty`
+  const style = (feature) => {
+    const value = getProperty(feature.properties, year); // Passa o ano corretamente
+    const occurrencies = value / feature.properties.pop;
+    return {
+      fillColor: getColor(value, occurrencies, minValue, maxValue),
+      weight: 0.4,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7,
+    };
+  };
+
   return (
     <MapContainer
-      key={mapKey} // Força o re-render com chave única
+      key={mapKey}
       center={[geojsonData.info.center_lat, geojsonData.info.center_lon]}
       zoom={geojsonData.info.zoom}
       style={{ height: '600px', width: '100%' }}
@@ -78,10 +100,11 @@ const ChoroplethMap = ({ geojsonData, sx }) => {
       />
       <GeoJSON
         data={geojsonData}
-        style={(feature) => style(feature.properties.aggr, feature.properties.aggr / feature.properties.pop, minValue, maxValue)}
+        style={(feature) => style(feature)}
       />
     </MapContainer>
   );
 };
+
 
 export default ChoroplethMap;

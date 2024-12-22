@@ -28,7 +28,7 @@ const MapSection = () => {
           <Grid container spacing={2}>
             <Grid size={9}>
               {/* Passando os dados selecionados diretamente para o ChoroplethMap */}
-              <ChoroplethMap geojsonData={data}/>
+              <ChoroplethMap geojsonData={data} year={filters.year} />
             </Grid>
             <Grid size={3}>
               <Grid
