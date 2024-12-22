@@ -18,15 +18,15 @@ const ColorModeSwitch = styled(Switch)(({ theme }) => ({
       },
       "& + .MuiSwitch-track": {
         opacity: 1,
-        backgroundColor: "#aab4be",
+        backgroundColor: theme.palette.secondary.dark,
         ...theme.applyStyles("dark", {
-          backgroundColor: "#8796A5",
+          backgroundColor: theme.palette.secondary.light,
         }),
       },
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: "#001e3c",
+    backgroundColor: theme.palette.secondary.dark,
     width: 32,
     height: 32,
     "&::before": {
@@ -36,6 +36,8 @@ const ColorModeSwitch = styled(Switch)(({ theme }) => ({
       height: "100%",
       left: 0,
       top: 0,
+      backgroundColor: theme.palette.secondary.dark,
+      borderRadius: "50%",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
@@ -48,10 +50,10 @@ const ColorModeSwitch = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-track": {
     opacity: 1,
-    backgroundColor: "#aab4be",
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: 20 / 2,
     ...theme.applyStyles("dark", {
-      backgroundColor: "#8796A5",
+      backgroundColor: theme.palette.secondary.dark,
     }),
   },
 }));
