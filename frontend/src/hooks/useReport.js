@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../helpers/axios";
-import { downloadHtmlBase64File } from "../helpers/downloadFile";
 
 const fetch = async (federalState, syndrome, year, evolution) => {
   const params = {
@@ -12,10 +11,7 @@ const fetch = async (federalState, syndrome, year, evolution) => {
     },
   };
 
-  const response = await api
-    .get("report", params)
-    .then((res) => downloadHtmlBase64File("report.html", res["data"]));
-
+  const response = await api.get("report", params).then((res) => res["data"]);
   return response;
 };
 

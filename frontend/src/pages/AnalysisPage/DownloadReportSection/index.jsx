@@ -9,10 +9,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { downloadHtmlBase64File } from "../../../helpers/downloadFile";
 import useReport from "../../../hooks/useReport";
 
 const DownloadReportPage = () => {
   const { filters } = useFilter();
+  const queryClient = useQueryClient();
 
   const {
     data,
@@ -26,7 +30,27 @@ const DownloadReportPage = () => {
   );
 
   const handleDownload = async () => {
-    refetch();
+    const queryKey = [
+      "report",
+      filters.federalState,
+      filters.syndrome,
+      filters.year,
+      filters.evolution,
+    ];
+    try {
+      const cachedData = queryClient.getQueryData(queryKey);
+      if (cachedData) {
+        downloadHtmlBase64File("report.html", cachedData);
+        toast.success("Relatório gerado com sucesso");
+        return;
+      }
+      const { data: fetchedData } = await refetch();
+      downloadHtmlBase64File("report.html", fetchedData);
+      toast.success("Relatório gerado com sucesso");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao gerar relatório");
+    }
   };
 
   return (
