@@ -54,7 +54,7 @@ const DownloadReportPage = () => {
           height: "100%",
         })}
       >
-        <Stack spacing={2}>
+        <Stack>
           <Typography variant={"h5"} color="primary">
             Exportar Relatório
           </Typography>
