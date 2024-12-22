@@ -107,6 +107,7 @@ const FilterPanel = () => {
               <Autocomplete
                 disablePortal
                 options={[2024, 2023, 2022, 2021].sort()}
+                getOptionLabel={(option) => option.toString()}
                 sx={{ width: "100%" }}
                 renderInput={(params) => (
                   <TextField {...params} label="Ano" size="small" />
