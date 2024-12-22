@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAppContext from "../../hooks/useAppContext";
+import GitHubIcon from "../Icons/Github";
 import ColorModeSwitch from "../Switch/ColorModeSwitch";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => {
@@ -94,7 +95,7 @@ const PageHeader = ({ routes }) => {
         <Box
           sx={{
             display: { xs: "none", md: "flex" },
-            gap: 1,
+            gap: 2,
             alignItems: "center",
           }}
         >
@@ -120,6 +121,21 @@ const PageHeader = ({ routes }) => {
                 </Typography>
               </Button>
             ))}
+          <Button
+            variant="outlined"
+            startIcon={<GitHubIcon />}
+            sx={(theme) => ({
+              color: "#ffffff",
+              borderColor: theme.palette.primary.dark,
+              px: 3,
+              borderRadius: 20,
+              backgroundColor: theme.palette.primary.dark,
+            })}
+            href="https://github.com/rafaeldschultz/series-temporais"
+            target="_blank"
+          >
+            Fork
+          </Button>
           <Tooltip title="Alterar tema" arrow>
             <ColorModeSwitch
               sx={{ m: 1 }}
