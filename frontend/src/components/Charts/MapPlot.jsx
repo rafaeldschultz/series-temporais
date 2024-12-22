@@ -18,9 +18,11 @@ const getColor = (incidency, min, max) => {
     return '#BEBEBE'; // Cor cinza para valores zero (sem dados)
   }
 
-  const ratio = (incidency - min) / (max - min); // Calcula a proporção do valor dentro do intervalo
+  const ratio = (incidency - min +0.00001) / (max - min); // Calcula a proporção do valor dentro do intervalo
 
-  if (ratio <= 0) return '#BEBEBE';
+  if (ratio <= 0) {
+    return '#BEBEBE';
+  }
   if (ratio <= 0.1) return '#FED976';
   if (ratio <= 0.2) return '#FEB24C';
   if (ratio <= 0.3) return '#FD8D3C';
