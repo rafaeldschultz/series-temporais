@@ -1,12 +1,44 @@
-import React, { useState } from "react";
-import { alpha, Box, Chip, CircularProgress, useTheme } from "@mui/material";
+import {
+  alpha,
+  Box,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useFilter } from "../../../contexts/FilterContext";
+import React from "react";
 import DashboardCard from "../../../components/Cards/DashboardCard";
 import GeneralLinePlot from "../../../components/Charts/GeneralLinePlot";
-import ChipHorizontalGrid from "../../../components/Chip/ChipHorizontalGrid";
-import useDecomposition from "../../../hooks/useDecomposition";
+import { useFilter } from "../../../contexts/FilterContext";
 import usePredict from "../../../hooks/usePredict";
+
+const info = (
+  <>
+    <Typography variant="body1" fontWeight={"bold"}>
+      Previsões médias e intervalos de confiança para intervalos de tempo
+      futuros.
+    </Typography>
+    <List sx={{ listStyle: "circle", pl: 4, pt: 0 }}>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo x: </b> Data de Notificação
+          </Typography>
+        </ListItemText>
+      </ListItem>
+      <ListItem sx={{ display: "list-item", p: 0 }}>
+        <ListItemText>
+          <Typography variant="body2">
+            <b>Eixo y: </b> Número de casos notificados.
+          </Typography>
+        </ListItemText>
+      </ListItem>
+    </List>
+  </>
+);
 
 const PredictChart = () => {
   const theme = useTheme();
@@ -76,7 +108,7 @@ const PredictChart = () => {
   );
 
   return (
-    <DashboardCard title={"Predição"}>
+    <DashboardCard title={"Predição"} info={info}>
       <Grid container direction={"row"} sx={{ width: "100%", height: "100%" }}>
         <Grid size="grow">
           {loading ? (

@@ -1,6 +1,6 @@
-import { Box, Chip, Skeleton, Stack, Typography } from "@mui/material";
-import DashboardCard from "./DashboardCard";
+import { Chip, Skeleton, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import DashboardCard from "./DashboardCard";
 
 const BigNumberTestesCard = ({
   title,
@@ -8,9 +8,10 @@ const BigNumberTestesCard = ({
   statisticNumber,
   statisticName,
   isLoading,
+  info,
 }) => {
   return (
-    <DashboardCard title={title}>
+    <DashboardCard title={title} info={info}>
       <Stack spacing={2.5} mt={1} width={1}>
         <Grid container justifyContent={"space-between"}>
           <Grid>
