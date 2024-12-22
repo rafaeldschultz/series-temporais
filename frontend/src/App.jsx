@@ -28,11 +28,13 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error, query) => {
-      console.error(error);
+      console.error(error.response.data.detail);
+      const errorMessage = error?.response?.data?.detail || error.message;
+
       if (query.state.data !== undefined) {
-        toast.error(`Erro ao atualizar os dados: ${error.message}`);
+        toast.error(`Erro ao atualizar os dados: ${errorMessage}`);
       } else {
-        toast.error(`Erro ao carregar os dados: ${error.message}`);
+        toast.error(`Erro ao carregar os dados: ${errorMessage}`);
       }
     },
   }),

@@ -395,8 +395,13 @@ class TemporalController:
 
         serie = self.df.groupby("DT_NOTIFIC").size()
 
-        stl = STL(serie, seasonal=seasonal if seasonal else 13)
-        results = stl.fit()
+        try:
+            stl = STL(serie, seasonal=seasonal if seasonal else 13)
+            results = stl.fit()
+        except ValueError:
+            raise ValueError(
+                "Há poucos dados para realizar a decomposição. Tente flexibilizar os filtros."
+            )
 
         serie = serie.reset_index().rename(columns={0: "Count"})
         serie["Trend_values"] = results.trend.values
