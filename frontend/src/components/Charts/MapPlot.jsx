@@ -2,28 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const getProperty = (feature, year) => {
+const getProperty = (mapType, feature, year) => {
+  console.log(mapType)
   if (year === 2021) {
     console.log("2021")
-    return feature["2021"]
+    return feature[mapType]["2021"]
   }
 
   if (year === 2022) {
     console.log("2022")
-    return feature["2022"]
+    return feature[mapType]["2022"]
   }
 
   if (year === 2023) {
     console.log("2023")
-    return feature["2023"]
+    return feature[mapType]["2023"]
   }
 
   if (year === 2024 ){
     console.log("2024")
-    return feature["2024"]
+    return feature[mapType]["2024"]
   }
     console.log(year)
-  return feature["aggr"]
+  return feature[mapType]["aggr"]
 }
 
 
@@ -47,11 +48,12 @@ const getColor = (occurrencies, value, min, max) => {
   return '#800026';
 };
 
-const ChoroplethMap = ({ geojsonData, year }) => {
+const ChoroplethMap = ({mapType, geojsonData, year, state }) => {
   const [mapKey, setMapKey] = useState(Date.now());
+  
   useEffect(() => {
     setMapKey(Date.now()); // Força o re-render quando `geojsonData` ou `year` mudam
-  }, [geojsonData, year]);
+  }, [geojsonData, year, state]);
 
   const [minValue, setMinValue] = useState(null);
   const [maxValue, setMaxValue] = useState(null);
@@ -59,7 +61,7 @@ const ChoroplethMap = ({ geojsonData, year }) => {
   useEffect(() => {
     if (geojsonData) {
       const values = geojsonData.features.map(
-        (feature) => getProperty(feature.properties, year) / feature.properties.pop
+        (feature) => getProperty(mapType, feature.properties, year) / feature.properties.pop
       );
       const min = Math.min(...values);
       const max = Math.max(...values);
@@ -67,7 +69,7 @@ const ChoroplethMap = ({ geojsonData, year }) => {
       setMinValue(min);
       setMaxValue(max);
     }
-  }, [geojsonData, year]);
+  }, [geojsonData, year, state]);
 
   if (!geojsonData) {
     return <div>Carregando dados do mapa...</div>;
@@ -75,7 +77,7 @@ const ChoroplethMap = ({ geojsonData, year }) => {
 
   // Atualize o estilo com a função `getProperty`
   const style = (feature) => {
-    const value = getProperty(feature.properties, year); // Passa o ano corretamente
+    const value = getProperty(mapType, feature.properties, year); // Passa o ano corretamente
     const occurrencies = value / feature.properties.pop;
     return {
       fillColor: getColor(value, occurrencies, minValue, maxValue),

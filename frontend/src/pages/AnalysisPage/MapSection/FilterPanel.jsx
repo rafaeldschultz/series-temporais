@@ -26,10 +26,10 @@ const FilterPanel = () => {
       <Grid container justifyContent={"space-between"} width={1}>
         <Grid size={5}>
           <Typography variant={"h5"} color="primary">
-            Mapas
+            Ocorrências no Brasil
           </Typography>
           <Typography variant={"body2"} color="textSecondary">
-            Filtre os dados de acordo com sua necessidade
+            Filtre e selecione os dados
           </Typography>
         </Grid>
         <Grid size={7}>
@@ -38,40 +38,15 @@ const FilterPanel = () => {
             spacing={2}
             alignItems={"center"}
             justifyContent={"center"}
+            sx={{ width: "100%" }}
           >
             <Grid size={"grow"}>
               <Autocomplete
                 disablePortal
                 options={[
-                  "BA",
-                  "PR",
-                  "RS",
-                  "RJ",
-                  "CE",
-                  "SP",
-                  "DF",
-                  "MG",
-                  "SC",
-                  "PB",
-                  "MS",
-                  "AM",
-                  "SE",
-                  "PA",
-                  "MT",
-                  "TO",
-                  "GO",
-                  "AL",
-                  "PE",
-                  "PI",
-                  "ES",
-                  "RR",
-                  "AP",
-                  "AC",
-                  "RN",
-                  "RO",
-                  "MA",
+                  "BA", "PR", "RS", "RJ", "CE", "SP", "DF", "MG", "SC", "PB", "MS", "AM", "SE", "PA", "MT", "TO", "GO", "AL", "PE", "PI", "ES", "RR", "AP", "AC", "RN", "RO", "MA",
                 ].sort()}
-                sx={{ width: "100%" }}
+                sx={{ minWidth: "150px", width: "100%" }}
                 renderInput={(params) => (
                   <TextField {...params} label="Estado" size="small" />
                 )}
@@ -86,7 +61,7 @@ const FilterPanel = () => {
               <Autocomplete
                 disablePortal
                 options={[2024, 2023, 2022, 2021].sort()}
-                sx={{ width: "100%" }}
+                sx={{ minWidth: "150px", width: "100%" }}
                 renderInput={(params) => (
                   <TextField {...params} label="Ano" size="small" />
                 )}
@@ -104,7 +79,6 @@ const FilterPanel = () => {
                 <SystemUpdateAltRoundedIcon />
               </Button>
             </Grid>
-
           </Grid>
         </Grid>
       </Grid>

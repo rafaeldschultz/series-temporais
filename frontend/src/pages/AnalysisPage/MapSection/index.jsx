@@ -5,11 +5,12 @@ import FilterPanel from "./FilterPanel";
 
 import ChoroplethMap from "../../../components/Charts/MapPlot";
 import selectMap from "../../../helpers/mapSelector";
+import DashboardCard from "../../../components/Cards/DashboardCard";
 import { useFilter } from "../../../contexts/FilterContext";
 
 const MapSection = () => {
-  const { filters } = useFilter(); // Obtém o estado do filtro
-  const data = selectMap(filters.federalState); // Seleciona o GeoJSON com base no filtro
+  const { filters } = useFilter();
+  const data = selectMap(filters.federalState);
 
   return (
     <>
@@ -23,14 +24,12 @@ const MapSection = () => {
         }}
       >
         <Stack gap={2} width={0.8}>
-          {/* O FilterPanel precisa ser exibido aqui */}
           <FilterPanel />
+
+          {/* Ocorrência da SRAG */}
           <Grid container spacing={2}>
-            <Grid size={9}>
-              {/* Passando os dados selecionados diretamente para o ChoroplethMap */}
-              <ChoroplethMap geojsonData={data} year={filters.year} />
-            </Grid>
-            <Grid size={3}>
+
+            <Grid size={4}>
               <Grid
                 container
                 direction={"column"}
@@ -39,16 +38,43 @@ const MapSection = () => {
                 height={1}
               >
                 <Grid>
-                  {/* Passando as informações corretas para o BigNumberCard */}
+
                   <BigNumberCard
-                    title={"Óbitos"}
-                    number={data.info.aggr}
-                    percentage={data.info.aggr / data.info.pop}
+                    title={"Ocorrência da SRAG"}
+                    number={data.info.occurrences.aggr}
+                    percentage={data.info.occurrences.aggr / data.info.pop}
                   />
                 </Grid>
               </Grid>
             </Grid>
+            <Grid size={8}>
+              <DashboardCard title={"Ocorrências"}>
+                <ChoroplethMap  mapType={'occurrences'} geojsonData={data} year={filters.year} state={filters.federalState}/>
+              </DashboardCard>
+            </Grid>
           </Grid>
+
+
+        <Grid container spacing={2}>
+          {/* MORAN */}
+          <Grid size={6}>
+            <DashboardCard title="MORAN">
+              <ChoroplethMap mapType={'moran'} geojsonData={data} year={filters.year} state={filters.federalState}/>
+            </DashboardCard>
+          </Grid>
+
+
+          {/* GETIS */}
+          <Grid size={6}>
+            <DashboardCard title="GETIS">
+              <ChoroplethMap mapType={'getis'} geojsonData={data} year={filters.year} state={filters.federalState}/>
+            </DashboardCard>
+          </Grid>
+        </Grid>
+
+
+
+
         </Stack>
       </Box>
     </>
