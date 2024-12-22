@@ -2,6 +2,8 @@ import {
   AppBar,
   Box,
   Button,
+  Divider,
+  Stack,
   styled,
   Toolbar,
   Tooltip,
@@ -57,15 +59,38 @@ const PageHeader = ({ routes }) => {
           py: 2,
         }}
       >
-        <Typography
-          variant="h4"
-          textTransform={"none"}
-          sx={{
-            color: "#FFFFFF",
-          }}
+        <Stack
+          direction={"row"}
+          spacing={2}
+          justifyContent={"center"}
+          alignItems={"center"}
         >
-          OpenDataSUS
-        </Typography>
+          <Typography
+            variant="h4"
+            textTransform={"none"}
+            sx={{
+              color: "#FFFFFF",
+            }}
+          >
+            DataSRAG
+          </Typography>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ borderColor: "#e0e0e0", height: 50 }}
+          />
+          <Typography
+            variant="h6"
+            textTransform={"none"}
+            sx={{
+              color: "#FFFFFF",
+            }}
+          >
+            Análise Temporal de Síndromes
+            <br />
+            Respiratórias Agudas Graves
+          </Typography>
+        </Stack>
         <Box
           sx={{
             display: { xs: "none", md: "flex" },
