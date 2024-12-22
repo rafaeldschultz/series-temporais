@@ -28,25 +28,6 @@ const MapSection = () => {
 
           {/* Ocorrência da SRAG */}
           <Grid container spacing={2}>
-
-            <Grid size={4}>
-              <Grid
-                container
-                direction={"column"}
-                spacing={2}
-                justifyContent={"space-between"}
-                height={1}
-              >
-                <Grid>
-
-                  <BigNumberCard
-                    title={"Ocorrência da SRAG"}
-                    number={data.info.occurrences.aggr}
-                    percentage={data.info.occurrences.aggr / data.info.pop}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
             <Grid size={8}>
               <DashboardCard title={"Ocorrências"}>
                 <ChoroplethMap  mapType={'occurrences'} geojsonData={data} year={filters.year} state={filters.federalState}/>
